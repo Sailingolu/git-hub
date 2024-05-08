@@ -1,0 +1,520 @@
+
+Ground Rules
+------------
+01. You need to be on the call from 9.00 to to 6.00 pm compulsory.
+02. Most of the training time will be utilized for hands on.
+03. Do daily revision of topics taught during the day.
+04. Ask questions in case of doubts. 
+05. Make the session interactive.
+-----------------------------------------------------------------------------------------------------------------------------
+
+Error messages :-
+-----------------
+TSO/ISPF
+--------
+01. No members in data set : this means your PDS is empty. There are no members in the PDS.
+02. No space in directory  : you have exceeded the limit of Directory Blocks
+
+ABnormal ENDs (ABEND CODES)
+---------------------------
+01. 0B37 - if you do not have space left in dataset to enter data.
+02. S322 - you get this abend when your job has executed beyond the time limit specified in TIME parameter.
+03. S806 - invalid program name specified in PGM parameter of EXEC statement
+04. S804 - space limit exceeded in REGION parameter of JOB command.
+05. S80A - space limit exceeded in REGION parameter of JOB command.
+06. S0C7 - you have typed a special character in a numeric field data.
+
+JCL programs
+------------
+01. JCL01 - IEFBR14 - allocate a dataset.
+02. JCL02 - IEBGENER - display dataset contents in spool.
+03. JCL03 - IEFBR14 - delete a dataset
+04. JCL04 - IEBGENER - copy dataset
+05. JCL05 - SORT - Sort on one/two field/s
+06. JCL06 - SORT - INCLUDE/OMIT command to sort specific records.
+07. JCL07 - SORT - OUTREC to reformat fields in output file
+08. JCL08 - SORT - Copy all/specific records
+09. JCL09 - SORT - Copy records (split a file into two or more files)
+10. JCL10 - SORT - Eliminate duplicates
+11. JCL11 - Instream procedure 
+12. JCL12 - Instream procedure + symbolic parameter + default value
+13. JCL13 - Catalogued Procedure
+14. JCL14 - JCL using Multiple Job Steps
+15. JCL15 - Define a GDG
+16. JCL16 - Define a Model for the GDG
+17. JCL17 - Define a GDS
+18. JCL18 - Populate data in a GDS
+19. JCL19 - Using GDS in two job steps
+20. JCL20 - COND parameter in JOB statement
+21. JCL21 - COND parameter in EXEC statement
+
+COBOL programs
+--------------
+01. COBOL01 - Basic program - DISPLAY, ACCEPT, COMPUTE
+02. COBOL02 - IF - ELSE - END-IF
+03. COBOL03 - PERFORM
+04. COBOL04 - Validate the input, Nested IF ELSE END-IF, IS NOT NUMERIC
+-----------------------------------------------------------------------------------------------------------------------------
+
+Knowledge Checks
+----------------
+01. What do you understand by GDG ? Why do we use it ?
+02. What does a GDG contain ?
+03. How many GDSs can 1 GDG have maximum ?
+04. Which option in DEFINE GDG command allows you to define number of GDSs to be contained in a GDG ?
+05. Can we code COND parameter in JOB as well as EXEC statement ?
+06. a. S322   b. MAXCC=12. Which of these is an error and an abend ?
+07. How many types of abend do we have ?
+08. In a GDS name, what does +1 mean ?
+09. When does +1 become 0 in a GDS name ?
+10. In how many ways can we have a GDS name ?
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+COBOL
+-----
+01. Introduction
+	- COBOL is a high level language used to develop commercial applications.
+	- COBOL was invented in 1957.
+	- COBOL instructions are close to English.
+	- COBOL programs are long.
+
+
+02. COBOL program structure :-
+
+	- COBOL program instructions are coded in two Areas - Area A and Area B.
+
+	- Area A is from Column 8 to Column 11. Area B is from Column 12 to Column 72.
+
+	- COBOL programs are divided into 4 Divisions. Some Divisions are further divided into Sections.
+
+		IDENTIFICATION DIVISION. -> to define program attributes
+		PROGRAM-ID. pgmname.		-> pgmname = in memory name of the program. (mandatory)
+		AUTHOR. MADHAV.			-> programmer's name (optional)
+		DATE-WRITTEN. 06-MAY-2024.	-> date on which program was coded. (optional)
+		DATE-COMPILED. 06-MAY-2024.	-> date on which program was compiled. (optional)
+
+		ENVIRONMENT DIVISION.	 -> to define file attributes and computer specifications
+		INPUT-OUTPUT SECTION.
+			<< define file attributes in this section >>
+		CONFIGURATION SECTION.	 -> is optional
+			<< define computer specifications - computer name used for compiling and running the program. >>
+
+		DATA DIVISION.
+		FILE SECTION.
+			<< define the file structure - field name, data type, width >>	
+		WORKING-STORAGE SECTION.
+			<< define variables >>
+		LINKAGE SECTION.
+			<< define variables which are received from another program >>
+
+		PROCEDURE DIVISION.
+			<< write program logic code >>
+
+	- COBOL data types 
+
+		- 9	-> numerical data type. We can store only digits (0-9)
+
+		- A	-> alphabetic data type. We can store alphabets (A-Z) and a space
+
+		- X	-> alphanumeric data type. We can store digits, alphabets and special characters.
+				
+
+	- Input output statements 
+		
+		- ACCEPT - used to input data in a variable.
+			 - Syntax :-
+					ACCEPT variable.
+					ACCEPT variable1, variable2.	-> Not allowed
+
+		- DISPLAY - used to display messages/ variable values.
+			  - Syntax :- 
+					DISPLAY "message".
+					DISPLAY variable.
+					DISPLAY "message", variable.
+
+		
+	- Processing (calculation) statement
+
+		- COMPUTE - used to perform arithmetical operations
+			  - Syntax :-
+
+					COMPUTE variable = arithmetical-expression.
+
+			    Example :-
+					COMPUTE Z = X + Y.
+					Z = X + Y.		-> Not allowed
+
+	- Variables
+
+		- We have different type of variables in COBOL.
+		- The variable type is identified by "Level number" of a variable.
+		- 01, 02 to 49, 66, 77, 88 are the valid level number in COBOL.
+
+			Level Number		Variable type
+			------------		-------------
+			    01			Record
+			  02 - 49		Element of the record.
+			    66			RENAMES clause variables
+			    77			Elementary items (variables which are not part of a record).
+			    88		        Conditional Name.
+
+
+03.	COBOL01
+	-------
+
+	Problem Definition
+	------------------
+	Input student name, marks in 3 tests. Calculate total and percentage. The program should display all the 
+	details of the student.
+
+	Instructions
+	------------
+	01. Allocate 3 PDSs - COBOL.PGMS.BASIC, COBOL.COPYLIB, COBOL.COMPILER. Attributes are as follows :-
+	    SPACE UNIT=TRKS, PRIMARY=10, SECONDAY=7, DIR BLKS=3, REC.FORMAT=FB, REC.LENGTH=80, BLKSIZE=800, DATASET NAME=PDS.
+
+	02. Allocate a PDS - COBOL.LOADLIB Attributes are as follows :-
+	    SPACE UNIT=TRKS, PRIMARY=10, SECONDAY=7, DIR BLKS=3, REC.FORMAT=U, REC.LENGTH=80, BLKSIZE=800, DATASET NAME=PDS.
+
+	03. Type E on left of COBOL.COMPILER and (CBLCMPLK) on right of COMPILER. 
+	04. COPY 'OZAGS3.COBOL.COMPILER(CBLCMPLK)' <enter>.	CHANGE ALL OZAGS3 OZA???.   Save.
+
+	05. Type E on left of COBOL.PGMS.BASIC and (COBOL01) on right of BASIC.
+	06. COPY 'OZAGS3.COBOL.PGMS.BASIC(COBOL01)' <enter>.     Save.
+
+	07. Open COBOL.COMPILER(CBLCMPLK) member. Save. Submit. You will get MAXCC=0000.
+
+	08. Type E on left of COBOL.COMPILER and (CBLRUN) on right of COMPILER.
+	09. COPY 'OZAGS3.COBOL.COMPILER(CBLRUN)' <enter>.    CHANGE ALL OZAGS3 OZA???.     Save.
+	10. Change data in SYSIN if you want. Save. Submit.
+	11. Goto spool. ST OZA???R. Type S in SYSOUT. You will see the output.
+
+	12. In CBLRUN JCL, change the data of the student. Save. Submit.
+	13. Goto spool. ST OZA???R. Type S in SYSOUT. You will see the output of the revised data.
+
+	14. In your program, make an error in COBOL01 in the variable name on any 1 line. Save.
+	15. Open COBOL.COMPILER(CBLCMPLK). Save. Submit. You will get MAXCC=0012.
+	16. Goto spool. ST OZA??C. Type S in SYSPRINT COBOL line. Type M and press F8 key. Check error message and line number.
+	17. Switch to your program COBOL01. On command line, type LOCATE and the line number. You will be able to see the 
+	    line on which you have made the mistake. 
+	18. Correct the mistake. Compile the program (CBLCMPLK). Run the program (CBLRUN). Goto spool. ST OZA???R. Check the output.
+
+
+04.	Operators
+
+	A.	Arithmetical Operators
+
+			+	- addition
+			-	- subtraction
+			*	- multiplication
+			/	- division
+			**	- exponential	(2 ** 3 = 8,   3 ** 5 = 243)	
+
+	B.	Relational Operators
+
+			<		or	IS LESS THAN
+			<=		or	IS LESS THAN OR EQUAL TO
+			>		or	IS GREATER THAN
+			>=		or	IS GREATER THAN OR EQUAL TO
+			=		or	IS EQUAL TO
+			NOT =		or	IS NOT EQUAL TO
+
+	C.	Logical Operators
+
+			AND
+			OR
+			NOT
+
+05.	IF ELSE statement
+
+	- IF ELSE statement is used to execute a block of statements conditionally.
+
+	- Syntax :-
+
+		IF condition
+			statement-1
+			statement-2
+		ELSE
+			statement-3
+			statement-4
+		END-IF.
+		statement-5.
+
+		If the condition satisfies, statement-1 & statement-2 will be executed and the control will then be
+		passed to statement-5.
+
+		If the condition does not satisfy, statement-3 & statement-4 will be executed and the control will then be
+		passed to statement-5.
+
+		Note : In a IF ELSE END-IF statement, you must type full stop (.) only after END-IF.
+
+
+06.	MOVE statement
+
+	- MOVE statement is used to assign a value or a variable to another variable.
+
+	- Syntax :-
+
+		MOVE value TO variable.
+
+		MOVE variable-1 to variable-2.
+
+
+	- Examples :-
+		MOVE 100 TO N1.
+		MOVE "RAJESH" TO STUD-NAME.
+
+		MOVE 5 TO N1.		-> N1 = 5
+		MOVE N1 TO N2.		-> N1 = 5   N2 = 5	-> Note : MOVE statement copies the data.
+
+
+07.	COBOL02
+	-------
+
+	Problem Definition
+	------------------
+	Input student name, marks in 3 tests. Calculate total, percentage and class. 
+	
+	If a student has secured < 35 in any one of the tests, then CLASS is FAIL else CLASS is PASS.
+
+	The program should display all the details of the student.
+
+	Instructions
+	------------
+	01. Type E on left of COBOL.PGMS.BASIC and (COBOL02) on right of BASIC.
+	02. COPY 'OZAGS3.COBOL.PGMS.BASIC(COBOL02). Save.
+	03. In compiler JCL, on line 12 & 14, type COBOL02 instead of COBOL01. Save. Submit.
+	04. In run JCL, on line 9, type COBOL02 instead of COBOL01. Save. Submit.
+	05. Goto spool. ST OZA???R. Check output in SYSOUT.
+	06. Test your program for a PASS case and a FAIL case.
+
+
+08.	PERFORM statement
+
+	- PERFORM statement is used to make your program logic modular, readable and reusable.
+
+	- Syntax :-
+
+		PERFORM para-name.
+
+		PERFORM statement will pass the control to the para-name and execute all the statements of para-name.
+		EXIT statement coded at end of para-name will return the control back to the calling para to the next
+		statement after PERFORM.
+
+		Example :-
+
+		0000-MAIN-PARA.
+			DISPLAY "WELCOME".
+			PERFORM 1000-PARA-1.
+			DISPLAY "THANK YOU".
+			STOP RUN.
+		1000-PARA-1.
+			DISPLAY "HELLO".
+			EXIT.
+		
+
+		OUTPUT
+		------
+		WELCOME
+		HELLO
+		THANK YOU
+			
+09.	COBOL03
+	-------
+
+	Problem Definition
+	------------------
+	Input student name, marks in 3 tests. Calculate total, percentage and class. 
+	
+	If a student has secured < 35 in any one of the tests, then CLASS is FAIL else CLASS is PASS.
+
+	The program should display all the details of the student.
+
+	Make your logic modular by using PERFORM statement.
+
+	Instructions
+	------------
+	01. Type E on left of COBOL.PGMS.BASIC and (COBOL03) on right of BASIC.
+	02. COPY 'OZAGS3.COBOL.PGMS.BASIC(COBOL03). Save.
+	03. In compiler JCL, on line 12 & 14, type COBOL03 instead of COBOL02. Save. Submit.
+	04. In run JCL, on line 9, type COBOL03 instead of COBOL02. Save. Submit.
+	05. Goto spool. ST OZA???R. Check output in SYSOUT.
+	06. Test your program for a PASS case and a FAIL case.
+
+10.	COBOL04
+	-------
+
+	Problem Definition
+	------------------
+	Input student name, marks in 3 tests. Calculate total, percentage and class. 
+	If a student has secured < 35 in any one of the tests, then CLASS is FAIL else CLASS is PASS.
+	The program should display all the details of the student.
+
+	Make your logic modular by using PERFORM statement.	
+	
+	Addition :-
+	-----------
+	The program should perform the following validation checks on the input data :-
+		a. student name should not be empty.
+		b. the 3 test scores should be in the range of 1 to 100
+		c. the 3 test scores should not have a special character in the data.
+
+	If the above validation checks pass successfully, the program should then calculate total, percentage, class.
+	If any of the above validation checks fail, the program should display a suitable error message.
+
+
+	Instructions
+	------------
+	01. Type E on left of COBOL.PGMS.BASIC and (COBOL04) on right of BASIC.
+	02. COPY 'OZAGS3.COBOL.PGMS.BASIC(COBOL04). Save.
+	03. In compiler JCL, on line 12 & 14, type COBOL04 instead of COBOL03. Save. Submit.
+	04. In run JCL, on line 9, type COBOL04 instead of COBOL03. Save. Submit.
+	05. Goto spool. ST OZA???R. Check output in SYSOUT.
+	06. Test your program for this case - student name is empty.
+	07. Test your program for this case - special character in one of the test marks
+	08. Test your program for this case - one of the test scores is 000.
+	09. Test your program for this case - one of the test scores is 482.
+	10. Test your program for this case - one of the test scores is 623 and another test score is 0,4.
+
+11.	Typical Workflow in a program
+
+		INPUT -> VALIDATE THE INPUT -> CALCULATION -> OUTPUT
+
+
+12.	**** VERY VERY IMPORTANT ****
+
+	S0C7 abend
+	----------
+	- We get S0C7 abend if we enter a non-numeric character in a numeric field data.
+
+	- If you have handled the validation using IS NOT NUMERIC in the program, then S0C7 abend message will not be
+	  displayed if you enter a non-numeric character in the numeric field data.
+
+	- S0C7 abend message will be displayed if you have not handled the validation using IS NOT NUMERIC in the program.
+	  
+	- S0C7 abend is called as "Data Exception Abend".
+
+	- How to get S0C7 abend ?
+		- In Run JCL, code COBOL03 as program name in PGM parameter in EXEC statement.
+		- Enter special character in one of the marks.
+		- Save. Submit.
+		- You will get S0C7 abend message.
+		- Goto spool in SYSOUT and see the data exception message.
+
+
+13.	Self Study Topics 
+
+	- ADD, SUBTRACT, MULTIPLY, DIVIDE statements
+
+	- Google :- Example of ADD statement in COBOL 
+
+14.	Assignment
+
+	- Define 4 numeric variables in one record - NUM-1 9(03), NUM-2 9(03), NUM-3 9(03), MAX-NUM 9(03).
+	  Write a program which will accept a number in NUM-1, NUM-2 and NUM-3 and display the maximum of the 3 numbers.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

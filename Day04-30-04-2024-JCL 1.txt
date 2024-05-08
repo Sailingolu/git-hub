@@ -1,0 +1,368 @@
+
+Ground Rules
+------------
+01. You need to be on the call from 9.00 to to 6.00 pm compulsory.
+02. Most of the training time will be utilized for hands on.
+03. Do daily revision of topics taught during the day.
+04. Ask questions in case of doubts. 
+05. Make the session interactive.
+-----------------------------------------------------------------------------------------------------------------------------
+
+Error messages :-
+-----------------
+TSO/ISPF
+--------
+01. No members in data set : this means your PDS is empty. There are no members in the PDS.
+02. No space in directory  : you have exceeded the limit of Directory Blocks
+
+ABnormal ENDs (ABEND CODES)
+---------------------------
+01. 0B37 - if you do not have space left in dataset to enter data.
+02. S322 - you get this abend when your job has executed beyond the time limit specified in TIME parameter.
+03. S806 - invalid program name specified in PGM parameter of EXEC statement
+
+JCL programs
+------------
+01. JCL01 - IEFBR14 - allocate a dataset.
+02. JCL02 - IEBGENER - display dataset contents in spool.
+03. JCL03 - IEFBR14 - delete a dataset
+04. JCL04 - IEBGENER - copy dataset
+05. JCL05 - SORT - Sort on one/two field/s
+06. JCL06 - SORT - INCLUDE/OMIT command to sort specific records.
+07. JCL07 - SORT - OUTREC to reformat fields in output file
+08. JCL08 - SORT - Copy all/specific records
+09. JCL09 - SORT - Copy records (split a file into two or more files)
+10. JCL10 - SORT - Eliminate duplicates
+-----------------------------------------------------------------------------------------------------------------------------
+
+Knowledge Checks
+----------------
+01. Why do we use JCL ?
+02. When do we get S322 abend ?
+03. What is the difference between OLD and SHR in DISP parameter ?
+04. When do we get S806 abend ?
+05. Why do we use IEFBR14 utility ?
+06. In //SYSPRINT DD SYSOUT=*, what does SYSOUT=* stand for ?
+07. What does MAXCC stand for ? What are the possible values for MAXCC ?
+08. Why do we use IEBGENER utility ?
+09. What is the difference between OLD and MOD in DISP parameter ?
+10. Why do we code NOTIFY parameter in JOB statement ?
+-----------------------------------------------------------------------------------------------------------------------------
+
+01.	SORT utility
+	------------
+
+	- SORT is all about arranging data in ascending / descending order.
+
+	- SORT process
+
+	  Analogy :-	Basket (Fruits)		      ---> Juice Maker (Prepare Juice)            ---> Glass (Juice)
+	  Sort process	Input file (unsorted records) ---> Temporary file (sort unsorted records) ---> Output file (sorted records)
+
+		- First, unsorted records will be copied from input file to tempoary file.
+		- Second, unsorted records will be sorted in temporary file
+		- Third, sorted records will be copied from the temporary file to the output file.
+
+	- SORT utility DD names
+
+		a. SYSOUT	: //SYSOUT DD SYSOUT=*
+				  - SYSOUT is similar to SYSPRINT of IEBGENER
+				  - SYSOUT DD name is coded to specify the device on which SORT UTILITY messages will be displayed.
+				  - In the above example, the SORT utility messages will be displayed in the spool (SYSOUT=*).
+
+		b. SORTIN	: //SORTIN DD DSN=input-dataset-name,DISP=OLD
+				  - SORTIN DD name is coded to specify the input dataset name which contains unsorted records.
+
+		c. SORTWK01	: //SORTWK01 DD UNIT=SYSDA,SPACE=(TRK,(1,1))
+				  - SORTWK01 DD name is coded to specify temporary dataset in which sorting will take place.						  - Temporay file is also called as a work file.
+
+		d. SORTOUT	: //SORTOUT DD DSN=output-dataset-name,DISP=OLD
+				  - SORTOUT DD name is coded to specify output dataset name which will contain sorted records.
+
+		e. SYSIN	: //SYSIN  DD *
+		 		   SORT FIELDS=(start-pos,length,data-type,sort-sequence)
+				  /*
+				
+				  - SYSIN DD name is coded to specify the "sort card".
+				  - "Sort card" will contain input related to starting position of field to be sorted, length
+				    of the field to be sorted, data type of the field, sort sequence of the field (A/D).			
+
+02.	JCL05 - Sort data on 1/2 fields
+
+	Instructions 
+	------------
+	01. Open JCL01. Make the following change :-    //DD01   DD   DSN=OZA???.EMP.SORTIN.PS,DISP=(NEW,CATLG),
+	02. Save. Submit. Check if EMP.SORTIN.PS has been allocated.
+
+	03. Open JCL01. Make the following change :-    //DD01   DD   DSN=OZA???.EMP.SORTOUT.PS,DISP=(NEW,CATLG),
+	04. Save. Submit. Check if EMP.SORTOUT.PS has been allocated.
+
+	05. Open OZA???.EMP.SORTIN.PS. On command line, type COPY 'OZAGS3.EMP.SORTIN.PS' <enter>.
+	06. You will see the data from my file being copied into your file. You can change the data if you want. Save.
+
+	07. On left of JCL.PGMS, type E and type (JCL05) on right of PGMS.
+	08. On command line, type COPY 'OZAGS3.JCL.PGMS(JCL05)' <enter>. Save.
+	09. On command line, type CHANGE  ALL  OZAGS3  OZA??? <enter>. Save.
+	10. Submit. Open EMP.SORTOUT.PS and check if data has been sorted on name in ascending order.
+	11. Now you can sort on some other field in sort sequence A or D and check if data is sorted as per your request.
+
+	12. In your JCL code, in SORT FIELDS=, type SORT FIELDS=(38,10,CH,A,49,7,CH,D).
+	13. Save. Submit. Open EMP.SORTOUT.PS and check if data is sorted on project in ascending order and salary in
+	    descending order. Check if within one project, records are sorted in descending order of salary.
+
+
+03.	SORT CARD commands
+
+	a.	INCLUDE command - this will filter the records of input file while sorting.
+
+		Syntax :- INCLUDE COND=(start-pos,length,data-type,operator,C'value')
+				
+			- start-pos : is the starting position of the field on which you want to specify the filter condition.
+			- length    : is the length of the field on which you want to specify the filter condition.
+			- data-type : data type of the filter field
+			- operator  : EQ, NE, LE, LT, GE, GT
+			- C'value'  : data to be checked in the filter condition
+
+	b.	OMIT command - this will exclude the records satisfying the filter condition while sorting.
+
+		Syntax :- OMIT COND=(start-pos,length,data-type,operator,C'value')
+				
+			- start-pos : is the starting position of the field on which you want to specify the filter condition.
+			- length    : is the length of the field on which you want to specify the filter condition.
+			- data-type : data type of the filter field
+			- operator  : EQ, NE, LE, LT, GE, GT
+			- C'value'  : data to be checked in the filter condition
+
+	c. 	OUTREC command - this can be used to reformat your output.
+
+		Syntax :- OUTREC FIELDS=(start-pos,length,start-pos,length,start-pos,length,.....)
+
+	d.	SORT FIELDS=COPY - to copy records
+
+	e.	SORT FIELDS=COPY,SKIPREC=n1,STOPAFT=n2 - copy n2 records after n1th record
+
+	f.	OUTFIL FILES=n,INCLUDE=(start-pos,length,data-type,operator,C'value') - split one file into smaller files.
+
+
+
+04.	JCL06 - Sort records using INCLUDE command
+
+	Instructions
+	------------
+	01. Type E on left of JCL.PGMS and type (JCL06) on right of PGMS.
+	02. On command line, type COPY 'OZAGS3.JCL.PGMS(JCL06)' <enter>
+	03. On command line, type CHANGE  ALL  OZAGS3  OZA??? <enter>.  Save.
+	04. Submit. Open EMP.SORTOUT.PS and check if records of employees with salary >= 30000 have been sorted on name (A).
+
+	05. You can change the specification in INCLUDE to suit your requirement. Save.
+	06. Submit. Open EMP.SORTOUT.PS and check if you are getting the correct output.
+
+	07. Type INCLUDE command as follows :-   INCLUDE COND=(38,10,CH,EQ,C'BANKING---',AND,49,7,CH,LT,C'0030000')
+	08. Save. Submit. Open EMP.SORTOUT.PS and check if records of banking project employees with salary < 30000 have
+	    been sorted on name (A).
+
+	09. You can change the specification in INCLUDE to suit your requirement to filter on two fields. Save.
+	10. Submit. Open EMP.SORTOUT.PS and check if you are getting the correct output.
+
+
+05.	JCL07 - Reformat fields in output file
+
+	Instructions
+	------------
+	01. Type E on left of JCL.PGMS and type (JCL07) on right of PGMS.
+	02. On command line, type COPY 'OZAGS3.JCL.PGMS(JCL07)' <enter>
+	03. On command line, type CHANGE  ALL  OZAGS3  OZA??? <enter>.  Save.
+	
+	04. Submit. Open EMP.SORTOUT.PS and check if it has join date, name and salary with a . in between two fields.
+
+	05. Open JCL07. You can take some other fields and delimiter of your choice and code the specification in OUTREC.
+		Example :-  OUTREC FIELDS=(38,10,C' ',6,20)
+	06. Save. Submit. Open EMP.SORTOUT.PS and check if the output is as per your requirement.
+
+
+06.	JCL08 - Copy all/specific records using SORT.
+
+	Instructions
+	------------
+	01. Type E on left of JCL.PGMS and type (JCL08) on right of PGMS.
+	02. On command line, type COPY 'OZAGS3.JCL.PGMS(JCL08)' <enter>
+	03. On command line, type CHANGE  ALL  OZAGS3  OZA??? <enter>.  Save.
+	04. Submit. Open EMP.SORTOUT.PS and check if all records have been copied. Check sequence of records in
+	    input file and output file - it will be the same sequence.
+
+	05. Open JCL08. Make the following change :-     SORT FIELDS=COPY,SKIPREC=7
+	06. Save. Submit. Open EMP.SORTOUT.PS and check if the last 3 records of the input file have been copied.
+
+	07. Open JCL08. Make the following change :-     SORT FIELDS=COPY,STOPAFT=4
+	08. Save. Submit. Open EMP.SORTOUT.PS and check if the first 4 records of the input file have been copied.
+	
+	09. Open JCL08. Make the following change :-     SORT FIELDS=COPY,SKIPREC=3,STOPAFT=4
+	10. Save. Submit. Open EMP.SORTOUT.PS and check if 4th,5th,6th,7th records of the input file have been copied.
+
+	11. You can give your own specifications and check if you are getting the correct output.
+
+
+07.	JCL09 - Split a file into smaller files
+
+	Instructions 
+	------------
+	01. Open JCL01. Make the following change :-    //DD01   DD   DSN=OZA???.EMP.FINANCE.PS,DISP=(NEW,CATLG),
+	02. Save. Submit. Check if EMP.FINANCE.PS has been allocated.
+
+	03. Open JCL01. Make the following change :-    //DD01   DD   DSN=OZA???.EMP.BANKING.PS,DISP=(NEW,CATLG),
+	04. Save. Submit. Check if EMP.BANKING.PS has been allocated.
+
+	05. Open JCL01. Make the following change :-    //DD01   DD   DSN=OZA???.EMP.RETAIL.PS,DISP=(NEW,CATLG),
+	06. Save. Submit. Check if EMP.RETAIL.PS has been allocated.
+
+	07. Type E on left of JCL.PGMS and type (JCL09) on right of PGMS.
+	08. On command line, type COPY 'OZAGS3.JCL.PGMS(JCL09)' <enter>
+	09. On command line, type CHANGE  ALL  OZAGS3  OZA??? <enter>.  Save. Submit.
+	
+	10. Open EMP.BANKING.PS and check if it has banking project records.
+	11. Open EMP.FINANCE.PS and check if it has finance project records.
+	12. Open EMP.RETAIL.PS and check if it has retail project records.
+
+
+08.	JCL10 - Eliminate duplicate records
+
+	Instructions
+	------------
+	01. Open EMP.SORTIN.PS. Duplicate any 3 records of the file using C and A or B commands. Save.
+	02. Type E on left of JCL.PGMS and (JCL10) on right of PGMS.
+	03. COPY 'OZAGS3.JCL.PGMS(JCL10)' 
+	04. CHANGE ALL  OZAGS3  OZA???
+	05. Save. Submit.
+	06. Open EMP.SORTOUT.PS and check if duplicate records have been eliminated.
+
+
+09.	Exercise
+
+	Note : Make changes in the existing JCLs (JCL01 to JCL10) to solve the exercise below :-
+
+	01. Allocate a dataset OZA???.STUDENT.PS
+	02. Allocate a dataset OZA???.STUDENT.SORTIN.PS
+	03. Allocate a dataset OZA???.STUDENT.SORTOUT.PS
+	04. Allocate a dataset OZA???.STUDENT.MALE.PS
+	05. Allocate a dataset OZA???.STUDENT.FEMALE.PS
+
+	06. Open OZA???.STUDENT.PS and enter 10 records with the data :- Student Name (20), Gender (06), Percentage (02).
+	    Type MALE or FEMALE in GENDER field.
+
+	07. Copy OZA???.STUDENT.PS file to OZA???.STUDENT.SORTIN.PS file. Open OZA???.STUDENT.SORTIN.PS file and check if records 
+	    have been copied.
+
+	08. Sort the data in the ascending order of name. The sorted records must be in STUDENT.SORTOUT.PS. Check output file.
+
+	09. Sort the data in the ascending order of gender and descending order of percentage. Check the output file.
+
+	10. Copy MALE student records in OZA???.STUDENT.MALE.PS and FEMALE student records in OZA???.STUDENT.FEMALE.PS.
+
+	11. Open STUDENT.MALE.PS and check if it has male student records. 
+            Open STUDENT.FEMALE.PS and check if it has female student records.
+
+	12. Open STUDENT.PS file. Duplicate some records in the file.
+
+	13. Eliminate duplicate records from STUDENT.PS file and copy the remaining records in STUDENT.SORTIN.PS
+
+	14. Sort records in ascending order of name where percentage >= 75.
+
+	15. Sort records in descending order of percentage. The output file must have data as -> GENDER NAME PERCENTAGE
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

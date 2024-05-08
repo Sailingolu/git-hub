@@ -1,0 +1,360 @@
+
+Ground Rules
+------------
+01. You need to be on the call from 9.00 to to 6.00 pm compulsory.
+02. Most of the training time will be utilized for hands on.
+03. Do daily revision of topics taught during the day.
+04. Ask questions in case of doubts. 
+05. Make the session interactive.
+-----------------------------------------------------------------------------------------------------------------------------
+
+Error messages :-
+-----------------
+TSO/ISPF
+--------
+01. No members in data set : this means your PDS is empty. There are no members in the PDS.
+02. No space in directory  : you have exceeded the limit of Directory Blocks
+
+ABnormal ENDs
+-------------
+01. 0B37 - if you do not have space left in dataset to enter data.
+02. S322 - you get this abend when your job has executed beyond the time limit specified in TIME parameter.
+03. S806 - invalid program name specified in PGM parameter of EXEC statement
+
+JCL programs
+------------
+01. JCL01 - IEFBR14 - allocate a dataset.
+02. JCL02 - IEBGENER - display dataset contents in spool.
+03. JCL03 - IEFBR14 - delete a dataset
+04. JCL04 - IEBGENER - copy dataset
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+JCL - Job Control Language
+--------------------------
+
+01. Introduction
+	- JCL is used to implement batch processing in Mainframes.
+	- In JCL, we write programs which execute in a non-interactive manner.
+	- JCL programs are called as "jobs".
+	- A job is a unit of work which we submit to Mainframe for execution.
+	- In a job, we can execute one or more non-interactive programs.
+	- A job is said to have successfully executed only if all the non-inteactive programs of the job have executed successfully.
+  	  If any non-interactive programs fails in execution, then the job is said to have failed in execution.
+	- Some of the programs we can executed in a job in JCL are :-
+		- compile programs, link programs, execute application programs
+		- sort data
+		- backup data, copy data, print data
+
+	- In JCL, we have 3 instructions :-
+		- JOB	- JOB command is coded to specify job attributes.
+		- EXEC	- EXEC command is coded to specify the program name which is to be executed.
+		- DD	- DD command is coded to specify the input/output datasets required by the program. DD = Data Definition
+
+
+	- JCL commands syntax :-
+
+		//name		JCL command	parameters	comment (optional)	
+
+
+		//OZAGS3A	JOB	..........
+		//STEP01	EXEC	..........
+		//DD01		DD	..........
+
+
+	In the above example :
+	- OZAGS3A is called as a job name. In general, the name coded on left of JOB command is called as the job name. The
+	  convention for job name is <your-user-id><alphabet>
+	- STEP01 is called as a step name. In general, the name coded on left of EXEC command is called as the step name.
+	  Step name is user defined.
+	- DD01 is called as a DD name. In general, the name coded on left of DD command is called as the DD name.
+	  DD name is user defined.
+
+
+	- Examples
+
+		Example 01 
+		----------
+		//OZAGS3A	JOB	..........
+		//STEP01	EXEC	..........
+		//DD01		DD	..........
+	
+	In the above example, there is only one EXEC command coded. So the job is executing one program only.
+
+
+		Example 02
+		----------
+		//OZAGS3A	JOB	..........
+		//STEP01	EXEC	..........
+		//DD01		DD	..........
+		//STEP02	EXEC	..........
+		//DD01		DD	..........
+		//DD02		DD	..........
+		//DD03		DD	..........
+
+	In the above example, there are 2 EXEC commands coded. So the above job is executing two programs.
+
+
+02. 	JOB command parameters
+
+	//OZAGS3A    JOB  '123-FINANCE','MADHAV',CLASS=A,NOTIFY=OZA084,TIME=(2,30)
+
+	A. 'WIPRO-123' - In this parameter, we type accounting information of the job. Accounting information is project specific.
+	   and it can contain values as specified by the program. In the above example, 123 is the project code and FINANCE is the 
+	   project name.
+
+	B. 'MADHAV' - In this parameter, we code the programmer's name.
+
+	C. CLASS=class-type - CLASS parameter is coded to specify the type of job. Class-type can be a single alphabet (A-Z) or a
+	   a single digit (0-9).
+
+		Scenario
+		--------
+		Class type	Description
+		----------	-----------
+		   A		Printing
+		   B		Sorting
+		   C* (default)	Compile, Link edit	
+		   D		backup, copy
+
+	   CLASS parameter is optional. If not coded, then a default class defined by the administrator will be assigned to the job.
+
+	D. NOTIFY=userid - NOTIFY parameter is coded to specify the user id to whom a notification message is to be sent when
+	   the job has completed/failed in execution. It is recommended to code NOTIFY parameter in all job codes.
+
+	E. TIME=(min,sec) - TIME parameter is coded to specify the amount of time for which the job should execute. If your job
+	   executes within the time limit specified in TIME parameter, then it is a positive case. But if your job requires more
+	   time to execute than the time specified in TIME parameter, then your job will abend (abnormal end) with S322 code
+
+03. 	EXEC command parameter	
+
+	//OZAGS3A    	JOB  '123-FINANCE','MADHAV',CLASS=A,NOTIFY=OZA084,TIME=(2,30)
+	//STEP01	EXEC PGM=COBPGM01
+
+
+	A. PGM=program-name - PGM parameter is coded to specify the name of the program you want to execute in the job. In the
+	   above example a program by the name COBPGM01 will be executed by the job. If you code an invalid program name in PGM
+	   paramter, then your job will abend with S806 code.
+
+04. 	DD command parameters
+
+	//DD01		DD	DSN=OZAGS3.EMP.DATA,DISP=(NEW,CATLG),UNIT=SYSDA,SPACE=(TRK,(10,7)),
+	// DCB=(DSORG=PS,LRECL=80,BLKSIZE=800,RECFM=FB)
+
+	A. DSN=dataset-name - DSN parameter is coded to specify the name of the input/ouput dataset used the program specified
+	   in PGM parameter of EXEC. DSN = Data Source Name.
+
+	B. DISP=(status,normal-disposition,abnormal-disposition)	.... DISP=(status,+ve action,-ve action)
+		
+		- status is the status of the dataset
+			- NEW - dataset does not exist and you are creating a new dataset.
+			- OLD - dataset already exists. Dataset cannot be used by two or more programs at the same time.
+			- SHR - dataset already exists. Dataset can be used by two or more programs at the same time.
+			- MOD - you want to add (append) data to the dataset.
+
+		- normal-disposition is the action to be taken on the dataset when the program executes successfully.
+			- CATLG 	- store the attributes of the dataset in VTOC. This must be coded if status=NEW.
+			- UNCATLG	- remove the attributes of the dataset from VTOC
+			- KEEP		- retain the dataset
+			- DELETE	- delete the dataset
+			- PASS		- pass the dataset to the next program to be executed.
+
+		- abnormal-disposition is the action to be taken on the dataset when the program fails to execute successfully.
+			- CATLG 	- store the attributes of the dataset in VTOC. This must be coded if status=NEW.
+			- UNCATLG	- remove the attributes of the dataset from VTOC
+			- KEEP		- retain the dataset
+			- DELETE	- delete the dataset
+
+	C. UNIT=device-name - UNIT parameter is coded to specify the name of the device on which the dataset will reside. This
+	   parameter must be coded only if DISP=(NEW,CATLG). For example, UNIT=SYSDA means you want the dataset to be created
+           on the hard disk. SYSDA term is the device name for hard disk.
+
+	D. SPACE=(space-unit,(primary-qty,secondary-qty)) - SPACE parameter is coded to specify space attributes. Space-unit can
+	   be TRK/CYL. SPACE parameter must be coded if DISP=(NEW,CATLG)
+
+	E. DCB=(DSORG=PS,LRECL=80,BLKSIZE=800,RECFM=FB)
+		- DCB is DD parameter and DSORG,LRECL,BLKSIZE,RECFM are sub-parameters of DCB parameter
+		- DCB - Data Control Blocks
+		- DSORG - Data Set Organization. PS - Physical Sequential / PO - Partitioned Organization
+		- LRECL - Logical Record Length
+		- BLKSIZE - Block Size. This must be a multiple of LRECL.
+		- RECFM - Record Format. It can be FB (Fixed Blocked) or VB (Variable Blocked)
+		- DCB parameter must be coded only if DISP=(NEW,CATLG) is coded.
+
+	  Conclusion :- UNIT, SPACE, DCB parameters must be coded only if DISP=(NEW,CATLG) is coded. 
+
+
+05.	Comment in JCL
+
+	Syntax :- //* comment.
+
+	- Comment must always be given on any line after JOB command. You cannot give a comment before JOB command.		
+		
+
+06.	How to run your JCL ?
+
+	- Follow the steps given below :-
+		1. Type SUB <enter> <enter> on command line to submit your job.
+		2. A notification message will be displayed on top of the screen. If MAXCC=0, it means your job has executed
+	 	   successfully. If MAXCC=non-zero-value, it means you job jas failed in execution. MAXCC=Maximum Completion Code
+		   MAXCC=0/4/8/12/16
+
+07.	JCL01 - Allocate a new dataset
+
+	Instructions :-
+	---------------
+	01. Type SUB on command line and press <enter>. Press <enter> again.
+	02. You will get a notification message with MAXCC=0.
+	03. Type SWAPBAR command on command line. Type START command to start a new screen.
+	04. Switch to Screen 2. Type =3.4 command and check using FIND command if EMP.PS has been allocated.
+
+	05. Switch to Screen 1. Change PS to PS1 in DSN parameter. Save the code. Submit.
+	06. You will get a notification message with MAXCC=0.
+	07. Switch to Screen 2. Type =3.4 command and check using FIND command if EMP.PS1 has been allocated.
+
+	08. Switch to Screen 1. Change PS1 to PS2 in DSN parameter. Save the code. Submit.
+	09. You will get a notification message with MAXCC=0.
+	10. Switch to Screen 2. Type =3.4 command and check using FIND command if EMP.PS2 has been allocated.
+
+	11. Switch to Screen 1. Submit. 
+	12. You will get JCL error in notification message.
+	13. Switch to Screen 2.
+	14. Type =9.S <enter>
+	15. Type ST OZA???J <enter> on the COMMAND INPUT line.
+	16. On the last line, type ? <enter> in Column 2,3 or 4.
+	17. On left of JESYSMSG, type S <enter> in Column 2,3 or 4. 
+	18. You will see some messages displayed. One of the message will say 'DUPLICATE NAME EXISTS IN CATALOG'.
+
+
+08. 	IEBGENER utility
+
+	- IEBGENER utility can be used to display dataset contents in spool or to copy data from one dataset to another dataset.
+
+	- IEBGENER utility DD names :-
+
+		a. //SYSPRINT	DD	SYSOUT=*
+			- SYSPRINT DD name is coded to specify the device on which messages generated by IEBGENER in the backend
+			  will be displayed. If SYSOUT=* is coded, it means messages will be displayed in spool. SYSOUT=* = spool.
+
+		b. //SYSUT1	DD	DSN=dataset-name
+			- SYSUT1 is coded to specify the name of the source dataset.
+
+		c. //SYSUT2	DD	DSN=dataset-name
+			- SYSUT2 is coded to specify the name of the target dataset. If dataset-name is coded as SYSOUT=*, then
+			  the contens of the source dataset (SYSUT1) will be displayed in spool.
+
+		d. //SYSIN	DD	DUMMY
+			- SYSIN is coded to specify the dataset which contains additional input to IEBGENER utility. If no
+			  additional input is to be given to IEBGENER utility, then code DUMMY as shown above.
+
+
+09.	JCL02 - display dataset contents in spool.
+
+	Instructions :-
+	----------------
+	01. Using R command, rename OZA???.EMP.PS dataset to OZA???.EMP.PS3.
+	02. Using E command, open EMP.PS1. Enter some data in the dataset. Save.
+	03. Using E command, open EMP.PS2. Enter some data in the dataset. Save.
+	04. Using E command, open EMP.PS3. Enter some data in the dataset. Save.
+	05. On left of JCL.PGMS, type E command and type (JCL02) after PGMS and press <enter>
+	06. On command line, type COPY 'OZAGS3.JCL.PGMS(JCL02)' <enter>. You will see the source code.
+	07. On command line, type CHANGE  ALL  OZAGS3  OZA??? <enter>. Check if all occurences of OZAGS3 have changed to OZA???.
+	08. Save. Submit.
+	09. Goto spool using =9.s and type S command on left of SYSUT2. Your dataset contents will be displayed.
+	10. Change the dataset name in SYSUT1 in source code. Save. Submit.
+	11. Go to spool and check if you are getting the correct data in spool.
+
+
+10.	JCL03 - delete a dataset
+
+	- IEFBR14 utility is used to allocate a dataset/ delete a dataset.
+
+	- Instructions :-
+	  ---------------
+	01. One left of JCL.PGMS, type E command and type (JCL03) after PGMS and press <enter>
+	02. On command line, type COPY 'OZAGS3.JCL.PGMS(JCL03)' and press <enter>
+	03. On command line, type CHANGE   ALL   OZAGS3   OZA??? <enter>. Check if all occurences of OZAGS3 have changed to OZA???.
+	03. Save. Submit. Switch to other screen. Using =3.4 check if EMP.PS1 has been deleted.
+	04. In source code, change PS1 to PS2. Save. Submit. Switch to other screen. Using =3.4 check if EMP.PS2 has been deleted.
+	05. In source code, change PS2 to PS3. Save. Submit. Switch to other screen. Using =3.4 check if EMP.PS3 has been deleted.
+	06. In source code, Submit again. You will get JCL error.
+	07. Go to spool -> (=9.s) -> ST OZA???J -> ? -> S on JESYSMSG -> Check the error message 'DATASET NOT FOUND'
+
+
+11.	JCL04 - Copy data from one dataset to another dataset.
+
+	Instructions :-
+	---------------
+	01. Open JCL01. Type DSN=OZA???.EMP.PS1 in DD statement. Save. Submit. Check if EMP.PS1 has been allocated.
+	02. Change PS1 to PS2. Save. Submit. Check if EMP.PS2 has been allocated.
+	
+	03. Using E command, open OZA???.EMP.PS1. Type 3 names of employees. Save.
+
+	04. Type E command on left of JCL.PGMS and type (JCL04) after PGMS and press <enter>
+	05. On command line, type COPY 'OZAGS3.JCL.PGMS(JCL04)' and press <enter>
+	06. On command line, type CHANGE   ALL   OZAGS3   OZA??? and press <enter>
+	07. Save. Submit. Open EMP.PS2 and check if 3 names have been copied.
+
+	08. Open EMP.PS1. Delete the 3 names and type 2 new names. Save.
+	09. Switch to your source code. Submit. Open EMP.PS2 and check if 3 names have been overwritten by 2 new names.
+
+	10. Open EMP.PS1. Delete the 2 names and type 4 new names. Save.
+	11. Switch to your source code.
+	12. In SYSUT2 DD statement, type DISP=MOD i.e. replace OLD by MOD. Save. Submit.
+	13. Open EMP.PS2. You will see 6 names -> 2 names from Point 09 above and 4 new names from Point 10 above.
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+

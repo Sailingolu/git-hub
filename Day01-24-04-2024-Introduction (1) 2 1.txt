@@ -1,0 +1,344 @@
+
+Ground Rules
+------------
+01. You need to be on the call from 9.00 to to 6.00 pm compulsory.
+02. Most of the training time will be utilized for hands on.
+03. Do daily revision of topics taught during the day.
+04. Ask questions in case of doubts. 
+05. Make the session interactive.
+-----------------------------------------------------------------------------------------------------------------------------
+
+01. 	What is a Mainframe ?
+    	- Mainframe is hardware.
+    	- Mainframe is used to process large sets of data (millions of records).
+	- Mainframe processes the data at a very high speed.
+	- Mainframe hardware cost is high.
+	- Mainframe occupies lot of floor space.
+	- Mainframe hardware requires dust-free environment
+	- Mainframe is a legacy system. Though it is a legacy system, it is used by most of the top clients today.
+	- Mainframe technology is stable. Code written 60 years back are still being used today.
+
+02.	Hardware ranges
+	- Microcomputers - occupies tablespace. Process thousands of records
+	- Minicomputers  - Process lakhs of records.
+	- Mainframes     - Process millions of records
+	- Supercomputers - Process records related to time-critical applications (space, traffic control, weather forcasting)
+
+03.	Mainframe modules
+	- TSO/ISPF - TSO - Time Sharing options. ISPF - Interactive System Productivity Facility.
+		   - TSO/ISPF contains a set of commands used to perform various tasks on Mainframes.
+		   - You can perform basic operations - create a file, enter data in file, copy file, rename file, delete file, etc.
+		   - TSO : You have to type the command along with options to perform the basic operation.
+		   - ISPF : is menu-driven. You need to select the option to perform the basic operation.
+
+	- JCL	   - JCL - Job Control Language
+		   - On Mainframes, we cannot compile, link, execute any program directly on mainframes. 
+		   - We need to have JCL code which will compile, link, execute programs.
+		   - Programs are compiled, linked, executed via JCL code.
+
+	- VSAM	   - VSAM - Virtual Storage Access Method
+		   - VSAM is all about file management.
+		   - We have 4 types of VSAM files using which we can write programs to write a record, read a record, 
+		     update a record, delete a record in/from VSAM files.
+
+	- COBOL	   - COBOL - COmmon Business Oriented Language
+		   - COBOL is a high level language used to develop commercial applications in Mainframes.
+		   - Commerical applications : banking, insurance, finance, retail, ecommerce
+
+	- DB2	   - DB2 - Data Base 2
+		   - DB2 is a Relational Data Base Management System. 
+		   - DB2 is a database. We can create tables, insert rows, update rows, delete rows, select rows, etc.
+
+	- CICS	   - CICS - Customer Information Control Systems
+		   - CICS is one of the front end software for Mainframes.
+
+		   
+04.	Operating Systems	
+	- Early 60's - OS - Operating System 
+	- Late  60's - OS/MFT and OS/MVT where MFT - Multiple Fixed Tasks and MVT - Multiple Variable Tasks
+	- Early 70's - MVS - Multiple Virtual Storage
+	- Mid 90     - OS/390
+	- 2000	     - z/OS
+
+05.	Features of Mainframe Operating System
+
+	1. Multiprogramming - is the ability of the OS to execute more than one programs at the same time.
+
+	2. Virtual Storage  - is the hard disk space in which programs are stored temporarily when they are not required in the
+   	   memory. If you have many programs loaded in memory and if you want to execute program-A. Now, space may not be there
+	   for program-A in memory. OS will then shift one of the idle programs (X) of memory to Virtual Storage and then load 
+	   program-A in memory. If the idle program (X) need to be executed, OS will first shift one of the idle programs (Y) of memory
+	   to virtual storage and then shift the idle program of virtual storage (X) from virtual storage back to memory and 
+	   execute it.
+
+		> idle program in memory -> OS will shift the program from memory to virtual storage
+		> idle program in virtual storage wanting to execute -> OS will shift the program from virtual storage to memory		
+	3. Spooling - is related to printing. Using spooling, OS will first copy the image of the data to be printed in a spool file
+           and then another OS program will print the data from the spool file to printer. Spooling reduces program execution time.
+	   Without spooling, a program will take more time to execute.
+
+	4. Batch processing - is implemented on huge sets of records. Batch processing programs are executed in a non-interactive 
+	   manner. They take lot of time to execute. Non-interactive programs do not require user intevention when they execute.
+	   Copying data, backup data, restore data, sort data, print data are some examples of non-interactive programs.
+
+	5. Time Sharing - is implemented for front end applications. We have more than one users using the application at the same
+   	   time. Using timsharing, OS will dedicate specific time to each user to process the request and keep on toggling between
+	   the other users once the time interval is completed. This entire process is so fast that each user gets a feel as if
+	   the server is interacting only with him/her.
+
+06.	Basic Terms 
+
+	1. Dataset - A dataset is a file. In Mainframe environment, a file is called as a dataset. It can contain records (data).
+
+	2. Partitioned Data Set (PDS) - A PDS can contain one or more members where each member can contains program source code
+	   or object code or executable code. One PDS can contain only one or more members, it cannot contain another PDS or a
+	   dataset in it.
+
+	3. Member - A member is always part of a PDS. It can contain program source code, object code, executable code.
+
+		Q. What is the difference between a dataset and a member ?
+		A. 1. A dataset is not associated with a PDS. A member is always assocaited with a PDS.
+		   2. A dataset contains records (data). A member contains program source code, object code, executable code.
+
+	4. VTOC - VTOC stands for Volume Table Of Contents. When you create a new file, OS will make entry of newly created file 
+	   in VTOC along with its attributes (file name, user, file size, location, creation date...). When you want to open the
+	   file at a later point in time, OS will first check the file and its location from VTOC and then open the file.
+
+	5. DASD - Direct Access Storage Device. DASD term is used to refer to hard disk.
+
+	6. Naming Conventions
+			  
+		a. Dataset 
+		    - A dataset name can have 1 to 5 qualifiers in the name where each qualifier can contain 1 to 8 characters.
+		    - Syntax : Q1.Q2.Q3.Q4.Q5	 
+		    - Examples :
+			- OZAGS3.WIPRO.DATA
+			- OZAGS3.EMPLOYEE.SAMPLE.DATA
+		    - A dataset name can contain maximum 44 characters
+		    - Each qualifier must begin with an alphabet or a national character (@ # $) and followed by an alphabets,
+		      national characters or a digits. Qualifier name must not begin with a digit.
+				- OZAGS3.STUDENT.$2024.RESULT
+				- OZAGS3.WIPRO.JCL@PGM
+
+		b. Partitioned Dataset (PDS)
+		    - A PDS name can have 1 to 4 qualifiers in the name where each qualifier can contain 1 to 8 characters.
+		    - Syntax : Q1.Q2.Q3.Q4	 
+		    - Examples :
+			- OZAGS3.WIPRO.DATA
+			- OZAGS3.EMPLOYEE.SAMPLE.DATA
+		    - A PDS name can contain maximum 35 characters
+		    - Each qualifier must begin with an alphabet or a national character (@ # $) and followed by an alphabets,
+		      national characters or a digits. Qualifier name must not begin with a digit.
+				- OZAGS3.STUDENT.$2024.RESULT
+				- OZAGS3.WIPRO.JCL@PGM
+
+		c. Member
+		    - A member name can have only 1 qualifier in the name where the qualifier can contain 1 to 8 characters.
+		    - Syntax : Q1	 
+		    - Examples :
+			- PGM01
+			- COBPGM
+		    - A member name can contain maximum 8 characters.
+		    - The qualifier must begin with an alphabet or a national character (@ # $) and followed by an alphabets,
+		      national characters or a digits. Qualifier name must not begin with a digit.
+				- $PGM01
+				- PGM#01
+
+	7. Dataset/PDS allocation
+		- Allocation means reserving disk space in advance for a dataset/PDS before it is created.
+
+		- At the time of allocation you need to give the following inputs to the OS :-
+
+			- name of dataset/PDS
+
+			- space unit (TRACK/CYLINDER/KB/MB/BYTES)
+
+			- primary extent - space will be immediately given at the time of allocation.
+
+			- secondary extent - space will be given on demand.
+
+			- record length - number of characters you want to type maximum on each line of the file.
+			  If record length = 80, it means each of my file can contain maximum 80 characters.
+
+			- record format - this can FB - Fixed Blocked or VB - Variable Blocked
+
+				FB - Fixed Length record
+				------------------------
+				101 ASHISH---- 45
+				102 TIM------- 28
+				103 RAHUL----- 31
+
+
+				VB - Variable Length record
+				---------------------------
+				101 ASHISH 45
+				102 TIM 28
+				103 RAHUL 31
+			
+				Fixed Length record - Each record of the file will begin and end in the same column.
+
+				Variable Length record - Each record of the file will begin in the same column but may end in 
+				different columns.
+
+			- Block size - this should be a mutiple of record length. If record length = 80, then block size can be
+			  640, 320, 800. Block size parameter is used while copying data from one dataset to another dataset or
+			  while performing block operations.
+
+			- Dataset name Type - If you are allocating a dataset, then do not type anything in Dataset Name Type.
+			  If you are allocating a PDS, then type Dataset Name Type = PDS.
+
+			- Directory blocks - If you are allocating a dataset, then Directory blocks = 0. If you are allocation
+			  a PDS, then directory blocks = n where n is a number.
+
+
+07.	Instructions :-
+	
+	Allocate a dataset by the name USER.PROGRAMS.PDS
+
+	01. Login to your id.
+	02. In ISPF Main Menu, Type Option 3 on command line and press Enter.
+	03. Type 2 on command line and press Enter.
+	04. Type A on command line and type USER.PROGRAMS.PDS in Name line. Also if you see some text in Project, Group, Type
+	    options, then you can delete that text.
+	05. Type the following values in the attributes :-
+		Space Unit : TRKS
+		Primary quantity : 10
+		Secondary quantity : 7
+		Directory Blocks : 0
+		Record Length : 80
+		Record Format : FB
+		Block size : 800
+		Dataset Name Type : leave it empty.
+
+		Press Enter. You will get a message 'Dataset allocated'
+
+	06. On command line, type =3.4 <enter>.
+	07. In DSName level, type your id and press <enter>
+	08. You will see a list of dataset names.
+	09. Type FIND ALL 'PROGRAMS' on command line and check if you are able to see your dataset name in the list.
+
+
+08.	ISPF commands
+	-------------
+	01. =3.2 - allocate a dataset
+	02. =3.4 - display dataset names
+
+
+	Commands
+	--------
+	01. E - Edit a dataset or Open a dataset for editing
+	02. R - rename a dataset
+	03. C - Copy a line. To copy 3rd,4th,5th,6th,7th lines, type CC on 3rd line, 7th line
+	04. A - Paste after current line
+	05. B - Paste before current line
+	06. M - Move a line. To move 3rd,4th,5th,6th,7th lines, type MM on 3rd line, 7th line
+
+	Editor commands
+	---------------
+	01. I - Insert a new line after the current line
+	02. D - Delete the current line. D3 will delete 3 lines from the current line.
+
+	Commands
+	--------
+	01. SAVE  - Save the dataset
+	02. UNNUM - Give line numbers as 1,2,3,4,5,.....
+
+	Instructions :-
+	---------------
+	01. Using =3.4 command, see your dataset name USER.PROGRAMS.PDS.
+	02. On left of USER.PROGRAMS.PDS, type R <enter> command to rename the dataset.
+	    Type new name as OZA***.USER.PROGRAMS.DATA and press <enter>
+	03. You can give =3.4 command and check if the dataset has been renamed.
+	04. On left of USER.PROGRAMS.DATA, type E command. One Edit Entry Panel dialog box will appear. Press <enter>
+	05. You will get a blank screen. Press <enter>. Type I on the first red asterisk line to insert a new line.
+	06. Type 10 names of employees. Save.
+	07. Delete the 3rd name. Save. Delete the last 3 names. Save.
+	08. Insert a new name after the 4th name.
+	09. Copy the 8th name after the 2nd name.
+	10. Move the last name after the first name. Save.
+	11. Insert a new line after the 2nd line and enter 5 names. Save.
+	12. Copy the first 3 names after the 7th name.
+	13. Move 7th, 8th, 9th names after the first name. Save.
+	14. Close the dataset by typing END command.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			
+
+
+
+
+
+
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

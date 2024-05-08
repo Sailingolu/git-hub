@@ -1,0 +1,308 @@
+
+Ground Rules
+------------
+01. You need to be on the call from 9.00 to to 6.00 pm compulsory.
+02. Most of the training time will be utilized for hands on.
+03. Do daily revision of topics taught during the day.
+04. Ask questions in case of doubts. 
+05. Make the session interactive.
+-----------------------------------------------------------------------------------------------------------------------------
+
+Error messages :-
+-----------------
+TSO/ISPF
+--------
+01. No members in data set : this means your PDS is empty. There are no members in the PDS.
+02. No space in directory  : you have exceeded the limit of Directory Blocks
+
+ABnormal ENDs
+-------------
+01. 0B37 - if you do not have space left in dataset to enter data.
+
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+01.	ISPF commands
+	-------------
+	01. =3.2 - allocate a dataset/ PDS
+	02. =3.4 - display dataset names
+
+	Line Commands
+	-------------
+	01. E - Edit a dataset or Open a dataset for editing
+
+	02. R - rename a dataset / PDS / member
+
+	03. / 17 - Copy a dataset. Do the following steps :-
+		> Type / <enter> on left of source file. Type option 17 <enter>.
+		> Enter target dataset name <enter>
+		> Enter 1 <enter>
+		> you will get a message 'dataset copied'.
+		> Refresh the screen using REFRESH command and then type FIND ALL commmand to get your target file.
+
+	04. D - delete a dataset / PDS / member
+
+	05. / 8 - Copy a member.
+		> Type / <enter> on left of member name. Type Option 8 <enter>
+		> Name - type pds name and in NEW member name type target member name <enter>
+
+	06. CREATE - Fully / Partially copy a member
+		> Open Source Member. Mark the block of text using CC ... CC commands.
+		> On the command line type pds-name(new-member-name) <enter>
+		> new-member-name will be created in pds-name and it will have the marked block of text.
+
+
+	Editor Line commands
+	--------------------
+	01. I - Insert a new line after the current line
+
+	02. D - Delete the current line. D3 will delete 3 lines from the current line.
+
+	03. LC - convert alphabets of current line to lower case. LCC ... LCC can be used to convert text to lowercase for > 1 lines.
+
+	04. UC - convert alphabets of current line to upper case. UCC ... UCC can be used to convert text to uppercase for > 1 lines.
+
+	05. )n - will shift text of current to the right by n columns. ((n ... ((n shifts a block of text to the right by n columns.
+
+	06. (n - will shift text of current to the left by n columns. ((n ... ((n shifts a block of text to the left by n columns.
+
+	07. TF - shift text of all the lines which are below the current line after the text on the current line.
+
+	08. TS - splits text of the current line. Type TS on line number. Place the cursor on the text at the place where you want
+	    the split to occur and press <enter>
+
+	09. TE - allows you to type paragraph text after the current line.
+
+	10. R - repeats text of the current on a new line after the current line. R<n> will repeat the text of current line n times.
+	    RR ... RR will repeat a block of text once. RR<n> ... RR<n> will repeat a block of text n times.
+
+	11. C - Copy a line. To copy 3rd,4th,5th,6th,7th lines, type CC on 3rd line, 7th line
+
+	12. A - Paste after current line
+
+	13. B - Paste before current line
+
+	14. M - Move a line. To move 3rd,4th,5th,6th,7th lines, type MM on 3rd line, 7th line
+
+
+	Editor Primary Commands
+	-----------------------
+	01. SAVE  - Save the dataset
+
+	02. UNNUM - Give line numbers as 1,2,3,4,5,.....
+
+	03. UNDO - used to undo recent changes made to text. For this, you must first give RECOVERY ON command before making
+	    and changes to the text. RECOVERY ON command will enable the facility of undo. To disable this facility, given RECOVERY
+            OFF command.
+
+	04. NUM ON/OFF - NUM ON will display line numbers as 100, 200, 300, ... NUM OFF will display line numbers as 1,2,3, ....
+	    NUM ON :- If you edit the text (insert/copy/move), you will see that your line number sequence in not proper. To
+	    get the proper sequence, you must give UNNUM command followed by NUM ON command.
+	    NUM OFF :- If you edit the text (insert/copy/move), your line numbers will be automatically be realigned. No need to
+	    give UNNUM command in this case.
+
+	05. CHANGE ALL 'string1' 'string2' - this will replace all occurences of string1 with string2. If ALL is not coded, then
+	    only the first occurence of string1 will be replaced.
+
+	06. RESET - If you have some text on the line number columns, then you can code RESET command to replace the text with
+	    the line numbers.
+
+	07. M<F7> / M<F8> : M<F7> will take you to the first line of the file. M<F8> will take you to the last line of the file.
+
+	08. CAPS ON/ OFF : 
+	    CAPS ON :- If you type text in Proper case/lower case/upper case, on pressing <enter> the text will get converted to
+            upper case
+	    CAPS OFF :- If you type text in Proper case/lower case/upper case, on pressing <enter> the text will remain in the
+	    same case as what you had typed.
+
+
+
+	Exercise
+	--------
+	01. Open USER.PROGRAMS.DATA. Enter 7 new names after the 3rd name.
+
+	02. Change the first occurence of any one name to SURENDRA.
+
+	03. Change the text of 7th line to lower case.
+
+	04. Shift the text of the 4th line to the right by 5 columns.
+
+	05. Type RECOVERY OFF command. Delete any 1 line. Type UNDO command. The undo operation will fail.
+
+	06. Type RECOVERY ON command. Delete 2nd line, 8th line, 9th line. Type UNDO command. Last delete operation will be undone.
+	    You can give UNDO command again to get the next most recent deletion back.
+
+	07. Convert the entire text of the file to lower case.
+
+	08. Shift the entire text to the right by 10 columns.
+
+	09. Type NUM OFF command. You will get line numbers as 1,2,3,4,....
+
+	10. Type NUM ON command. You will get line numbers as 100, 200, 300, ....
+
+	11. Copy 4th line after 7th line. Insert a new name after the 2nd name. You will see line numbers are not in proper sequence.
+
+	12. Type UNNUM command. Type NUM ON command. You will get proper sequence.
+
+	13. On 4th line number type C. On 7th line number type M. On 10th line number type A. Press <enter>. You will see C, M, A
+	    in RED color. Type RESET command on command line to replace the C, M, A with line numbers.
+
+	14. Copy USER.PROGRAMS.DATA to SCHOOL.ABC.DATA. Check if the dataset has been copied.
+
+	15. Delete SCHOOL.ABC.DATA. Check if the dataset has been deleted.
+
+
+02.	Allocating a PDS :-
+
+	Differences in allocating a dataset and allocating a PDS in =3.2 comand.
+	-------------------------------------------------------------------------
+	1. If you are allocating a dataset, then Directory Blocks = 0.
+	   If you are allocating a PDS, then Directory Blocks = n where n is a number > 0
+
+	2. If you are allocating a dataset, then Dataset Name Type = blank
+	   If you are allocating a PDS, then Dataset Name Type = PDS.
+
+	Question : How to differentiate between a dataset and a PDS in =3.4 command ?
+	Answer : Type S command on left of dataset/PDS name. Check Organization parameter. 
+	         If Organization is PS (Physical Sequential), it means it is a dataset.
+	         If Organization is PO (Partioned Organization), it means it is a PDS.
+	
+	Create a member in PDS
+	----------------------
+	01. Type E on left of PDS name and type (membername) after the pds name <enter>
+	02. You will be in editor. You can type the text. Save. End.
+	03. Type E on left of PDS name. You will see your member name. 
+	04. Type E on left of member name. You will see the contents of the member.
+
+	Directory Blocks
+	----------------
+	> Directory blocks for a PDS signifies the total number of members you would like to have in the PDS.
+
+	> The number specified in Directory blocks is derived as follows :-
+
+			Directory Blocks	Total members in PDS
+			----------------	--------------------
+				1			05
+				2			11
+				3			17
+				4			23
+				5			29
+				6			35
+
+	  If Directory Blocks limit is exceeded, then you will get an error 'No space in directory' on top right corner of screen.
+
+03. 	Working with multiple screens
+	-----------------------------
+	1. SWAPBAR - this command will display/hide the screen name on the last line of the screen.
+
+	2. START   - this will start a new screen. If multiple screens are open, then * will be displayed on the current screen name.
+
+	3. SWAP n  - this will switch to screen n. Alternatively, you can use mouse, click on the screen name to activate the screen.
+
+	4. SWAP LIST - this will display a list of all the screens. If you type S on left of a screen name, then that screen will
+	   be activated.
+
+
+04.	Exercise
+
+	01. Using =3.2 command, Allocate a PDS by the name COURSE.PGMS. Directory blocks = 1. Dataset Name type = PDS. 
+            Rest of the attributes same as that given for dataset.
+
+	02. Using =3.4, check if the PDS has been allocated. Using S command, check organization if it is PO.
+
+	03. Create a member BE$CS. Enter name of 3 modules of the course.
+	04. Create a member BE$EL. Enter name of 3 modules of the course.
+	05. Create a member BCA. Enter name of 3 modules of the course.
+	06. Create a member BCS. Enter name of 3 modules of the course.
+	07. Create a member COLLEGE. Enter name of 4 colleges.
+
+	08. Using =3.4, check if pds is having 5 members.
+
+	09. On command line, type SWAPBAR command. One name will appear on the last line.
+	10. Create a new screen by typing START command. You will see two names on the last line.
+	11. Using mouse you can toggle between the screens. Also, using SWAP 1/ SWAP 2 commands, you can toggle between the screens.
+	12. Create a 3 more new screens using START command.
+	13. Open BE$CS member in Screen 1.
+	14. Open BE$EL member in Screen 2.
+	15. Open BCA member in Screen 3.
+	16. Open BCS member in Screen 4.
+	17. Open College member in Screen 5.
+	18. Toggle between the screens using mouse or SWAP commands and check if you are able to view the contents.
+
+	19. If you want to close any screen, then type =X on the command line of the screen.
+
+
+05.	Space Unit, Primary Quantity, Secondary Quantity
+	------------------------------------------------
+	> Scenario : Dataset name : A1.B1, Space Unit = TRKS, Primary Qty : 12, Secondary Qty : 5
+
+		> Each dataset will have 16 extents allocated to it out of which 1 primary extent and 15 secondary extents
+
+		> The number specified in Primary Qty (12), will be assigned to 1 primary extent 
+		  Meaning : 1 primary extent = 12 tracks
+
+		> The number specified in Secondary Qty will be assigned to each of the secondary extents (15 times)
+		  Meaning : 1 secondary = 5 tracks, 2 secondary extent = 5 tracks, ........ 15 secondary extent = 5 tracks
+
+		> The total space allocated to the dataset will be 12 + (5 x 15) = 87 tracks.
+
+	> When A1.B1 is allocated, 12 tracks (1 extent) will be allocated. As you enter the data, each of 12 tracks will get
+	  utilized with the data.
+
+	> Once all 12 tracks are fully utilized, OS will allocate 1st secondary extent of 5 tracks to A1.B1. You can now add more
+	  data to the dataset.
+
+	> Once 5 tracks of 1st secondary extent is fully utilized, OS will allocate 2nd secondary extent of 5 tracks to A1.B1.
+	  You can now add more data to the dataset.
+
+	> The above process will be repeated by the OS till all 15 secondary extents have been utilized. Once all 15 secondary
+	  extents are utilized, and if you enter more data and save the file, you will get an abend 0B37.
+	  ABEND means ABnormal END.
+
+
+06.	Exercise
+
+	01. Delete any 2 members of COURSE.PGMS PDS. Check if the members have been deleted.
+
+	02. Rename any one member to a new member. Check if the member has been renamed.
+
+	03. Copy all the contents of any 1 member to a new member BACKUP. Check if BACKUP is created and also check the contents.
+
+	04. Copy specific lines of any 1 member to a new member BKUP. Check if BKUP is created and also check the contents.
+
+
+
+
+
+
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

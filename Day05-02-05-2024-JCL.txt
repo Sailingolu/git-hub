@@ -1,0 +1,361 @@
+
+Ground Rules
+------------
+01. You need to be on the call from 9.00 to to 6.00 pm compulsory.
+02. Most of the training time will be utilized for hands on.
+03. Do daily revision of topics taught during the day.
+04. Ask questions in case of doubts. 
+05. Make the session interactive.
+-----------------------------------------------------------------------------------------------------------------------------
+
+Error messages :-
+-----------------
+TSO/ISPF
+--------
+01. No members in data set : this means your PDS is empty. There are no members in the PDS.
+02. No space in directory  : you have exceeded the limit of Directory Blocks
+
+ABnormal ENDs (ABEND CODES)
+---------------------------
+01. 0B37 - if you do not have space left in dataset to enter data.
+02. S322 - you get this abend when your job has executed beyond the time limit specified in TIME parameter.
+03. S806 - invalid program name specified in PGM parameter of EXEC statement
+04. S804 - space limit exceeded in REGION parameter of JOB command.
+05. S80A - space limit exceeded in REGION parameter of JOB command.
+
+
+JCL programs
+------------
+01. JCL01 - IEFBR14 - allocate a dataset.
+02. JCL02 - IEBGENER - display dataset contents in spool.
+03. JCL03 - IEFBR14 - delete a dataset
+04. JCL04 - IEBGENER - copy dataset
+05. JCL05 - SORT - Sort on one/two field/s
+06. JCL06 - SORT - INCLUDE/OMIT command to sort specific records.
+07. JCL07 - SORT - OUTREC to reformat fields in output file
+08. JCL08 - SORT - Copy all/specific records
+09. JCL09 - SORT - Copy records (split a file into two or more files)
+10. JCL10 - SORT - Eliminate duplicates
+11. JCL11 - Instream procedure 
+12. JCL12 - Instream procedure + symbolic parameter + default value
+13. JCL13 - Catalogued Procedure
+-----------------------------------------------------------------------------------------------------------------------------
+
+Knowledge Checks
+----------------
+01. Why do we use INCLUDE command in SORT ?
+02. When do we code SUM FIELDS=NONE in SORT ?
+03. Apart for sorting, for what other purpose can we use SORT command ?
+04. In which file sorting process will be carried out ?
+05. Sort card is related to which DD name of SORT command ?
+06. In want to realign the fields in output file. Which SORT command can I use for this ?
+07. What is the impact of using STOPAFT option in SORT command in sort card ?
+08. Which option will you use to copy last 3 records of file using SORT command ?
+09. SORT FIELDS=_________ will allow you to copy records from one file to another file.
+10. Can we split one file into two or more files using SORT command ?
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+01.	Procedures
+
+	- A procedure is defined as a group of JCL statements to perform a specific task.
+	- Advantages of using a procedure :- 
+		1. Reusable - you can call one procedure multiple times. Recurring tasks can be implemented more than once.
+		2. Modular - You can break one large source code into smaller components (procedures).
+
+	- Types of Procedures :-
+		1. Instream Procedure
+			- The procedure code and the main code to call the procedure are coded in the same member.
+			- Instream procedure can be called only from the JCL in which it has been coded.
+			- PEND must be coded at the end of the procedure code.
+			- Name coded on left of PROC is the instream procedure name.
+			- JCLLIB operator is not coded.
+
+		2. Catalogued Procedure
+			- Procedure code and the main code to call the procedure are coded in separate members.
+			- A catalogued procedure can be invoked from any JCL.
+			- PEND must not be coded at the end of the procedure code.
+			- The member name in which you code the catalogued procedure is the catalogued procedure name.
+			- JCLLIB must be coded in Main Code to specify the PDS in which catalogued procedure is present.
+
+
+	- How to call a procedure ?
+
+		Syntax 01 :-		//step-name	EXEC	PROC=procedure-name
+	
+		Syntax 02 :-		//step-name	EXEC 	procedure-name
+
+
+02. 	JCL11 - instream procedure
+
+	Instructions
+	------------
+	01. Type E on left of OZA???.JCL.PGMS and (JCL11) on right of PGMS.
+	02. COPY 'OZAGS3.JCL.PGMS(JCL11)' 
+	03. CHANGE ALL OZAGS3 OZA???
+	04. Save. Submit.
+	05. Goto spool and check the outputs in SYSUT2. You will see 3 SYSUT2 lines since we are calling the procedure 3 times.
+
+
+03.	Symbolic Parameter
+
+	- Symbolic Parameter is a concept using which you can pass one or more parameters to a procedure.
+
+	- Syntax :-
+
+		//step-name 	EXEC	procedure-name,parameter1='value1,parameter2='value2',....
+
+	- In the procedure, you must type &parameter-name at the place where you want the parameter value to occur.
+
+04.	Default value parameter
+
+	- If your procedure is using symbolic parameter and if you forget to pass symbolic parameter to the procedure
+	  at the time of calling the procedure, then you will get JCL ERROR when you submit your job.
+	
+	  To avoid this, we define a default value to the symbolic parameter. If you forget to pass parameter to the
+	  procedure, then the procedure will assign the default value to the symbolic parameter and process your request.
+	  This way, even if you call a procedure without passing symbolic parameter, your request will get processed
+	  without any error.
+
+05. 	JCL12 - instream procedure + symbolic parameter + default value
+
+	Instructions
+	------------
+	01. Type E on left of OZA???.JCL.PGMS and (JCL12) on right of PGMS.
+	02. COPY 'OZAGS3.JCL.PGMS(JCL12)' 
+	03. CHANGE ALL OZAGS3 OZA???
+	04. Save. Submit.
+	05. Goto spool and check the outputs in SYSUT2. You will see 5 SYSUT2 lines since we are calling the procedure 5 times.
+
+
+06.	Q : Can we code more than 1 instream procedures in one member ?
+	A : Yes, we can code maximum 15 instream procedures in one member.
+	
+	Template
+	--------
+
+		//OZAGS3J	JOB	........
+		//*----------------------------------------------------------------------------
+		//PROC1		PROC
+		....
+		....
+		....
+		//		PEND
+		//*----------------------------------------------------------------------------
+		//PROC2		PROC
+		....
+		....
+		....
+		//		PEND
+		//*----------------------------------------------------------------------------
+		//PROC3		PROC
+		....
+		....
+		....
+		//		PEND
+		//*----------------------------------------------------------------------------
+		//STEPA		EXEC	PROC1
+		//STEPB		EXEC	PROC2
+		//STEPC		EXEC 	PROC3
+		//*----------------------------------------------------------------------------
+			
+
+07.	Catalogued Procedure
+
+	-	Template for instream procedure
+
+			Member
+			------
+			instream procedure code
+			main code
+	
+	- 	Template for catalogued procedure
+
+			Member01			Member02
+			--------			--------
+			main code			catalogued procedure code
+
+
+
+	- 	JCLLIB operator
+
+		- JCLLIB is an operator. It is coded in Main Code to specify the PDS in which catalogued procedure is located.
+
+		- Syntax :-
+			//	JCLLIB	ORDER=(pds-name)
+
+
+08.	JCL13 - Catalogued procedure.
+
+	Instructions
+	------------
+	01.	Using =3.2, allocate a new PDS JCL.CATPROC. Give the following attributes :-
+			SPACE UNITS = TRACKS,	PRIMARY QUANTITY = 10,   SECONDARY QUANTITY = 7,   DIRECTORY BLOCKS = 1,
+			RECORD FORMAT = FB,     RECORD LENGTH = 80,      RECORD FORMAT = FB,       DATASET NAME TYPE = PDS.
+
+	02. 	Type E on left of JCL.CATPROC and (DISPPROC) on right of CATPROC.
+	03.	COPY 'OZAGS3.JCL.CATPROC(DISPPROC)'
+	04.	CHANGE ALL OZAGS3 OZA???
+	05.	Save.
+
+	06. 	Type E on left of JCL.PGMS and (JCL13) on right of PGMS.
+	07.	COPY 'OZAGS3.JCL.PGMS(JCL13)'
+	08.	CHANGE ALL OZAGS3 OZA???
+	09.	Save.
+
+	10.	Submit.
+	11.	Goto spool and check output in SYSUT2. You will see 2 SYSUT2 since we have called the procedure 2 times.
+
+
+09.	What is a job step ?
+
+	- A job step is equivalent to the number of EXEC commands in your JCL.
+	- If your JCL has one EXEC command, it means your JCL is having 1 job step.
+	- If your JCL has two EXEC commands, it means your JCL is having 2 job steps.
+	- If your JCL has three EXEC commands, it means your JCL is having 3 job steps.
+
+10.	JCL14 - Multiple job steps
+
+	Instructions
+	------------
+	01. Type E on left of JCL.PGMS and (JCL14) on right of PGMS.
+	02. COPY 'OZAGS3.JCL.PGMS(JCL14)'
+	03. CHANGE ALL OZAGS3 OZA???
+	04. Save. Submit.
+	05. Goto spool. You will see SYSUT2 of STEP03 and STEP04 since RESTART=STEP03 is coded in JOB statement.
+	06. Type S on JESYSMSG and check if STEP03 and STEP04 are the only steps which have been executed.
+	07. In source code, type RESTART=STEP02. Save. Submit.
+	08. Goto spool. You will see SYSUT2 of STEP02, STEP03 and STEP04 since RESTART=STEP02 is coded in JOB statement.
+	09. Type S on JESYSMSG and check if STEP02, STEP03 and STEP04 are the only steps which have been executed.
+
+	10. In source code, type RESTART=STEP01.
+	11. In STEP03, type SYSUT3 instead of SYSUT2. 
+	12. Save. Submit. You will get MAXCC=12. Goto spool. In JESYSMSG, check if you are able to identify the step in
+	    which the error has been done. You should see COND CODE = 0000 for STEP01, STEP02, STEP04 and COND CODE = 0012
+	    for STEP03.
+
+	13. Rectify your mistake in source code i.e. in STEP03, change SYSUT3 to SYSUT2. Save. Submit. You will get MAXCC=0000.
+	14. Goto spool and check if you are able to see the output of all 4 datasets.
+
+11.	*** Important Points ***
+	- If you get MAXCC = 4/8/12/16, you should always goto spool, type S on JESYSMSG and check COND CODE of each job step.
+	  If a job step has executed successfully, you will see COND CODE = 0000. 
+	  If a job step has failed, you will see COND CODE = 0004/0008/00012/00016.
+
+	  If you have a 4 step JCL and if STEP02 has failed in execution, it will still go ahead and execute STEP03 & STEP04.		
+
+12.	JOB parameters
+
+	a. RESTART=step-name - this parameter can be coded to start execution of a job beginning from the step-name specified
+ 	   with RESTART parameter.
+
+	b. REGION=nM | nK - this parameter can be coded to specify the amount of space required by the job for execution.
+	   Example : REGION=4K means your job will require 4Kilobytes of space for execution.
+		     REGION=8M means your job will require 8Megabytes of space for execution.
+
+	   If you say REGION=6K and if your job requires more than 6K for execution, then your job will abend with S804 or
+	   S80A abend code.
+
+	   If REGION parameter is not coded, then OS will allocate the optimum space required by your job.
+
+	c. PRTY=n where n = 1 to 15 - this parameter is coded to specify the priority level for a job which can be a number
+	   from 1 to 15. Higher the priority level, more the attention given to your job by the OS. 
+
+	   If PRTY parameter is not coded, then the OS will assign a default priority level to your job.
+
+	d. MSGCLASS=device-name where device-name can be a single alphabet or a digit. Example : MSGCLASS=A  or MSGCLASS=2
+
+			Message Class		Device
+			-------------		------
+			      A			Printer
+			      B	(default)	Spool
+			      C			Terminal
+			      D			Disk
+
+	   MSGCLASS parameter is coded to specify the device on which the output of the job is to be displayed.
+	   If MSGCLASS=A has been coded in a job, then the output of the job will be printed on the printer.
+		
+	   If MSGCLASS parameter is not coded, then a default message class will be assigned to the job.
+
+	e. MSGLEVEL=(statement,messages) - is used to control the statements in JESJCL & messages in JESYSMSG displayed in spool.
+
+		statement
+		---------
+		0 - display only JOB statement in JESJCL
+
+		1 - display all statements including procedure statements in JESJCL. 
+		    instream procedure code lines will be preceded by ++ and catalogued procedure code lines will be preceded by XX.
+
+		2 - display all statements excluding procedure statements in JESJCL
+
+		messages
+		--------
+		0 - display all messages excluding allocation messages in JESYSMSG
+
+		1 - display all messages including allocation messages in JESYSMSG
+
+		*** Important *** If MSGLEVEL is not coded in JCL, then the default values for MSGLEVEL=(1,1)
+
+
+13.	Type of parameters in JCL
+
+	a. Keyword Parameter
+		- Keyword parameter is coded using the syntax 	->	parameter=
+
+		- If you need to code more than one keyword parameter for a command, then they can be coded in any sequence.
+
+			//OZAGS3J	'FINANCE-123','MADHAV',NOTIFY=OZAGS3,TIME=(2,30),MSGLEVEL=(1,0)  -> VALID
+			//OZAGS3J	'FINANCE-123','MADHAV',MSGLEVEL=(1,0),NOTIFY=OZAGS3,TIME=(2,30)  -> VALID
+			//OZAGS3J	'FINANCE-123','MADHAV',NOTIFY=OZAGS3,MSGLEVEL=(1,0),TIME=(2,30)  -> VALID
+
+
+		- Examples :- NOTIFY, TIME, MSGCLASS, MSGLEVEL, PGM, UNIT, SPACE are examples of keyword parameters
+
+	b. Positional Parameter
+		- Positional parameter is usually coded inside ( ) of a parameter.
+
+		- The position of a parameter is important. If the parameter is not coded in the defined position, then its absence
+		  is indicated by a ,
+
+			a. TIME=(0,30)	or    TIME=( ,30)
+
+			b. DISP=(NEW,CATLG) -> I do not want to code NEW -> DISP=(,CATLG)
+
+			c. DISP=(OLD,KEEP,DELETE) -> I do not want to code KEEP -> DISP=(OLD,,DELETE)
+
+		- Examples :-
+			01.  DISP=(NEW,CATLG)	-> NEW and CATLG are positional parameters	
+			02.  TIME=(2,30) 	-> 2 and 30 are positional parameters
+			03.  SPACE=(TRK,(10,7)) -> TRK, 10 and 7 are positional parameters
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

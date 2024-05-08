@@ -1,0 +1,557 @@
+
+Ground Rules
+------------
+01. You need to be on the call from 9.00 to to 6.00 pm compulsory.
+02. Most of the training time will be utilized for hands on.
+03. Do daily revision of topics taught during the day.
+04. Ask questions in case of doubts. 
+05. Make the session interactive.
+-----------------------------------------------------------------------------------------------------------------------------
+
+Error messages :-
+-----------------
+TSO/ISPF
+--------
+01. No members in data set : this means your PDS is empty. There are no members in the PDS.
+02. No space in directory  : you have exceeded the limit of Directory Blocks
+
+ABnormal ENDs (ABEND CODES)
+---------------------------
+01. 0B37 - if you do not have space left in dataset to enter data.
+02. S322 - you get this abend when your job has executed beyond the time limit specified in TIME parameter.
+03. S806 - invalid program name specified in PGM parameter of EXEC statement
+04. S804 - space limit exceeded in REGION parameter of JOB command.
+05. S80A - space limit exceeded in REGION parameter of JOB command.
+06. S0C7 - you have typed a special character in a numeric field data.
+
+JCL programs
+------------
+01. JCL01 - IEFBR14 - allocate a dataset.
+02. JCL02 - IEBGENER - display dataset contents in spool.
+03. JCL03 - IEFBR14 - delete a dataset
+04. JCL04 - IEBGENER - copy dataset
+05. JCL05 - SORT - Sort on one/two field/s
+06. JCL06 - SORT - INCLUDE/OMIT command to sort specific records.
+07. JCL07 - SORT - OUTREC to reformat fields in output file
+08. JCL08 - SORT - Copy all/specific records
+09. JCL09 - SORT - Copy records (split a file into two or more files)
+10. JCL10 - SORT - Eliminate duplicates
+11. JCL11 - Instream procedure 
+12. JCL12 - Instream procedure + symbolic parameter + default value
+13. JCL13 - Catalogued Procedure
+14. JCL14 - JCL using Multiple Job Steps
+15. JCL15 - Define a GDG
+16. JCL16 - Define a Model for the GDG
+17. JCL17 - Define a GDS
+18. JCL18 - Populate data in a GDS
+19. JCL19 - Using GDS in two job steps
+20. JCL20 - COND parameter in JOB statement
+21. JCL21 - COND parameter in EXEC statement
+
+COBOL programs
+--------------
+01. COBOL01 - Basic program - DISPLAY, ACCEPT, COMPUTE
+02. COBOL02 - IF - ELSE - END-IF
+03. COBOL03 - PERFORM
+04. COBOL04 - Validate the input, Nested IF ELSE END-IF, IS NOT NUMERIC
+-----------------------------------------------------------------------------------------------------------------------------
+
+Knowledge Checks
+----------------
+01. What are the different level numbers for variables ?
+02. When do we get S0C7 abend ?
+03. By what name is S0C7 abend also known as ? 
+04. Which are the 4 divisions in COBOL ? 
+05. In which division do we declare variables ?
+06. What are the different data types in COBOL ?
+07. How will you code a condition in IF statement to check if a numeric variable contains special characters ?
+08. If I want to assign a value to a variable, then which command should I use ?
+09. What is the difference between STOP RUN and EXIT statements ?
+10. Which command will you use in the program to make your program logic modular ?
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+01. 	COBOL04 logic revised
+	---------------------
+
+       *----------------------------------------------------------------------------------------- 
+	0000-MAIN-PARA.
+		.......
+		PERFORM 1000-PROCESS-PARA.
+		.......
+		STOP RUN.
+       *----------------------------------------------------------------------------------------- 
+	1000-PROCESS-PARA.
+		PERFORM 1100-INPUT-PARA.
+		PERFORM 1200-VALIDATION-PARA.
+		PERFORM 1300-CALCULATION-PARA.
+		PERFORM 1400-OUTPUT-PARA.
+		EXIT.
+       *----------------------------------------------------------------------------------------- 
+	1100-INPUT-PARA.
+		<< ACCEPT THE INPUT >>
+		EXIT.
+       *----------------------------------------------------------------------------------------- 
+	1200-VALIDATION-PARA.
+		<< VALIDATE THE INPUT >>
+		EXIT.
+       *----------------------------------------------------------------------------------------- 
+	1300-CALCULATION PARA.
+		<< PERFORM CALCULATIONS >>
+		EXIT.
+       *----------------------------------------------------------------------------------------- 
+	1400-OUTPUT-PARA.
+		<< DISPLAY THE OUTPUT >>
+		EXIT.
+       *----------------------------------------------------------------------------------------- 
+
+
+02.	EVALUATE statement
+	------------------
+
+	- EVALUATE statement is used as an alternative to nested IF ELSE END-IF statement.
+	- By using EVALUATE, you make your program more readable and easy to maintain.
+
+	- Syntax :-
+
+		EVALUATE TRUE
+			WHEN condition-1
+				stmt-1
+				stmt-2
+			WHEN condition-2
+				stmt-3
+				stmt-4
+			WHEN condition-3
+				stmt-5
+				stmt-6
+			WHEN OTHER
+				stmt-7
+				stmt-8
+		END-EVALUATE.
+		stmt-9.
+
+		If condition-1 satisfies, then stmt-1 and stmt-2 will be executed and control will pass to stmt-9.
+		If condition-2 satisfies, then stmt-3 and stmt-4 will be executed and control will pass to stmt-9.
+		If condition-3 satisfies, then stmt-5 and stmt-6 will be executed and control will pass to stmt-9.
+		If no condition satisifies, then stmt-7 and stmt-8 will be executed and control will pass to stmt-9.
+
+03.	Edit characters
+	---------------
+	- Edit characters are used to format your data in the output.
+	- Edit characters are defined in a variable declaration. Such a variable is called as an Edit Variable.
+	- Z * , . / B + - are examples of some of the edit characters in COBOL.
+
+	- Z edit character is used to replace a leading 0 by a space.
+	- * edit character is used to replace a leading 0 by a *.
+
+	- If you want to display the formatted value in the output :-
+		1. move the value from non-edit variable to edit-variable.
+		2. display value from edit-variable.
+
+
+	- Example to demonstrate the use of edit character.
+
+		MKS-1		-> 	PIC 9(03)	-> PIC 999.
+		MKS-2		->	PIC 9(03)	-> PIC 999.
+		MKS-3		->	PIC 9(03)	-> PIC 999.
+
+		EDIT-MKS-1	->	PIC ZZ9.
+		EDIT-MKS-2	-> 	PIC ZZ9.
+		EDIT-MKS-3	-> 	PIC ZZ9.
+	
+		......
+
+		MOVE 48  TO MKS-1.
+		MOVE 6   TO MKS-2.
+		MOVE 123 TO MKS-3.
+		DISPLAY MKS-1.			-> 048
+		DISPLAY MKS-2.			-> 006
+		DISPLAY MKS-3.			-> 123
+
+		MOVE MKS-1 TO EDIT-MKS-1.	 
+		MOVE MKS-2 TO EDIT-MKS-2.
+		MOVE MKS-3 TO EDIT-MKS-3.
+		DISPLAY EDIT-MKS-1.		->  48
+		DISPLAY EDIT-MKS-2.		->   6
+		DISPLAY EDIT-MKS-3.		-> 123
+		
+		-----------------------------------------------------------------------------------
+		MKS-1		-> 	PIC 9(03)	-> PIC 999.
+		MKS-2		->	PIC 9(03)	-> PIC 999.
+		MKS-3		->	PIC 9(03)	-> PIC 999.
+
+		EDIT-MKS-1	->	PIC **9.
+		EDIT-MKS-2	-> 	PIC **9.
+		EDIT-MKS-3	-> 	PIC **9.
+	
+		......
+
+		MOVE 48  TO MKS-1.
+		MOVE 6   TO MKS-2.
+		MOVE 123 TO MKS-3.
+		DISPLAY MKS-1.			-> 048
+		DISPLAY MKS-2.			-> 006
+		DISPLAY MKS-3.			-> 123
+
+		MOVE MKS-1 TO EDIT-MKS-1.	 
+		MOVE MKS-2 TO EDIT-MKS-2.
+		MOVE MKS-3 TO EDIT-MKS-3.
+		DISPLAY EDIT-MKS-1.		-> *48
+		DISPLAY EDIT-MKS-2.		-> **6
+		DISPLAY EDIT-MKS-3.		-> 123
+
+	- **** IMPORTANT POINTS *****
+
+		1. Edit variables cannot be part of an arithmetical expression.
+
+			COMPUTE R = EDIT-MKS-1 + 4.			-> NOT ALLOWED
+			COMPUTE R = MKS-1 + 4.				-> ALLOWED
+
+			COMPUTE T = EDIT-MKS-1 + EDIT-MKS2 + EDIT-MKS3.	-> NOT ALLOWED
+			COMPUTE T = MKS-1 + MKS2 + MKS3.		-> ALLOWED
+
+			COMPUTE T = MKS-1 + EDIT-MKS2 + MKS3.		-> NOT ALLOWED
+
+		2. Result of an arithmetical expression can be assigned to an edit variable.
+			COMPUTE EDIT-TOTAL = MKS-1 + MKS2 + MKS3.	-> ALLOWED
+
+		In short, you can code edit variable on left of = in COMPUTE statement but you cannot code edit variable
+	   	on right of = in COMPUTE statement.
+
+		3. VALUE clause MUST NOT BE CODED while declaring an edit variable.
+
+			77	EDIT-MKS1	PIC ZZ9.			-> VALID
+			77	EDIT-MKS1	PIC ZZ9		VALUE 0		-> INVALID
+
+		-----------------------------------------------------------------------------------
+
+		DATE-1		-> PIC 9(08).
+		EDIT-DATE-1	-> PIC 99/99/9999.
+
+		MOVE 07052024 TO DATE-1.
+		DISPLAY DATE-1.			-> 07052024
+			
+		MOVE DATE-1 TO EDIT-DATE-1.
+		DISPLAY EDIT-DATE-1.		-> 07/05/2024 
+
+		-----------------------------------------------------------------------------------
+
+		AMOUNT		-> PIC 9(08)
+		EDIT-AMOUNT	-> PIC Z,ZZ,ZZ,ZZ9.99 
+		
+
+		MOVE 12500 TO AMOUNT.
+		DISPLAY AMOUNT.			-> 00012500
+
+		MOVE AMOUNT TO EDIT-AMOUNT.
+		DISPLAY EDIT-AMOUNT.		->      12,500.00 
+
+		-----------------------------------------------------------------------------------
+		
+
+04.	COBOL05
+	-------
+
+	Problem Definition
+	------------------
+	Input student name, marks in 3 tests. Calculate total, percentage and class. 
+	If a student has secured < 35 in any one of the tests, then CLASS is FAIL else CLASS is PASS.
+	The program should display all the details of the student.
+
+	Make your logic modular by using PERFORM statement.	
+	
+	The program should perform the following validation checks on the input data :-
+		a. student name should not be empty.
+		b. the 3 test scores should be in the range of 1 to 100
+		c. the 3 test scores should not have a special character in the data.
+
+	If the above validation checks pass successfully, the program should then calculate total, percentage, class.
+	If any of the above validation checks fail, the program should display a suitable error message.
+
+	Additions
+	---------
+	1. Make the program more module using PERFORM statement.
+	2. Use EVALUATE statement instead of nested IF ELSE END-IF.
+	3. Use edit characters to format your output.
+
+	Instructions
+	------------
+	01. Type E on left of COBOL.PGMS.BASIC and (COBOL05) on right of BASIC.
+	02. COPY 'OZAGS3.COBOL.PGMS.BASIC(COBOL05). Save.
+	03. In compiler JCL, on line 12 & 14, type COBOL05 instead of COBOL04. Save. Submit.
+	04. In run JCL, on line 9, type COBOL05 instead of COBOL04. Save. Submit.
+	05. Goto spool. ST OZA???R. Check output in SYSOUT.
+	
+	06. Replace * with Z edit character in the program.
+	07. Compile the program -> Run program
+	08. Goto spool. ST OZA???R. Check output in SYSOUT.
+
+	09. Check if your program is working for valid as well as invalid records. Also you can input any of the test
+	    marks in either single digit (007) or double digit (045) or triple digit (100) and check if you are 
+	    getting formatted output.
+
+
+05.	VALUE clause
+
+	- VALUE clause is used in a variable declaration to assign an initial value to a variable.
+	- VALUE clause is optional in variable declaration.
+
+
+		C example
+		---------
+		int x;		-> we are only declaring the variable. x will contain junk value.
+		int y=10;	-> we are declaring the variable as well as assigning a value to the variable.
+
+	- VALUE clause syntax :-
+
+		77	variable-name	PIC  data-type(width)	VALUE initial-value.
+
+	- Examples 
+
+		77	NUM-1	PIC 9(03)	VALUE 0.			-> NUM-1 = 000
+		77	NUM-2 	PIC 9(05)	VALUE 123.			-> NUM-2 = 00123
+		77	NUM-3	PIC 9(01)	VALUE 1.			-> NUM-3 = 1
+
+		77	STR-1	PIC X(05)	VALUE SPACES.			-> STR-1 = <5 SPACES>      
+		77	STR-2	PIC X(10)	VALUE "RAJESH".			-> STR-2 = RAJESH<4 SPACES>
+		77	STR-3	PIC X(05)	VALUE SPACE.			-> STR-3 = <5 SPACES>
+		77	STR-4	PIC X(01)	VALUE SPACES.			-> STR-4 = <1 SPACE>
+		77	STR-5	PIC X(01)	VALUE SPACE.			-> STR-5 = <1 SPACE>
+
+		77	NUM-4	PIC 9(04).					-> NUM-4 = <JUNK VALUE>. 
+		77	STR-6 	PIC X(10).					-> STR-6 = <JUNK VALUE>
+
+
+06.	FIGURATIVE CONSTANT
+	-------------------
+	- A Figurative Constant is a pre-defined value/term in COBOL.
+	- ZERO, ZEROS, SPACE, SPACES, ALL, FILLER, LOW-VALUE, LOW-VALUES, HIGH-VALUE, HIGH-VALUES are examples of 
+	  Figurative Constants.
+	- ZERO, ZEROS, SPACE, SPACES, LOW-VALUE, LOW-VALUES, HIGH-VALUE, HIGH-VALUES can be coded in DATA DIVISION as 
+	  well as PROCEDURE DIVISION.
+	- ALL, FILLER can be coded only in DATA DIVISION. They cannot be coded in PROCEDURE DIVISION.
+
+	- Examples :-
+
+		77	NUM-1	PIC 9(03)	VALUE ZEROS.		-> 77	NUM-1 PIC 9(03) VALUE 0.
+		77	NUM-2	PIC 9(03)	VALUE ZERO.		-> 77	NUM-1 PIC 9(03) VALUE 0.
+
+		77	STR-1	PIC X(10)	VALUE SPACE.
+		77	STR-2	PIC X(10)	VALUE SPACES.
+
+		77	STR-3	PIC X(05)	VALUE ALL "-".		-> STR-3 = -----
+		77	STR-4	PIC X(10)	VALUE ALL "*".		-> STR-4 = **********
+		77	STR-5	PIC X(05)	VALUE "-".		-> STR-5 = -
+
+		77	FILLER	PIC X(01).
+
+		77	STR-6	PIC X(03)	VALUE LOW-VALUE.	-> STR-6 = 000 (HEX)
+		77	STR-7	PIC X(03)	VALUE LOW-VALUES.	-> STR-6 = 000 (HEX)
+
+		77	STR-8	PIC X(03)	VALUE HIGH-VALUE.	-> STR-6 = FFF (HEX)
+		77	STR-9	PIC X(03)	VALUE HIGH-VALUES.	-> STR-6 = FFF (HEX)
+
+
+07.	PIC V
+
+	- V means assumed decimal point	
+	-
+
+	- Example :-
+
+		58 /100					
+
+		81.25 / 100	-> .25 = 1/4
+		78.50 / 100	-> .50 = 1/2
+		62.75 / 100	-> .75 - 3/4
+
+		MKS-1	MKS-2	MKS-3	TOTAL	PERCENT
+		-----	-----	-----	-----	-------
+		60.25	71.00	58.75	190.00   .....
+		83.25	88.25	70.25	241.75	 .....
+
+		77	MKS-1		PIC 9(03)V9(02).
+		77	MKS-2		PIC 9(03)V9(02).
+		77	MKS-3		PIC 9(03)V9(02).
+		77	TOTAL		PIC 9(03)V9(02).
+		77	PERCENT		PIC 9(02)V9(02).
+
+		77	EDIT-MKS-1	PIC 9(03).9(02).
+		77	EDIT-MKS-2	PIC 9(03).9(02).
+		77	EDIT-MKS-3	PIC 9(03).9(02).
+		77	EDIT-TOTAL	PIC 9(03).9(02).
+		77	EDIT-PERCENT	PIC 9(02).9(02).
+
+
+		Rule :- PIC V variable -> ACCEPT data, calculation (+ - / * ) in arithmetical expression
+			PIC . variable -> DISPLAY, assign result of arithmetical expression
+
+
+		Input data
+		----------
+		//SYSIN DD *
+		06550
+		03425
+		07100
+		/*
+
+		ACCEPT MKS-1.		-> 06550				
+		ACCEPT MKS-2.		-> 03425
+		ACCEPT MKS-3.		-> 07100
+
+		DISPLAY MKS-1.		-> 06550
+		DISPLAY MKS-2.		-> 03425
+		DISPLAY MKS-3.		-> 07100
+
+		MOVE MKS-1 TO EDIT-MKS-1.	-> 
+		DISPLAY EDIT-MKS-1.		-> 065.50
+		MOVE MKS-2 TO EDIT-MKS-2.	-> 
+		DISPLAY EDIT-MKS-2.		-> 034.25
+		MOVE MKS-3 TO EDIT-MKS-3.	-> 
+		DISPLAY EDIT-MKS-1.		-> 071.00
+
+		COMPUTE TOTAL = MKS-1 + MKS-2 + MKS-3.		-> 
+		DISPLAY TOTAL.					-> 17075
+		MOVE TOTAL TO EDIT-TOTAL.			-> 
+		DISPLAY EDIT-TOTAL.				-> 170.75
+
+		COMPUTE PERCENT = TOTAL / 3.
+		DISPLAY PERCENT.				-> 05691
+		MOVE PERCENT TO EDIT-PERCENT.
+		DISPLAY EDIT-PERCENT.				-> 056.91
+
+08.	COBOL06
+	-------
+
+	Problem Definition
+	------------------
+	Input student name, marks in 3 tests. Calculate total, percentage and class. 
+	If a student has secured < 35 in any one of the tests, then CLASS is FAIL else CLASS is PASS.
+	The program should display all the details of the student.
+
+	Make your logic modular by using PERFORM statement.	
+	
+	The program should perform the following validation checks on the input data :-
+		a. student name should not be empty.
+		b. the 3 test scores should be in the range of 1 to 100
+		c. the 3 test scores should not have a special character in the data.
+
+	If the above validation checks pass successfully, the program should then calculate total, percentage, class.
+	If any of the above validation checks fail, the program should display a suitable error message.
+
+	1. Make the program more module using PERFORM statement.
+	2. Use EVALUATE statement instead of nested IF ELSE END-IF.
+	3. Use edit characters to format your output.
+	
+	Additions
+	---------
+	- Enter data considering decimal point (PIC V)
+
+
+	Instructions
+	------------
+	01. Type E on left of COBOL.PGMS.BASIC and (COBOL06) on right of BASIC.
+	02. COPY 'OZAGS3.COBOL.PGMS.BASIC(COBOL06). Save.
+	03. In compiler JCL, on line 12 & 14, type COBOL06 instead of COBOL05. Save. Submit.
+	04. In run JCL, on line 9, type COBOL06 instead of COBOL05. Enter input data in SYSIN as follows :
+		//SYSIN    DD  *            
+		RAHUL SHARMA---------       
+		00775                       
+		06575                       
+		00425                       
+		/*                          
+	05. Save. Submit. Goto spool. ST OZA???R. Check output in SYSOUT.
+	06. You can test the program now for your own combinations of input in SYSIN in RUN JCL.
+
+
+09.	COBOL07
+	-------
+
+	Problem Definition
+	------------------
+	Input student name, marks in 3 tests. Calculate total, percentage and class. 
+	If a student has secured < 35 in any one of the tests, then CLASS is FAIL else CLASS is PASS.
+	The program should display all the details of the student.
+
+	Make your logic modular by using PERFORM statement.	
+	
+	The program should perform the following validation checks on the input data :-
+		a. student name should not be empty.
+		b. the 3 test scores should be in the range of 1 to 100
+		c. the 3 test scores should not have a special character in the data.
+
+	If the above validation checks pass successfully, the program should then calculate total, percentage, class.
+	If any of the above validation checks fail, the program should display a suitable error message.
+
+	1. Make the program more module using PERFORM statement.
+	2. Use EVALUATE statement instead of nested IF ELSE END-IF.
+	3. Use edit characters to format your output.
+	
+	- Enter data considering decimal point (PIC V)
+
+	Additions
+	---------
+	01. Accept the input data as a record.
+	02. Display statistics.
+	03. Program should work for 6 students.
+
+	Instructions
+	------------
+	01. Type E on left of COBOL.PGMS.BASIC and (COBOL07) on right of BASIC.
+	02. COPY 'OZAGS3.COBOL.PGMS.BASIC(COBOL07). Save.
+	03. In compiler JCL, on line 12 & 14, type COBOL07 instead of COBOL06. Save. Submit.
+	04. In run JCL, on line 9, type COBOL07 instead of COBOL06. Enter input data in SYSIN as follows :
+
+		//SYSIN    DD  *                                          
+		RAHUL SHARMA-------- 07775 06575 00425 00000 0000 ----    
+		SATISH DESHPANDE---- 06500 08125 04575 00000 0000 ----    
+		ARUN DEB------------ 04025 07000 03875 00000 0000 ----    
+		VARUN KHANNA-------- 05900 04350 07300 00000 0000 ----    
+		GANESH RAO---------- 04300 00000 05625 00000 0000 ----    
+		SATISH KAPUR-------- 05300 06700 05800 00000 0000 ----    
+		/*                                                        
+
+	05. Save. Submit. Goto spool and check the output. Check if the statistics are correct.
+	06. Change some data in the input records. Save. Submit. 
+	07. Goto spool and check the output. Check if the statistics are correct.
+
+	08. If you have done Point 01 to 07 above, now make changes in the program and in run jcl to make the program
+	    work for 10 students. Check the statistics when you run the program.
+
+
+10.	Assignment (based on COBOL07)
+
+	Assignment Member Name : COBOL.PGMS.BASIC(ASN02)
+
+	Problem Definition 
+	------------------
+	Input employee name, basic salary and deduction. Calculate net salary and display all the details of the employee.
+
+		EMPLOYEE-RECORD
+		---------------
+			EMP-NAME	PIC X(15)
+			BASIC-SAL	PIC 9(06)V9(02)
+			DEDN		PIC 9(06)V9(02)
+			NET-SAL		PIC 9(06)V9(02).
+
+	Implement the following in the program :-
+
+	01. Validate the input data
+		- employee name must not be empty. 
+		- Basic salary, deduction should not be 0.
+		- Basic salary and deduction should not contain non-numeric data.
+
+	02. The program should display basic salary, deduction and net salary using edit character Z i.e. leading 0's
+	    must not be displayed in basic salary, deduction, net salary.
+
+	03. At the end, the program must display statistics - total records, total valid records, total invalid records.
+
+	04. The program should execute for 4 employees.
+
+
+
+
+
+
+
+

@@ -1,0 +1,475 @@
+
+Ground Rules
+------------
+01. You need to be on the call from 9.00 to to 6.00 pm compulsory.
+02. Most of the training time will be utilized for hands on.
+03. Do daily revision of topics taught during the day.
+04. Ask questions in case of doubts. 
+05. Make the session interactive.
+-----------------------------------------------------------------------------------------------------------------------------
+
+Error messages :-
+-----------------
+TSO/ISPF
+--------
+01. No members in data set : this means your PDS is empty. There are no members in the PDS.
+02. No space in directory  : you have exceeded the limit of Directory Blocks
+
+ABnormal ENDs (ABEND CODES)
+---------------------------
+01. 0B37 - if you do not have space left in dataset to enter data.
+02. S322 - you get this abend when your job has executed beyond the time limit specified in TIME parameter.
+03. S806 - invalid program name specified in PGM parameter of EXEC statement
+04. S804 - space limit exceeded in REGION parameter of JOB command.
+05. S80A - space limit exceeded in REGION parameter of JOB command.
+
+
+JCL programs
+------------
+01. JCL01 - IEFBR14 - allocate a dataset.
+02. JCL02 - IEBGENER - display dataset contents in spool.
+03. JCL03 - IEFBR14 - delete a dataset
+04. JCL04 - IEBGENER - copy dataset
+05. JCL05 - SORT - Sort on one/two field/s
+06. JCL06 - SORT - INCLUDE/OMIT command to sort specific records.
+07. JCL07 - SORT - OUTREC to reformat fields in output file
+08. JCL08 - SORT - Copy all/specific records
+09. JCL09 - SORT - Copy records (split a file into two or more files)
+10. JCL10 - SORT - Eliminate duplicates
+11. JCL11 - Instream procedure 
+12. JCL12 - Instream procedure + symbolic parameter + default value
+13. JCL13 - Catalogued Procedure
+14. JCL14 - JCL using Multiple Job Steps
+15. JCL15 - Define a GDG
+16. JCL16 - Define a Model for the GDG
+17. JCL17 - Define a GDS
+18. JCL18 - Populate data in a GDS
+19. JCL19 - Using GDS in two job steps
+-----------------------------------------------------------------------------------------------------------------------------
+
+Knowledge Checks
+----------------
+01. What is a procedure ?
+02. How many types of procedures do we have ? Name them.
+03. State 3 points of difference between instream and catalogued procedure.
+04. If MSGLEVEL parameter is not coded, then what is the default value of MSGLEVEL parameter ?
+05. S80A abend code is related to which parameter ?
+06. How many types of parameters do we have ? Name them.
+07. State one point of difference betweeen keyword parameter and positional parameter.
+08. JCLLIB operator is related to which procedure ?
+09. If I want to start execution of a job from the 3rd step, then how can I do this ?
+10. What do you understand by the term 'job step' ?
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+01. 	GDG - Generation Data Group
+
+
+	Analogy :-		Folder	-> Plastic sheets -> Certificates
+	GDG explanation 	GDG	-> GDSs		  -> Data (records)
+
+
+	- A GDG contains one or more GDSs (Generation Data Set)
+	- A GDS contains data in the form of records.
+	- GDG is used to group a set of datasets (GDSs) together.
+	- GDG is practically implemented to maintain different versions of data in GDS
+
+		GDS
+		---
+		1st	-> Jan data
+		2nd	-> Feb data
+		3rd	-> Mar data
+		4th	-> Apr data
+		....
+		....
+		12th	-> Dec data
+
+
+02.	How to implement GDG concept programmatically ?
+
+	You need to implement 4 steps :-
+	1. Define a GDG			: IDCAMS utility
+	2. Define a model for the GDG	: IEFBR14 utility
+	3. Define the GDS		: IEFBR14 utility
+	4. Populate the data in GDS	: IEBGENER/ SORT
+
+
+	What is a model for a GDG ?
+	- A model is a template for the GDS. When you define a model you define DCB attributes for the model - DSORG, LRECL, RECFM,
+	  BLKSIZE. Once you define DCB attributes for the model, then when you define a GDS, then you can have the same DCB
+          attributes being allocated to each GDS by associating the model name with the GDS. This way all GDSs of one GDG will have
+	  the same DCB attibutes.
+
+		MODEL1 -> DCB=(DSORG=PS,LRECL=60,RECFM=FB,BLKSIZE=360)
+		GDS1 -> MODEL1 -> DCB=(DSORG=PS,LRECL=60,RECFM=FB,BLKSIZE=360)
+		GDS2 -> MODEL1 -> DCB=(DSORG=PS,LRECL=60,RECFM=FB,BLKSIZE=360)
+		GDS3 -> MODEL1 -> DCB=(DSORG=PS,LRECL=60,RECFM=FB,BLKSIZE=360)
+		GDS4 -> MODEL1 -> DCB=(DSORG=PS,LRECL=60,RECFM=FB,BLKSIZE=360)
+
+
+03.	Define a GDG 
+
+	//OZAGS3J	JOB	.........
+	//STEP01	EXEC	PGMS=IDCAMS
+	//SYSPRINT	DD	SYSOUT=*
+	//SYSIN		DD	*
+		DEFINE GDG(NAME(OZAGS3.EMP.GDG) -
+			   LIMIT(5) -
+			   EMPTY | NOEMPTY -
+			   SCRATCH | NOSCRATCH)
+	/*
+
+
+	1. NAME(GDG(GDG-name)	- specify the name of the GDG to be defined.
+
+	2. LIMIT(n)		- specify the number of GDSs to be defined in the GDG. n = 1 to 255.
+
+	3. EMPTY | NOEMPTY
+
+		BEFORE EMPTY OPTION IS EXECUTED
+		-------------------------------
+		OZAGS3.EMP.GDG (LIMIT=5),EMPTY
+		------------------------------
+			GDS1
+			GDS2
+			GDS3
+			GDS4
+			GDS5
+			GDS6 ?????	EMPTY option will get executed here
+
+		AFTER EMPTY OPTION IS EXECUTED
+		-------------------------------
+		OZAGS3.EMP.GDG (LIMIT=5),EMPTY
+		------------------------------
+			GDS6 
+			GDS7
+			....
+
+		EMPTY option :- If GDG has maximum GDSs and if you are defining a new GDS (GDs6)in the GDG, then EMPTY option will
+	        first delete all the GDSs of the GDG and then define the new GDS (GDS6) in the GDG.
+
+
+		BEFORE NOEMPTY OPTION IS EXECUTED
+		---------------------------------
+		OZAGS3.EMP.GDG (LIMIT=5),EMPTY
+		------------------------------
+			GDS1
+			GDS2
+			GDS3
+			GDS4
+			GDS5
+			GDS6 ?????	NOEMPTY option will get executed here
+
+		AFTER NOEMPTY OPTION IS EXECUTED
+		-------------------------------
+		OZAGS3.EMP.GDG (LIMIT=5),EMPTY
+		------------------------------
+			GDS2
+			GDS3
+			GDS4
+			GDS5
+			GDS6 
+
+		NOEMPTY option :- If GDG has maximum GDSs and if you are defining a new GDS (GDs6)in the GDG, then NOEMPTY option
+                will delete the oldest GDS (GDS1) of the GDG and then define the new GDS (GDS6) in the GDG.
+
+	4. SCRATCH | NOSCRATCH
+	
+		SCRATCH option : When a GDS is being deleted, SCRATCH will delete the data of the GDS from the disk immediately.
+		NOSCRATCH option : When a GDS is being deleted, NOSCRATCH will delete the data of the GDS at a later point in time.
+
+	
+04.	JCL15 - Define a GDG
+
+	Instructions
+	------------
+	01. Type E on left of PGMS and (JCL15) on right of PGMS
+	02. COPY 'OZAGS3.JCL.PGMS(JCL15)'
+	03. CHANGE  ALL  OZAGS3  OZA???
+	04. Save. Submit.
+	05. Using =3.4 command check if the GDG has been defined.
+	06. Submit. You will get MAXCC=12 error.
+	07. Goto spool and see the error message in SYSPRINT.
+
+05.	JCL16 - Define a model for the GDG
+
+	Instructions
+	------------
+	01. Type E on left of PGMS and (JCL16) on right of PGMS
+	02. COPY 'OZAGS3.JCL.PGMS(JCL16)'
+	03. CHANGE  ALL  OZAGS3  OZA???
+	04. CHANGE  ALL  MDLGS3  MDL???		<--------------- see here
+	05. Save. Submit.
+	06. Using =3.4 command check if the model has been defined.
+	07. Submit. You will get JCL ERROR error.
+	08. Goto spool and see the DUPLICATE DATSET NAME error message in JESYSMSG.
+
+
+06.	GDS naming convention
+
+	- GDS can be named in two ways :-
+
+		1. Relative Name
+			- Relative Name is given as GDG-name(+1) or GDG-name(0) or GDG-name(-1)
+			- +1 means you are referring to a new GDS which is not existing
+			- 0, -1, -2, -3 means you are referring to the existing GDS
+			- Relative Name of a GDS is always coded in a JCL.
+			- 0 means most recent GDS, -1 means next most recent GDS, -2 means next most recent GDS, ....
+
+
+		2. Absolute Name
+			- Absolute name is given as GDG-name.GnnnnVnn	(Example : OZAGS3.EMP.GDG.G0001V00)
+			- G means Generation, V means Version
+			- Absolute Name is the physical name of the GDS and can be see using =3.4 command.
+
+			
+
+07.	JCL17 - Define a GDS
+
+	Instructions
+	------------
+	01. Open JCL15. Change EMP to ABC and change NOSCRATCH to SCRATCH. Save. Submit.
+	02. Type E of left of JCL.PGMS and (JCL17) on right of PGMS.
+	03. COPY  'OZAGS3.JCL.PGMS(JCL17)'
+	04. CHANGE  ALL  OZAGS3  OZA???
+	05. CHANGE  ALL  MDLGS3  MDL??? 	<=============================== see here
+	06. Save. Submit. Using=3.4 check if ABC.GDG.G0001V00 has been created.
+	07. Submit. Refresh and Check if ABC.GDG.G0002V00 has been created.
+	08. Submit. Refresh and Check if ABC.GDG.G0003V00 has been created.
+	09. Submit. Refresh and Check if ABC.GDG.G0004V00 has been created.
+	10. Submit. Refresh and Check if ABC.GDG.G0005V00 has been created.
+	11. Submit. Refresh and Check if ABC.GDG.G0001V00 has been deleted and ABC.GDG.G0006V00 has been created.	
+	12. Submit. Refresh and Check if ABC.GDG.G0002V00 has been deleted and ABC.GDG.G0007V00 has been created.	
+	13. Submit. Refresh and Check if ABC.GDG.G0003V00 has been deleted and ABC.GDG.G0008V00 has been created.	
+
+
+08.	JCL18 - Populate data in a GDS
+
+	Instructions
+	------------
+	01. Type E on left of PGMS and (JCL18) on right of PGMS
+	02. COPY 'OZAGS3.JCL.PGMS(JCL18)'
+	03. CHANGE  ALL  OZAGS3  OZA???
+	04. Save. Submit. Open the most recent GDS in your GDG and check if retail records have been copied.
+	05. Change RETAIL to FINANCE and change 0 to -1. Save. Submit.
+	06. Open the next most recent GDS and check if FINANCE records have been copied.
+	07. Now you can copy BANKING records in any GDS of your choice and check if records have been copied in that GDS.
+
+
+09.	**** VERY VERY VERY IMPORTANT ****
+
+	Consider you are having a JCL of two job steps. In Step 1, you are creating a new GDS using +1.
+	Now, in Step 2 if you want to refer to the GDS which you have created in Step 1, then you need to code +1 for the GDS
+	in Step 2 also.
+
+	This is because +1 will become 0 when the job ends and not when the job step ends.
+
+	In the above example, when Step 1 completes its execution, +1 will remain +1. Hence, you need to use +1 only in Step 2
+	to refer to the GDS. When Step 2 completes its execution and the job ends, then +1 will get converted to 0.
+
+	(Refer to JCL19 for sample code)
+
+
+10.	Errors and Abends
+
+	What is the difference between an error and an abend ?
+
+	Error
+	-----
+	- An error is displayed with MAXXC=4/8/12/16 message.
+	- An error is created due to coding error in syntax.
+
+			MAXCC values		Meaning
+			------------		-------
+			     00			Success, no error
+			     04			Warning
+			     08			Error (Level-1)
+			     12			Error (Level-2)
+			     16			Error (Level-3)
+
+	Abend
+	-----
+	- An abend is displayed as Snnn Unnnn message where S stands for System abend and U stands for User abend
+	- An abend is an abnormal end to a program due to some run time exception.
+	- Examples : S806, S80A, S804, S322, S0E37, S0B37
+
+11.	COND parameter
+
+	- COND parameter means CONDitional parameter
+
+	- Consider you have a JCL of 3 job steps. If Step 1, gives you an error, then the OS will still executed Step2, Step3.
+	- If Step 1 works correctly and Step 2 gives you an error, then Step 3 will also get executed.
+	- In general, if any job step gives you an error, then the OS will still execute the subsequent steps.
+
+	- Now, if you do not want to execute the subsequent steps (due to dependencies), in that you must code COND parameter
+	  in JOB statement.
+
+	- COND parameter syntax :- COND=(value,opearator) where
+		value    -> 0/ 4/ 8/ 12/ 16
+		operator -> LT, LE, EQ, NE, GT, GE
+		
+		Examples :- 
+		- COND=(8,GE)
+		- COND=(16,NE)	
+
+
+			COND parameter table for JOB statement.
+			--------------------------------------
+			COND PARAMETER		CONTINUE		TERMINATE
+			--------------		--------		---------
+			COND=(12,GT)		COND CODE >= 12		COND CODE < 12
+			COND=(16,GE)		COND CODE > 16		COND CODE <= 16
+			COND=(4,LT)		COND CODE <= 4		COND CODE > 4	  
+			COND=(12,LE)		COND CODE < 12		COND CODE >= 12
+			COND=(12,EQ)		COND CODE != 12		COND CODE = 12
+			COND=(0,NE)		COND CODE = 0		COND CODE != 0	   
+
+		Examples :-
+
+		01. COND=(4,LT)
+			- If any job step gives a COND CODE <= 4, then continue to execute the next job step
+			- If any job step gives a COND CODE > 4, then terminate the job without executing the subsequent steps.
+
+		02. COND=(12,EQ)
+			- If any job step gives a COND CODE not equal to 12, then continue to execute the next job step
+			- If any job step gives a COND CODE = 12, then terminate the job without executing the subsequent steps.
+			
+		03. COND=(0,NE)
+			- If any job step gives a COND CODE = 0, then continue to execute the next job step
+			- If any job step gives a COND CODE <> 0, then terminate the job without executing the subsequent steps.
+
+		04. COND=(16,GE)
+			- If any job step gives a COND CODE > 16, then continue to execute the next job step
+			- If any job step gives a COND CODE <= 16, then terminate the job without executing the subsequent steps.
+
+
+12. 	JCL20 - COND parameter in JOB statement
+
+	Instructions
+	------------
+	01. Type E on left of JCL.PGMS and (JCL20) on right of PGMS
+	02. COPY 'OZAGS3.JCL.PGMS(JCL20)'
+	03. CHANGE ALL OZAGS3 OZA???
+	04. Save. Submit. Goto spool in JESYSMSG and check COND CODE of STEP01. It will be 0000. STEP02 and STEP03 will not 
+            get executed due to COND=(0,NE).
+
+	05. In program, replace SYSUT3 with SYSUT2 in STEP01 and change replace SYSUT2 with SYSUT3 in STEP02.
+	06. Save. Submit. Goto spool in JESYSMSG and check COND CODE of STEP01. It will be 0000. STEP02 COND CODE will be 0012. 
+	    STEP03 will not get executed due to COND=(0,NE).
+
+
+13.	COND parameter in EXEC statement
+
+
+	Example
+	-------
+									DONE	DONE	DONE    DONE
+		//STEP01	PGM=IEBGENER				0012	0012	0000	0000
+		....
+		....
+		//STEP02	PGM=SORT				0016	0000	0016	0000
+		....
+		....
+		//STEP03	PGM=IEBGENER,COND=(0,NE)		NO	NO	NO	YES
+		....
+		....
+		//STEP04	PGM=IEBGENER				YES	YES	YES	YES
+		....
+		....
+
+	If all of the steps prior to STEP03 gives a COND CODE = 0000, execute STEP03 and then execute STEP04.
+	If any of the steps prior to STEP03 gives a COND CODE <> 0000, then do not execute STEP03 but go ahead and execute STEP04.
+	
+	COND parameter in EXEC statement is specific to the step in which it has been coded. It does not apply to other steps.
+
+
+14	JCL21 - COND parameter in EXEC statement
+
+	INSTRUCTIONS
+	------------
+
+	01. Type E on left of JCL.PGMS and (JCL21) on right of PGMS
+	02. COPY 'OZAGS3.JCL.PGMS(JCL21)'
+	03. CHANGE ALL OZAGS3 OZA???
+	04. Save. Submit. You will get MAXCC=0000. Goto spool in SYSMSG. You will see COND CODE of STEP01=0000, STEP02=0000,
+	    STEP03=0000, STEP04=0000.
+
+	05. In STEP01, change SYSUT2 to SYSUT3. In STEP02, type SORT FIELDS= command from 1st column. 
+	06. Save. Submit. You will get MAXCC=0016.
+	07. Goto spool in SYSMSG. You will see COND CODE of STEP01=0012, STEP02=0016, STEP03 will not be executed, STEP04=0000.
+
+	08. In STEP01, change SYSUT3 to SYSUT2.  
+	09. Save. Submit. You will get MAXCC=0016.
+	10. Goto spool in SYSMSG. You will see COND CODE of STEP01=0000, STEP02=0016, STEP03 will not be executed, STEP04=0000.
+
+	11. In STEP01, change SYSUT2 to SYSUT3. In STEP02, type SORT FIELDS= command from 2nd column. 
+	12. Save. Submit. You will get MAXCC=0012.
+	13. Goto spool in SYSMSG. You will see COND CODE of STEP01=0012, STEP02=0000, STEP03 will not be executed, STEP04=0000.
+
+
+	Conclusion :- If all prior steps give COND CODE = 0000, STEP03 will be executed and then STEP04 will be executed.
+		      For any other values of COND CODE for prior steps, STEP03 will not be executed but STEP04 will be executed.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
