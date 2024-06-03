@@ -1,0 +1,398 @@
+
+Ground Rules
+------------
+01. You need to be on the call from 9.00 to to 6.00 pm compulsory.
+02. Most of the training time will be utilized for hands on.
+03. Do daily revision of topics taught during the day.
+04. Ask questions in case of doubts. 
+05. Make the session interactive.
+-----------------------------------------------------------------------------------------------------------------------------
+
+Error messages :-
+-----------------
+TSO/ISPF
+--------
+01. No members in data set : this means your PDS is empty. There are no members in the PDS.
+02. No space in directory  : you have exceeded the limit of Directory Blocks
+
+ABnormal ENDs (ABEND CODES)
+---------------------------
+01. 0B37 - if you do not have space left in dataset to enter data.
+02. S322 - you get this abend when your job has executed beyond the time limit specified in TIME parameter.
+03. S806 - invalid program name specified in PGM parameter of EXEC statement
+04. S804 - space limit exceeded in REGION parameter of JOB command.
+05. S80A - space limit exceeded in REGION parameter of JOB command.
+06. S0C7 - you have typed a special character in a numeric field data.
+
+JCL programs
+------------
+01. JCL01 - IEFBR14 - allocate a dataset.
+02. JCL02 - IEBGENER - display dataset contents in spool.
+03. JCL03 - IEFBR14 - delete a dataset
+04. JCL04 - IEBGENER - copy dataset
+05. JCL05 - SORT - Sort on one/two field/s
+06. JCL06 - SORT - INCLUDE/OMIT command to sort specific records.
+07. JCL07 - SORT - OUTREC to reformat fields in output file
+08. JCL08 - SORT - Copy all/specific records
+09. JCL09 - SORT - Copy records (split a file into two or more files)
+10. JCL10 - SORT - Eliminate duplicates
+11. JCL11 - Instream procedure 
+12. JCL12 - Instream procedure + symbolic parameter + default value
+13. JCL13 - Catalogued Procedure
+14. JCL14 - JCL using Multiple Job Steps
+15. JCL15 - Define a GDG
+16. JCL16 - Define a Model for the GDG
+17. JCL17 - Define a GDS
+18. JCL18 - Populate data in a GDS
+19. JCL19 - Using GDS in two job steps
+20. JCL20 - COND parameter in JOB statement
+21. JCL21 - COND parameter in EXEC statement
+
+COBOL programs
+--------------
+01. COBOL01 - Basic program - DISPLAY, ACCEPT, COMPUTE
+02. COBOL02 - IF - ELSE - END-IF
+03. COBOL03 - PERFORM
+04. COBOL04 - Validate the input, Nested IF ELSE END-IF, IS NOT NUMERIC
+05. COBOL05 - EVALUATE, Edit characters
+06. COBOL06 - PIC V, how to display numerical value using decimal point
+07. COBOL07 - PERFORM ... TIMES, display statistics
+08. COBOL08 - Sequential table
+09. COBOL09 - Indexed table, SEARCH, SET
+10. COBOL10 - Signed variable
+
+VSAM programs
+-------------
+01. VSAM01  - DELETE KSDS -> DEFINE KSDS
+02. VSAM02  - REPRO (copy)
+03. VSAM03  - REPRO (REPRO options)
+04. VSAM04  - ALTER
+05. VSAM05  - LISTCAT
+06. VSAM06  - DELETE ESDS -> DEFINE ESDS -> REPRO
+
+-----------------------------------------------------------------------------------------------------------------------------
+Knowledge Checks
+----------------
+01. Name the VSAM datasets.
+02. What is the difference between KSDS and ESDS ?
+03. Which utility program will you use for writing JCL for VSAM datasets ?
+04. Which command will you use for copying data from PS file to VSAM file ?
+05. What is the purpose of REUSE option in DEFINE CLUSTER command ?
+06. While copying data from PS file to KSDS file, what points must we keep in mind ?
+07. Can we have duplicate records in an ESDS ?
+08. Records in KSDS are searched based on _______ ________.
+09. What information will be stored in index component of KSDS ?
+10. What is the full form of RBA and RRN ?
+-----------------------------------------------------------------------------------------------------------------------------
+
+01.	Alternate Index
+	---------------
+	- Alternate Index is defined as a field on the basis of which you can search a record if primary key field data
+   	  is not available to search for the same record.
+
+	- Primary key field data must be unique. Alternate key field data can be unique or non-unique.
+
+	- If you want to use alternate index, you must define alternate index cluster, data and index components. Due to
+	  this, hard disk space will get utilized for alternate index.
+
+	- Alternate Index drawbacks :-
+		- space gets utilized due to additional components of alternate index
+		- speed to search for the record will get impacted.
+
+	- Searching a record based on primary key is always faster than searching for the same record based on alternate key.
+
+02.	How records are stored in Alternate Index (AIX)
+
+				OZAGS2.EMP.KSDS.CLUSTER	-> base cluster
+				------------------------
+		OZAGS2.EMP.KSDS.INDEX		OZAGS2.EMP.KSDS.DATA
+		----------------------		---------------------
+		001001	#100			#100 -> 001001 MAHESH......... INSURANCE. 9811223344 0023000
+		001002	#150			#150 -> 001002 TEJAS.......... FINANCE... 9722334455 0027000   
+		001003	#200			#200 -> 001003 JITESH......... INSURANCE. 8633445566 0021000
+		001004	#250			#250 -> 001004 VIJAY.......... BANKING... 8877665544 0022000
+		001005	#300			#300 -> 001005 MITESH......... FINANCE... 9155667788 0028000   
+		001006	#350			#350 -> 001006 ARUN........... INSURANCE. 9866778899 0023000
+		001007	#400			#400 -> 001007 VISHESH........ FINANCE... 9977889900 0029000   
+		001008	#450			#450 -> 001008 MITESH......... INSURANCE. 8688990011 0022000
+		001009	#500			#500 -> 001009 JAYESH......... BANKING... 9899001122 0026000
+
+				OZAGS2.EMP.MOBILENO.AIX.CLUSTER
+				-------------------------------
+		OZAGS2.EMP.MOBILENO.AIX.INDEX			OZAGS2.EMP.MOBILENO.AIX.DATA
+		-----------------------------			----------------------------
+		8633445566 #650					#600 -> 9811223344 001001
+		8688990011 #775					#625 -> 9722334455 001002 
+		8877665544 #675					#650 -> 8633445566 001003 
+		9155667788 #700					#675 -> 8877665544 001004 
+		9722334455 #625					#700 -> 9155667788 001005 
+		9811223344 #600					#725 -> 9866778899 001006 
+		9866778899 #725					#750 -> 9977889900 001007 
+		9899001122 #800					#775 -> 8688990011 001008 
+		9977889900 #750					#800 -> 9899001122 001009 
+
+				OZAGS2.EMP.PROJECT.AIX.CLUSTER
+				-------------------------------
+		OZAGS2.EMP.PROJECT.AIX.INDEX			OZAGS2.EMP.PROJECT.AIX.DATA
+		-----------------------------			----------------------------
+		BANKING   #980					#900 -> INSURANCE 001001 001003 001006 001008
+		FINANCE   #940				   	#940 -> FINANCE   001002 001005 001007
+		INSURANCE #900					#980 -> BANKING   001004 001009 
+
+
+03.	Steps for creating alternate index (AIX)
+
+	01.	Define the base cluster			-> DEFINE CLUSTER
+	02.	Copy data in the base cluster		-> REPRO
+	03.	Define AIX cluster			-> DEFINE AIX
+	04.	Populate AIX cluster with records	-> BLDINDEX
+	05.	Define a path for AIX			-> DEFINE PATH
+
+
+04.	DEFINE AIX 
+
+	- DEFINE AIX command is used to define an alternate index.
+
+	- Syntax :-
+
+		DEFINE AIX(NAME(AIX-cluster-name) 
+			   RELATE(base-cluster-name)
+			   VOLUMES(volume-serial-name)
+			   TRACKS(primary-qty, secondary-qty)
+			   RECORDSIZE(avg-rec-len, max-rec-len)
+			   KEYS(len, offset)
+			   UPGRADE | NOUPGRADE
+			   UNIQUEKEY | NONUNIQUEKEY
+			  )
+		      DATA(NAME(data-component-name)) 
+		     INDEX(NAME(index-component-name))
+
+		RELATE(base-cluster-name) - specify base cluster name with which you want AIX cluster to be associated with.
+
+		VOLUMES(volume-serial-name) - specify device name on which AIX is to be defined.
+
+		space-unit(primary-qty, secondary-qty) - TRACKS(10,7)
+	
+		RECORDSIZE(avg-rec-len, max-rec-len) - RECORDSIZE(80,80) - similar to base cluster
+				    - avg-rec-len = average length of the record.
+				      max-rec-len = maximum length of the record.
+				    - if avg-rec-len = max-rec-len -> it means you are having fixed length records in file.
+				      if avg-rec-len < max-rec-len -> it means you are having variable length records in file.
+				    - Example :- RECORDSIZE(80,80)
+
+		KEYS(len, offset) - len -> length of alternate key field, offset -> position at which alternate key data
+				    begins in base cluster.
+
+		UPGRADE | NOUPGRADE
+
+			- UPGRADE : if you make any changes in the base cluster (add new record, update record, delete record)
+			  then alternate index data will also get updated automatically.
+			- NOUPGRADE : if you make any changes in the base cluster (add new record, update record, delete record)
+			  then alternate index data will not get updated automatically.
+
+		UNIQUEKEY | NONUNIQUEKEY
+		
+			- UNIQUEKEY - should be coded if you have unique values in aix field. This is the default option.
+			- NONUNIQUEKEY - should be coded if you have duplicate values in aix field.
+
+
+	- ***** VERY IMPORTANT POINT *****
+	  For creating an alternate index cluster, you must define the base cluster without REUSE option.
+
+	  If your base cluster is created with REUSE option and if you create an alternate index cluster, then you will get
+	  an error - INVALID RELATED OBJECT - in SYSPRINT in spool.
+
+05.	PATH for an AIX 
+
+	- A PATH is a logical link between the base cluster and aix cluster. A PATH binds the base cluster and the aix cluster
+	  together.
+
+	- PATH will not contain any data.
+
+				 |-----> base cluster
+			PATH ----|
+				 |-----> aix cluster
+
+	- PATH will be used in a COBOL program when you want to use an aix cluster in the COBOL program.
+	  When you write a COBOL program using alternate index, you will never specify aix cluster name in RUN JCL. But
+	  you will have to specify PATH name in RUN JCL.
+
+	- Without a PATH, you will not be able to use alternate index cluster in a COBOL program.
+
+	- DEFINE PATH command syntax
+
+		DEFINE PATH(NAME(path-name)
+			    PATHENTRY(aix-cluster-name)
+			    UPDATE | NOUPDATE
+
+		If you type UPGRADE option in DEFINE AIX command, you must type UPDATE option in DEFINE PATH.
+		If you type NOUPGRADE option in DEFINE AIX command, you must type NOUPDATE option in DEFINE PATH.
+
+
+06.	VSAM07 (DELETE -> DEFINE AIX -> BLDINDEX -> DEFINE PATH) - AIX with unique values
+
+	Instructions
+	------------
+	01. Delete VSAM01. 
+	02. Type E of left of VSAM.PGMS and (VSAM01) on right of PGMS.
+	03. COPY 'OZAGS3.VSAM.PGMS(VSAM01)'
+	04. CHANGE  ALL  OZAGS3  OZA???. 
+	05. Save. Submit
+	06. Open KSDS file in FM (=9.FM) and check if it has records.
+
+	01. Type E of left of VSAM.PGMS and (VSAM07) on right of PGMS.
+	02. COPY 'OZAGS3.VSAM.PGMS(VSAM07)'
+	03. CHANGE  ALL  OZAGS3  OZA???
+	04. Save. Submit.
+	05. Open 'OZAGS3.COMPANY.MOBILENO.AIX.CLUSTER' in File Manager in View Mode. Check if data in AIX is correct.
+
+	06. In File Manager, in Edit mode, open 'OZAGS3.COMPANY.KSDS.CLUSTER'
+	07. Change the mobile number of any 1 record.
+	08. Delete any 1 record.
+	09. Add a new record in KSDS cluster.
+	10. Save.
+	11. In File Manager, in View mode, open 'OZAGS3.COMPANY.MOBILENO.AIX.CLUSTER' and check if AIX has been updated.
+
+
+07.	VSAM08 (DELETE -> DEFINE AIX -> BLDINDEX -> DEFINE PATH) -> AIX with duplicate values
+
+	Instructions
+	------------
+	01. Type E of left of VSAM.PGMS and (VSAM08) on right of PGMS.
+	02. COPY 'OZAGS3.VSAM.PGMS(VSAM08)'
+	03. CHANGE  ALL  OZAGS3  OZA???
+	04. Save. Submit.
+	05. Open 'OZAGS3.COMPANY.PROJECT.AIX.CLUSTER' in File Manager in View Mode. Check if data in AIX is correct.
+
+	06. In File Manager, in Edit mode, open 'OZAGS3.COMPANY.KSDS.CLUSTER'
+	07. Change the project of any 1 record.
+	08. Delete any 1 record.
+	09. Add a new record in KSDS cluster.
+	10. Save.
+	11. Open PROJECT AIX in View mode and check if changes have been incorporated.
+
+	12. In one screen, Open base cluster - OZAGS3.COMPANY.KSDS.CLUSTER in Edit mode.
+	13. Type END to close the base cluster.
+	14. In next screen, open OZAGS3.COMPANY.MOBILENO.AIX.CLUSTER in View mode.
+	15. Type END to close the AIX cluster.
+	16. In next screen, open OZAGS3.COMPANY.PROJECT.AIX.CLUSTER in View mode.
+	17. Type END to close the AIX cluster.
+
+	18. Make changes in base cluster as given below. Make a note of the changes you do in writing pad.
+		> add a new record OR 
+		> shift an employee to another existing project OR
+	    	> shift 2 employees to a new project OR 
+		> add a new record for new project OR 
+		> change the mobile number OR
+	    	> delete any 1 record). 
+	19. Save. Type END to close the base cluster.
+	20. Open both the AIX clusters in the other screens to check if changes have been updated.
+
+
+08.	Points
+	------
+	If you already have code for AIX cluster (DELETE, DEFINE AIX, BLDINDEX, DEFINE PATH) and if you want to define
+	an AIX for some other field, then you can copy this code in new member and make changes as follows :-
+		> change the name in DELETE, DEFINE AIX, BLDINDEX, DEFINE PATH
+		> change values in KEYS parameter
+		> type UNIQUEKEY or NONUNIQUE KEY as per your requirement. 
+
+
+09.	Assignment on AIX
+	01. In a PS file EMP.PS2, enter 10 records for the following data :-
+		ROLL NUMBER (04)  GENDER (06)    STUDENT NAME (20)    EMAIL-ID (20)
+
+		GENDER can be MALE or FEMALE
+		EMAIL-ID is in the format ????.####@gmail.com. Email id must be unique for each student.
+
+	02. Copy VSAM01 member to ASN01 member. 
+	03. Make changes in ASN01 member wherever applicable to do the following :-
+		a. Delete OZA???.STUDENT.KSDS.CLUSTER
+		b. Define a cluster OZA???.STUDENT.KSDS.CLUSTER. Roll Number is the primary key. Code KEYS as 4,0. 
+		c. Copy data from OZA???.EMP.PS2 to OZA???.STUDENT.KSDS.CLUSTER
+	04. Open the KSDS cluster and check if records have been copied.
+
+	05. Copy VSAM07 member to ASN02 member.
+	06. Make changes in ASN02 member wherever applicable to do the following :-
+		a. Delete OZA???.STUDENT.EMAILID.AIX.CLUSTER
+		b. Define an AIX OZA???.STUDENT.EMAILID.AIX.CLUSTER for email-id field. 
+		   Email-id contains unique data. Code KEYS parameter and UNIQUEKEY / NONUNIQUEKEY accordingly.
+		c. Build AIX from OZA???.STUDENT.KSDS.CLUSTER to OZA???.STUDENT.EMAILID.AIX.CLUSTER.
+		d. Define a path OZA???.STUDENT.EMAILID.AIX.CLUSTER for the EMAILID AIX.
+	07. Open EMAILID AIX cluster and check if it has correct data.
+
+	08. Copy VSAM08 member to ASN03 member.
+	09. Make changes in ASN03 member wherever applicable to do the following :-
+		a. Delete OZA???.STUDENT.GENDER.AIX.CLUSTER
+		b. Define an AIX OZA???.STUDENT.GENDER.AIX.CLUSTER for gender field. 
+		   Gender contains duplicate data. Code KEYS parameter and UNIQUEKEY / NONUNIQUEKEY accordingly.
+		c. Build AIX from OZA???.STUDENT.KSDS.CLUSTER to OZA???.STUDENT.GENDER.AIX.CLUSTER.
+		d. Define a path OZA???.STUDENT.GENDER.AIX.CLUSTER for the GENDER AIX.
+	10. Open GENDER AIX cluster and check if it has correct data.
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			
+
+
+

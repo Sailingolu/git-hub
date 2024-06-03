@@ -1,0 +1,556 @@
+
+Ground Rules
+------------
+01. You need to be on the call from 9.00 to to 6.00 pm compulsory.
+02. Most of the training time will be utilized for hands on.
+03. Do daily revision of topics taught during the day.
+04. Ask questions in case of doubts. 
+05. Make the session interactive.
+-----------------------------------------------------------------------------------------------------------------------------
+
+Error messages :-
+-----------------
+TSO/ISPF
+--------
+01. No members in data set : this means your PDS is empty. There are no members in the PDS.
+02. No space in directory  : you have exceeded the limit of Directory Blocks
+
+VSAM error
+----------
+01. Invalid Related Object : You are creating an AIX for a base cluster which has been created using REUSE parameter.
+			     You must remove REUSE in DEFINE CLUSTER command to resolve this error.
+
+COBOL file status codes
+-----------------------
+01. "00"	- File operation successful.
+02. "10"	- End of File
+03. "22"	- Duplicate primary key
+04. "23"	- Primary key/ Alternate key not found
+
+DB2 SQLCODEs
+-------------
+01.  0		- SQL command has executed successfully.
+02.  100	- End of SELECT, Delete all rows from an empty table.
+03. -117	- number of values in INSERT not matching with number of columns
+04. -181	- Date value invalid in date column.
+05. -204	- Invalid table name
+06. -206        - Invalid column name
+07. -408	- Invalid data type
+08. -601	- Object (table) already exists.
+09. -803 	- duplicate primary key
+
+ABnormal ENDs (ABEND CODES)
+---------------------------
+01. 0B37 - if you do not have space left in DATASET to enter data.
+02. 0E37 - No space in MEMBER of a PDS. You can compress the PDS using Z command and then try to save.
+03. S322 - you get this abend when your job has executed beyond the time limit specified in TIME parameter.
+04. S806 - invalid program name specified in PGM parameter of EXEC statement
+05. S804 - space limit exceeded in REGION parameter of JOB command.
+06. S80A - space limit exceeded in REGION parameter of JOB command.
+07. S0C7 - you have typed a special character in a numeric field data.
+08. S0C4 - 1. mismatch in DD names in RUN JCL and COBOL program.
+	   2. STOP RUN not coded in COBOL program.
+08. U4038 - 1. Accessing a location of a table outside its limits.
+
+JCL programs
+------------
+01. JCL01 - IEFBR14 - allocate a dataset.
+02. JCL02 - IEBGENER - display dataset contents in spool.
+03. JCL03 - IEFBR14 - delete a dataset
+04. JCL04 - IEBGENER - copy dataset
+05. JCL05 - SORT - Sort on one/two field/s
+06. JCL06 - SORT - INCLUDE/OMIT command to sort specific records.
+07. JCL07 - SORT - OUTREC to reformat fields in output file
+08. JCL08 - SORT - Copy all/specific records
+09. JCL09 - SORT - Copy records (split a file into two or more files)
+10. JCL10 - SORT - Eliminate duplicates
+11. JCL11 - Instream procedure 
+12. JCL12 - Instream procedure + symbolic parameter + default value
+13. JCL13 - Catalogued Procedure
+14. JCL14 - JCL using Multiple Job Steps
+15. JCL15 - Define a GDG
+16. JCL16 - Define a Model for the GDG
+17. JCL17 - Define a GDS
+18. JCL18 - Populate data in a GDS
+19. JCL19 - Using GDS in two job steps
+20. JCL20 - COND parameter in JOB statement
+21. JCL21 - COND parameter in EXEC statement
+
+COBOL programs
+--------------
+01. COBOL01 - Basic program - DISPLAY, ACCEPT, COMPUTE
+02. COBOL02 - IF - ELSE - END-IF
+03. COBOL03 - PERFORM
+04. COBOL04 - Validate the input, Nested IF ELSE END-IF, IS NOT NUMERIC
+05. COBOL05 - EVALUATE, Edit characters
+06. COBOL06 - PIC V, how to display numerical value using decimal point
+07. COBOL07 - PERFORM ... TIMES, display statistics
+08. COBOL08 - Sequential table
+09. COBOL09 - Indexed table, SEARCH, SET
+10. COBOL10 - Signed variable
+11. COBOL11 - Display all records of PS file in spool.
+12. COBOL12 - Copy all records of PS file to PS file.
+13. COBOL13 - String manipulation - INSPECT, STRING, UNSTRING commands.
+14. COBOL14 - Copy all records from PS file to KSDS.
+15. COBOL15 - Copy valid records of PS file to KSDS and invalid records of PS file to ERROR.PS file. + COPY command
+16. COBOL16 - Display all records of KSDS in spool. + COPY command
+17. COBOL17 - 88-level.
+18. COBOL18 - Alternate Index (unique)
+19. COBOL19 - ACCESS MODE DYNAMIC
+20. COBOL20 - SORT
+21. COBOL21S, COBOL21T - CALL / EXIT PROGRAM
+22. COBOL22S, COBOL22T - CALL .. USING / LINKAGE SECTION
+23. COBOL23S, COBOL23T - Product program
+24. COBOL24 - REDEFINES clause, SSRANGE compiler option
+
+VSAM programs
+-------------
+01. VSAM01  - DELETE KSDS -> DEFINE KSDS
+02. VSAM02  - REPRO (copy)
+03. VSAM03  - REPRO (REPRO options)
+04. VSAM04  - ALTER
+05. VSAM05  - LISTCAT
+06. VSAM06  - DELETE ESDS -> DEFINE ESDS -> REPRO
+07. VSAM07  - Alternate Index (Unique)    : DELETE -> DEFINE AIX -> BLDINDEX -> DEFINE PATH
+08. VSAM08  - Alternate Index (Nonunique) : DELETE -> DEFINE AIX -> BLDINDEX -> DEFINE PATH
+
+DB2 programs
+------------
+01. CREATE - create table/ create index/ drop table
+02. INSERT - insert/ delete
+03. UPDATE - update
+04. SELECT - select
+05. DB201  - copy records from PS file to table
+06. DB202  - select a row from the table
+07. DB203  - cursor - display all rows of table in spool
+
+CICS programs
+-------------
+01. MAPSGS3 - BMS code
+02. 
+-----------------------------------------------------------------------------------------------------------------------------
+Knowledge Checks
+----------------
+01. Why is CICS called as a 'Mini Operating System' ?
+02. Why is CICS called as 'DB/DC system' ?
+03. What outputs will you get when you assemble a BMS code ?
+04. What will physical map and symbolic map contain ?
+05. What does BMS stand for ?
+06. Define the terms : Map, Mapset, Field
+07. How many types of fields are there ? Name them.
+08. Why do we use protected field, unprotected field and askip field ?
+09. Name the 3 macro instructions coded in BMS.
+10. What does TIOAPFX stand for ?
+----------------------------------------------------------------------------------------------------------------------------
+
+01.	Pseudo-Conversational Programming Technique
+	-------------------------------------------	
+
+	Conversational Programming Technique
+	------------------------------------
+
+	- Example :-
+
+		main() {
+			int a = 0, b = 0, s = 0;
+
+			printf("enter first number : ");
+			scanf("%d",&a);
+
+			printf("enter second number : ");
+			scanf("%d",&b);
+
+			s = a + b;
+
+			printf("sum = %d\n", s);
+		}
+
+		Output :-
+		---------
+		enter first number : 10
+		enter second number : 20	-> after 30 mins
+		sum = 30
+
+	- In a conversational programming technique, a program when executed remains in the memory till its complete
+	  execution. Even if the program is in idle state, it remains in the memory. Due to this, other programs waiting
+	  to get executed may not get a chance to execute due to space unavailability in RAM.
+
+
+	Pseudo-conversational Programming Technique
+	-------------------------------------------
+	
+	- In pseudo-conversational programming technique, a program when executed does not remain in RAM till its 
+	  complete execution. If the program is waiting for input and goes in idle state, CICS will "temporarily 
+	  remove" that program from the memory. This gives a chance to other programs waiting to get executed.
+	  When the program which was "temporarily removed" from the memory gets the input, then it is loaded back in the 
+          memory to continue its execution.
+	
+	  In summary, in pseudo-conversational programming, a program keeps on moving in and out of memory. When a
+	  program is not required for execution, it is "temporarily removed" from the memory. When the program is required
+	  for execution, it is "loaded back" in the memory.
+
+
+02.	Communication Area (COMMAREA)			(Analogy : Writing Pad)
+
+	- When a program is "temporarily removed" from the memory, any data entered in the variables declared in the
+	  program will get lost.
+
+	- If you do not want to lose this data, then you must copy this data, before removing the program temporarily
+	  from the memory, to a temporary area assigned to you which is called as "Communication Area"
+
+			1. Input data (partial)
+			2. copy data (partial) from Program variables to Communication Area variables
+			3. remove program temporarily from memory.
+			
+	- Communication Area is an area alloted to each program. This area contains variables in which you can store
+          data. This data will be retained even when a program is removed temporarily from the memory.
+
+	- When you load the program back in memory, then you can copy the data from Communication Area variables back
+	  to program variables and then continue to execute the logic in the program.
+
+			1. Load program back in memory
+			2. copy data (partial) from Communication Area variables to Program variables
+			3. Continue with the program logic
+
+	- CICS allots maximum 32K space to each program for Communication Area variables.
+
+	- In CICS application program, Communication Area is defined as 01 level record in Linkage Section. The name
+	  of the record must be DFHCOMMAREA.
+
+03.	Symbolic Map variables
+
+	- Each field defined in BMS code has variables with the following suffix :-
+
+		1. <field-name>I - Input	-> completed	-> RECEIVE MAP
+		2. <field-name>O - Output	-> completed	-> SEND MAP
+		3. <field-name>L - Length	-> completed	-> RECEIVE MAP
+		4. <field-name>C - Color
+		5. <field-name>H - Hilight
+		6. <field-name>A - Attribute
+		7. <field-name>F - Flag
+
+	- The above variables are used in CICS application program to process the map.
+
+04.	SEND MAP
+
+	- SEND MAP command is used to display output on the screen. It is similar to DISPLAY command of COBOL.
+
+	- SEND MAP command is used when you want the map output to be displayed on the screen.
+
+	- Syntax :-
+
+		EXEC CICS
+			SEND MAP(map-name) MAPSET(mapset-name) ERASE
+		END-EXEC.
+
+		- map-name is the name coded on left of DFHMDI command in BMS code.
+		- mapset-name is the name coded on left of DFHMSD command in BMS code.
+		- ERASE option will first clear the screen and then send map output on the screen.
+
+	- Before executing SEND MAP command, O-variable of the field must have the data to be displayed for that field
+	  on the screen. This is because, SEND MAP command displays the contents of O-variable of each field on the 
+	  screen.
+
+05.	RECEIVE MAP
+
+	- RECEIVE MAP command is used to capture the input data from the screen.
+
+	- RECEIVE MAP command will capture the data entered in each field on the screen and copy that data in 
+          I-variable of the field. 
+
+	- RECEIVE MAP command will update L-variable of the field with the length of the data entered in the I-variable.
+
+	- Example :-
+
+		Suppose you enter ASHOK in NAME unprotected field on the screen.
+		Then when RECEIVE MAP command is executed, NAMEI = ASHOK, NAMEL =  5.
+
+		Suppose you enter RAJENDRA in NAME unprotected field on the screen.
+		Then when RECEIVE MAP command is executed, NAMEI = RAJENDRA, NAMEL =  8.
+
+	- Syntax :-
+
+		EXEC CICS
+			RECEIVE MAP(map-name) MAPSET(mapset-name)
+		END-EXEC.
+
+		- map-name is the name coded on left of DFHMDI command in BMS code.
+		- mapset-name is the name coded on left of DFHMSD command in BMS code.
+
+
+06.	RETURN - TRANSID - COMMAREA
+
+	- RETURN - TRANSID - COMMAREA command is used to remove a program temporarily from the memory.
+
+	- Syntax :-
+
+		EXEC CICS
+			RETURN TRANSID(trans-id) COMMAREA(WS-commarea-variable)
+		END-EXEC.
+
+	- Example :-
+
+		EXEC CICS
+			RETURN TRANSID('T001') COMMAREA(WS-COMMAREA)
+		END-EXEC.
+		
+		When the above command executes, the following steps will occur in the back end :-
+
+		01. Control will be passed to CICS.
+
+		02. CICS will make a note of the transaction id coded in TRANSID option (T001)
+
+		03. CICS will copy the data of WS-COMMAREA variable to DFHCOMMAREA (Communication Area) variable 
+	            declared in the program.
+
+		04. CICS will then remove the program temporarily from the memory.
+
+
+07.	RETURN
+
+	- RETURN command will remove the program permanently from the memory. This command is similar to GOBACK or
+	  STOP RUN command in COBOL.
+
+	- Syntax :-
+
+		EXEC CICS
+			RETURN
+		END-EXEC.
+
+	- When RETURN command is executed, CICS will delete the data stored in Communication Area (COMMAREA) variables.
+
+
+08.	AID key (Attention Identification Key)
+
+	- AID key is a key which when pressed allows CICS to load the program back in the memory.
+
+	- Enter, Esc, F1 to F12, Clear, F13 to F24 are AID keys
+
+	- When the user presses an AID key, CICS will load the transaction specified in TRANSID option of RETURN - 
+	  TRANSID - COMMAREA command. This command was executed when the user removed the program temporarily from the 
+	  memory.
+
+
+09.	Program Logic
+
+	
+	- Analogy : Patient visiting a Doctor in his clinic
+
+		Is it your first visit	?
+		Yes
+			Prepare a File (empty)
+			Goto meet Doctor
+			Doctor will diaognise your problem
+			Doctor will recommend tests (paper -> File)
+			Doctor tell you to go
+			You leave Doctor's cabin and go hom
+		No
+			Receptionist will check your data/appointment
+			Goto meet Doctor
+			Doctor will first read his paper from File
+			Doctor will read your Test reports/ diaognize you
+			Doctor will recommend treatment (paper -> File)
+			Doctor will tell you to go, and :-
+				a. he tells you to meet him next week.
+					you leave Doctor's cabin and go home
+				b. he tells you, you are well now, no need to come again
+					you leave Doctor's cabin and go home
+
+	- CICS program logic for student program
+
+		Are you executing the program for the first time ?
+		Yes
+			Initialize the symbolic map variables
+
+			Send the student map on the screen (SEND MAP)
+
+			Perform the initial logic based on problem definition.
+
+			Remove the program temporarily from the memory (RETURN - TRANSID - COMMAREA)
+				(when the program is removed temporarily from the memory, the student map will be present 
+				 on the screen but the program will not be present in the memory)
+		No
+			check which AID key was pressed to load the program
+
+			If ENTER is the AID key pressed
+				> capture the input data from the screen. (RECEIVE MAP)
+					(ROLLNOI = 1234,   ROLLNOL = 4
+					 NAMEI   = MAHESH, NAMEL = 6
+					 MKS1I   = 74,     MKS1L = 2
+					 MKS2I   = 78,     MKS2L = 2
+					 MKS3I   = 62,     MKS3L = 2)
+
+			if ROLLNOI = 9999
+					remove the program permanently from the memory (RETURN)
+			else	  
+				calculate total, percentage, class, grade in TOTALO, PERCENTO, CLASSO AND GRADEO variables.
+				send the student map on the screen (total, percent, class, grade will be shown on screen)
+				remove program temporarily from the memory (RETURN - TRANSID - COMMAREA)
+
+	- CICS program logic for login program
+
+		Are you executing the program for the first time ?
+		Yes
+			> Initialize the symbolic map variables.
+			> Send the login map on the screen (SEND MAP)
+			> Perform initial logic based on problem definition.
+			> Remove the program temporarily from the memory (RETURN - TRANSID - COMMAREA)
+				(when the program is removed temporarily from the memory, the login map will be present 
+				 on the screen but the program will not be present in the memory)
+		No
+			> check which AID key was pressed to load the program
+			> If ENTER is the AID key pressed
+				> capture the input data from the screen. (RECEIVE MAP)
+					(LOGINI  = ABCDE,    LOGINL = 5
+					 PASSWDI  = PASS1,   PASSWDL = 5)
+				> if LOGINI = 99999
+					remove the program permanently from the memory
+			  	  else
+					IF LOGINI is correct and PASSWDI is correct
+						MOVE "credentials are correct" to MESG1O
+					ELSE
+						MOVE "credentials are incorrect" to MESG1O
+					END-IF
+					send login map on the screen (SEND MAP)
+					remove the program temporarily from the memory (RETURN - TRANSID - COMMAREA)
+
+			
+10.	EIBCALEN
+
+	- EIBCALEN stands for Execute Interface Block Communication Area LENgth.
+
+	- EIBCALEN is an in-built variable in CICS which stores the length of Communcation Area (DFHCOMMAREA in program).
+
+	- When you execute the CICS program for the first time, EIBCALEN = 0 because there is no data in Communication Area
+	  (DFHCOMMAREA in program). 
+
+	- The moment you put data in Communication Area variable (DFHCOMMAREA variable), EIBCALEN becomes non-zero.
+
+	- This way, we can check EIBCALEN variable at the beginning in PROCEDURE DIVISION.
+
+			IF EIBCALEN = 0
+				we are executing the program for the first time
+			ELSE
+				we are executing the program for 2nd, 3rd, 4th, etc..
+			END-IF.
+
+
+11. 	CICSGS3A
+
+	Problem Definition
+	------------------
+	Display login screen. Accept loging and password from the user.
+
+	If the login and password are correct, then display a positive message and allow the user to enter login details again.
+
+	If either or both login or/and password are incorrect, then display a error message and allow the user to enter 
+	login detailsagain.
+
+	If login is 99999, display a message and remove the program permanently from the memory.
+
+
+	INSTRUCTIONS
+	------------
+	01. Type E on left of OZA???.CICS.PROGRAMS and (CICS???A) on right of PROGRAMS.
+	02. COPY "OZAGS3.CICS.PROGRAMS(CICSGS3A)"
+	03. CHANGE ALL  "GS3"  "???"	->    Save.
+
+	04. Type E on left of OZA???.CICS.COMPILER and (CBLCSCMP) on right of COMPILER.
+	05. COPY "OZAGS3.CICS.COMPILER(CBLCSCMP)"
+	06. CHANGE ALL  "GS3"  "???"	->   Save.
+
+	07. Submit. You will get MAXCC=0.
+
+	08. Login to CICSOZA region.
+	09. Clear the screen and type your transid (A???) on top corner of the screen and press <enter>
+
+
+12.	Steps for executing a CICS program
+
+	01. 	Write BMS code.
+	02.	Assemble BMS code.
+
+	03.	Write COBOL/CICS program
+	04.	Compile COBOL/CICS program
+
+	05.	Make the entry of the mapset in PPT (Processing Program Table)	-> done by Admin
+		Command : CEDA DEF MAP(mapset-name) GROUP(group-name)
+		Example : CEDA DEF MAP(MAPSGS3) GROUP(OZAGS3)
+
+	06.	Install the PPT entry of the mapset in memory.			-> done by Admin	
+		Command : CEDA INS MAP(mapset-name) GROUP(group-name)
+		Example : CEDA INS MAP(MAPSGS3) GROUP(OZAGS3)
+
+	07.	Make the entry of the transaction id in PCT (Program Control Table)	-> done by Admin
+		Command : CEDA DEF TRANS(transid) PROGRAM(program-name) GROUP(group-name)
+		Example : CEDA DEF TRANS(AGS3) PROGRAM(CICSGS3A) GROUP(group-name)
+
+	08.	Install the PCT entry of transaction id in memory.			-> done by Admin
+		Command : CEDA INS TRANS(transid) GROUP(group-name)
+		Example : CEDA INS TRANS(AGS3) GROUP(OZAGS3)
+
+	09.	Make the entry of the program in PPT (Processing Program Table)	-> done by Admin
+		Command : CEDA DEF PROG(program-name) LANG(COBOL) GROUP(group-name)
+		Example : CEDA DEF PROG(CICSGS3) LANG(COBOL) GROUP(OZAGS3)
+
+	10.	Install the PPT entry of program in memory.			-> done by Admin
+		Command : CEDA INS PROG(program-name) GROUP(group-name)
+		Example : CEDA DEF PROG(CICSGS3) GROUP(OZAGS3)
+
+	11. 	Run your transaction by specifying transid on top left corner of the screen.
+
+
+
+13.	CICS TRANSACTIONS
+
+	A. CESN - Transaction to login to CICS region
+
+	B. CESF - Transaction to logout from CICS region
+
+	C. CEMT SET PROG(mapsetname/programname) NEWC
+		If you make any change in BMS code or in COBOL/CICS program, then you will have to assemble BMS code or 
+	        compile COBOL/CICS program depending on which code has been changed.
+
+		In CICS region, you can code the above CEMT command which will install the updated version of your code in
+		memory. Now when you run the transaction, you will be able to see the latest version of your coded in output.
+
+		If you do not code CEMT transaction and directly run the transaction, you will see the old version of the output.
+
+	D. CEDA - Transaction to define/install/delete transaction/mapset/program entry from PCT/PPT
+		- CEDA define/install/delete transaction entry from PCT
+		- CEDA define/install/delete mapset entry from PPT
+		- CEDA define/install/delete program entry from PPT
+
+	E. CECI SEND MAP(mapname) MAPSET(mapsetname) ERASE - CECI transaction is used to test output CICS command.		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+

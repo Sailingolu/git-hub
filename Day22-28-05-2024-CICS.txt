@@ -1,0 +1,355 @@
+
+Ground Rules
+------------
+01. You need to be on the call from 9.00 to to 6.00 pm compulsory.
+02. Most of the training time will be utilized for hands on.
+03. Do daily revision of topics taught during the day.
+04. Ask questions in case of doubts. 
+05. Make the session interactive.
+-----------------------------------------------------------------------------------------------------------------------------
+
+Error messages :-
+-----------------
+TSO/ISPF
+--------
+01. No members in data set : this means your PDS is empty. There are no members in the PDS.
+02. No space in directory  : you have exceeded the limit of Directory Blocks
+
+VSAM error
+----------
+01. Invalid Related Object : You are creating an AIX for a base cluster which has been created using REUSE parameter.
+			     You must remove REUSE in DEFINE CLUSTER command to resolve this error.
+
+COBOL file status codes
+-----------------------
+01. "00"	- File operation successful.
+02. "10"	- End of File
+03. "22"	- Duplicate primary key
+04. "23"	- Primary key/ Alternate key not found
+
+DB2 SQLCODEs
+-------------
+01.  0		- SQL command has executed successfully.
+02.  100	- End of SELECT, Delete all rows from an empty table.
+03. -117	- number of values in INSERT not matching with number of columns
+04. -181	- Date value invalid in date column.
+05. -204	- Invalid table name
+06. -206        - Invalid column name
+07. -408	- Invalid data type
+08. -601	- Object (table) already exists.
+09. -803 	- duplicate primary key
+
+ABnormal ENDs (ABEND CODES)
+---------------------------
+01. 0B37 - if you do not have space left in DATASET to enter data.
+02. 0E37 - No space in MEMBER of a PDS. You can compress the PDS using Z command and then try to save.
+03. S322 - you get this abend when your job has executed beyond the time limit specified in TIME parameter.
+04. S806 - invalid program name specified in PGM parameter of EXEC statement
+05. S804 - space limit exceeded in REGION parameter of JOB command.
+06. S80A - space limit exceeded in REGION parameter of JOB command.
+07. S0C7 - you have typed a special character in a numeric field data.
+08. S0C4 - 1. mismatch in DD names in RUN JCL and COBOL program.
+	   2. STOP RUN not coded in COBOL program.
+08. U4038 - 1. Accessing a location of a table outside its limits.
+
+JCL programs
+------------
+01. JCL01 - IEFBR14 - allocate a dataset.
+02. JCL02 - IEBGENER - display dataset contents in spool.
+03. JCL03 - IEFBR14 - delete a dataset
+04. JCL04 - IEBGENER - copy dataset
+05. JCL05 - SORT - Sort on one/two field/s
+06. JCL06 - SORT - INCLUDE/OMIT command to sort specific records.
+07. JCL07 - SORT - OUTREC to reformat fields in output file
+08. JCL08 - SORT - Copy all/specific records
+09. JCL09 - SORT - Copy records (split a file into two or more files)
+10. JCL10 - SORT - Eliminate duplicates
+11. JCL11 - Instream procedure 
+12. JCL12 - Instream procedure + symbolic parameter + default value
+13. JCL13 - Catalogued Procedure
+14. JCL14 - JCL using Multiple Job Steps
+15. JCL15 - Define a GDG
+16. JCL16 - Define a Model for the GDG
+17. JCL17 - Define a GDS
+18. JCL18 - Populate data in a GDS
+19. JCL19 - Using GDS in two job steps
+20. JCL20 - COND parameter in JOB statement
+21. JCL21 - COND parameter in EXEC statement
+
+COBOL programs
+--------------
+01. COBOL01 - Basic program - DISPLAY, ACCEPT, COMPUTE
+02. COBOL02 - IF - ELSE - END-IF
+03. COBOL03 - PERFORM
+04. COBOL04 - Validate the input, Nested IF ELSE END-IF, IS NOT NUMERIC
+05. COBOL05 - EVALUATE, Edit characters
+06. COBOL06 - PIC V, how to display numerical value using decimal point
+07. COBOL07 - PERFORM ... TIMES, display statistics
+08. COBOL08 - Sequential table
+09. COBOL09 - Indexed table, SEARCH, SET
+10. COBOL10 - Signed variable
+11. COBOL11 - Display all records of PS file in spool.
+12. COBOL12 - Copy all records of PS file to PS file.
+13. COBOL13 - String manipulation - INSPECT, STRING, UNSTRING commands.
+14. COBOL14 - Copy all records from PS file to KSDS.
+15. COBOL15 - Copy valid records of PS file to KSDS and invalid records of PS file to ERROR.PS file. + COPY command
+16. COBOL16 - Display all records of KSDS in spool. + COPY command
+17. COBOL17 - 88-level.
+18. COBOL18 - Alternate Index (unique)
+19. COBOL19 - ACCESS MODE DYNAMIC
+20. COBOL20 - SORT
+21. COBOL21S, COBOL21T - CALL / EXIT PROGRAM
+22. COBOL22S, COBOL22T - CALL .. USING / LINKAGE SECTION
+23. COBOL23S, COBOL23T - Product program
+24. COBOL24 - REDEFINES clause, SSRANGE compiler option
+
+VSAM programs
+-------------
+01. VSAM01  - DELETE KSDS -> DEFINE KSDS
+02. VSAM02  - REPRO (copy)
+03. VSAM03  - REPRO (REPRO options)
+04. VSAM04  - ALTER
+05. VSAM05  - LISTCAT
+06. VSAM06  - DELETE ESDS -> DEFINE ESDS -> REPRO
+07. VSAM07  - Alternate Index (Unique)    : DELETE -> DEFINE AIX -> BLDINDEX -> DEFINE PATH
+08. VSAM08  - Alternate Index (Nonunique) : DELETE -> DEFINE AIX -> BLDINDEX -> DEFINE PATH
+
+DB2 programs
+------------
+01. CREATE - create table/ create index/ drop table
+02. INSERT - insert/ delete
+03. UPDATE - update
+04. SELECT - select
+05. DB201  - copy records from PS file to table
+06. DB202  - select a row from the table
+07. DB203  - cursor - display all rows of table in spool
+
+CICS programs
+-------------
+01. MAPSGS3  - BMS code
+02. CICSGS3A - Login Program
+-----------------------------------------------------------------------------------------------------------------------------
+Knowledge Checks
+----------------
+01. What do you understand by pseudo-conversational programming technique ?
+02. What do you understand by Communication Area ?
+03. Why do we use EIBCALEN variable in a program ?
+04. What are the different suffixes a variable can have in a symbolic map ?
+05. Which suffix variables will get the data when RECEIVE MAP command is executed ?
+06. Which suffix variable must have a value before SEND MAP command is executed ?
+07. Why do we code COPY DFHAID command in a CICS program ?
+08. Which command will remove a program temporarily from the memory ?
+09. Which command will remove a program permanently from the memory ?
+10. Why do we code DFHCOMMAREA record in LINKAGE SECTION in a CICS program ?
+----------------------------------------------------------------------------------------------------------------------------
+01. 	Q : How to change color of text at run time ?
+
+	A : Move the color constant (DFHRED, DFHGREEN, DFHBLUE, DFHPINK,....) to the C-variable of the field before sending
+	    the map on the screen.
+	
+	    DFHRED, DFHGREEN, DFHBLUE,.... color constants are defined in CICS in-built member DFHBMSCA. You need to plug-in this
+	    member in your program using COPY command (COPY DFHBMSCA)
+
+02.	Q : How do I blink a message at run time ?
+
+	A : Move DFHBLINK to the H-variable of the field which you want to blink.
+
+	    DFHBLINK is defined in CICS in-built member DFHBMSCA. You need to plug-in this member in your program using 
+	    COPY command (COPY DFHBMSCA)
+
+03.	Q : How do I change the text at run time ?
+
+	A : Move the text which you want to display in the field to the O-variable of the field before sending the map.
+
+
+04.	Q : How do I blink a message at design time and how do I blink a message at run time ?
+
+	A : If you want to blink a message at design time, then code HILIGHT=BLINK for the field in BMS code.
+	    If you want to blink a message at run time, then you MOVE DFHBLINK TO H-variable of the field.
+
+	    If you go for design time option, then it will blink all messages which you display in the field.
+	    If you go for run time option, then you can bink specific messages of the field based on your choice.
+
+
+05	INSTRUCTIONS : CICS???A
+	-----------------------
+
+	01. Delete CICS???A from OZA???.CICS.PROGRAMS PDS.
+	02. Type E on left of OZA???.CICS.PROGRAMS and (CICS???A) on right of PROGRAMS
+	03. COPY "OZAGS3.CICS.PROGRAMS(CICSGS3A)".
+	04. CHANGE ALL  "GS3"  "???".	-> Save.
+	05. Compile the program using CBLCSCMP JCL.
+
+	06. Login to CICSOZA region.
+	07. Type the command : CEMT SET PROG(CICS???A) NEWC	-> You will see RESPONSE : NORMAL at bottom of the screen.
+	08. Run the transaction by typing A??? on top left corner of the screen.
+	09. Check if messages are coming in different colors, error message is blinking and login name + program name is
+	    displayed on top left corner of the screen.
+
+06.	CICS???B
+	
+	Problem Definition :-
+	---------------------
+	Display the student map on the screen.
+	Allow the user to enter roll number, name, marks of 3 tests. The program should calculate total, percentage,
+	class and grade and display these details on the screen.
+
+	The program should allow the user to enter any number of student details. If the user enters 9999 in rollno, the
+	program should be terminated.
+
+
+	INSTRUCTIONS
+	------------
+
+	01. Delete MAPS??? from OZA???.CICS.PROGRAMS.
+	02. Type E on left of OZA???.CICS.PROGRAMS and (MAPS???) on right of PROGRAMS.
+	03. COPY "OZAGS3.CICS.PROGRAMS(MAPS???)".
+	04. CHANGE ALL  "GS3"  "???"  -> Save.
+
+	05. Type E on left of OZA???.CICS.PROGRAMS and (CICS???B) on right of PROGRAMS.
+	06. COPY "OZAGS3.CICS.PROGRAMS(CICS???B)".
+	07. CHANGE ALL  "GS3"  "???"  -> Save.
+
+	08. Open the assembler JCL -> CICSMAP -> Save -> Submit -> You will get MAXCC=0
+	09. Open the compiler JCL  -> CBLCSCMP -> Type CICSGS3B on line 12, 14 -> Save -> Submit -> You will get MAXCC=0 
+
+	----------------------------------------------------------------------------------------------------------------
+	    >> Login to CICSOZA region
+	    >> 	Make the transaction entry in PCT and program entry in PPT
+
+		Define and Install PCT entry of transaction.
+		--------------------------------------------
+	10.  Define Transaction Entry in PCT
+
+	     CEDA  DEF  TRANS(B???)  GROUP(OZA???)  PROGRAM(CICS???B) 
+
+		> you will get a message DEFINE SUCCESSFUL. If you get DEFINE UNSUCCESSFUL message, ignore and
+		  go to next step.
+
+	11. Install Transaction Entry of PCT
+
+	    CEDA  INS  TRANS(B???)   GROUP(OZA???)
+
+		> you will get a message INSTALL SUCCESSFUL
+
+	12. Define Program entry in PPT
+
+	    CEDA  DEF  PROG(CICS???B)  GROUP(OZA???)  LANG(COBOL)
+
+		> you will get a message DEFINE SUCCESSFUL. If you get DEFINE UNSUCCESSFUL message, ignore and
+		  go to next step.
+			
+	13. Install Program entry of PPT
+
+	    CEDA  INS  PROG(CICS???B)  GROUP(OZA???)
+
+		> you will get a message INSTALL SUCCESSFUL
+
+	14. Clear the screen and run transaction B???. You can enter data for multiple students and check if your combinations
+	    are working correctly. If you type 9999 as roll number, you will quit the program.
+
+	----------------------------------------------------------------------------------------------------------------
+
+07.	CICS???B
+	
+	Problem Definition :-
+	---------------------
+	Display the student map on the screen.
+
+	Allow the user to enter roll number, name, marks of 3 tests. The program should validate the data - if user has
+	not entered data in any one of the fields, then the program should display an error message + total, percentage,
+	class, grade must not be calculated. Also, the program should place the cursor in the field on which the
+        data has not been entered.
+
+	If the user has entered data in all the fields, then the program should calculate total, percentage, class and 
+	grade and display these details on the screen.
+
+	The program should allow the user to enter any number of student details. If the user enters 9999 in rollno, the
+	program should be terminated.
+
+
+	Validation Technique : How to check if data has been entered in a field or not ?
+
+	01. Check the L-variable of the field. 
+            IF L-variable of the field = 0
+		it means data has not been entered in the field
+		move -1 to L-variable of the field
+		move an appropriate error message to the message field
+	 	send the map with CURSOR option
+		remove the program temporarily from the memory
+	    ELSE
+		it means data has been entered in the field
+	    END-IF.
+
+	INSTRUCTIONS
+	------------
+
+	01. Delete CICS???B from OZA???.CICS.PROGRAMS.
+	02. Type E on left of OZA???.CICS.PROGRAMS and (CICS???B) on right of PROGRAMS.
+	03. COPY "OZAGS3.CICS.PROGRAMS(CICS???B)".
+	04. CHANGE ALL  "GS3"  "???"  -> Save.
+
+	05. Open the compiler JCL  -> CBLCSCMP -> Type CICSGS3B on line 12, 14 -> Save -> Submit -> You will get MAXCC=0 
+	
+	06. CEMT SET PROG(CICS???B) NEWC 	-> RESPONSE : NORMAL will be displayed at bottom of the screen.
+
+	07. Run the transaction and test the program for different invalid + valid scenarios.
+
+
+
+08.	Pointers to execute your programs
+
+	Assumption : We have made the PCT of the transaction and PPT entry of the program & map - DEFINE + INSTALL
+
+	Scenario 01
+	-----------
+	If you make a change in the BMS code
+		Assemble the BMS code
+		Compile COBOL/CICS program
+		In CICSOZA region, give CEMT SET PROG command two times - once for MAP  and once for PROGRAM 
+		Run the transaction
+
+	Scenario 02
+	-----------
+	If you make a change in COBOL/CICS code
+		Compile COBOL/CICS program
+		In CICSOZA region, give CEMT SET PROG command once for PROGRAM 
+		Run the transaction
+
+09.	Exercise :-
+
+	Requirement 01
+	--------------
+	The client wants to change the valid login id from ABCDE to USR01 and password from WIPRO to PSWD01
+
+	Requirement 02
+	--------------
+	In the student program (CICS???B), the client wants 0000 to be entered as roll number to quit from the program.
+
+	Requirement 03
+	--------------
+	The client wants the GRADE values to be changed as follows :-
+		CURRENT GRADES -> DISTN, FIRST, SECOND, THIRD, FAIL
+		NEW     GRADES -> A+     A      B+      B      C
+
+	Requirement 04
+	--------------
+	In CICS???A and CICS???B, change the title showing the company name to MNO company.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

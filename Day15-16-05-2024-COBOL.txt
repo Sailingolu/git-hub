@@ -1,0 +1,423 @@
+
+Ground Rules
+------------
+01. You need to be on the call from 9.00 to to 6.00 pm compulsory.
+02. Most of the training time will be utilized for hands on.
+03. Do daily revision of topics taught during the day.
+04. Ask questions in case of doubts. 
+05. Make the session interactive.
+-----------------------------------------------------------------------------------------------------------------------------
+
+Error messages :-
+-----------------
+TSO/ISPF
+--------
+01. No members in data set : this means your PDS is empty. There are no members in the PDS.
+02. No space in directory  : you have exceeded the limit of Directory Blocks
+
+VSAM error
+----------
+01. Invalid Related Object : You are creating an AIX for a base cluster which has been created using REUSE parameter.
+			     You must remove REUSE in DEFINE CLUSTER command to resolve this error.
+
+COBOL file status codes
+-----------------------
+01. "00"	- File operation successful.
+02. "10"	- End of File
+03. "22"	- Duplicate primary key
+
+
+ABnormal ENDs (ABEND CODES)
+---------------------------
+01. 0B37 - if you do not have space left in dataset to enter data.
+02. S322 - you get this abend when your job has executed beyond the time limit specified in TIME parameter.
+03. S806 - invalid program name specified in PGM parameter of EXEC statement
+04. S804 - space limit exceeded in REGION parameter of JOB command.
+05. S80A - space limit exceeded in REGION parameter of JOB command.
+06. S0C7 - you have typed a special character in a numeric field data.
+07. S0C4 - 1. mismatch in DD names in RUN JCL and COBOL program.
+	   2. STOP RUN not coded in COBOL program.
+
+JCL programs
+------------
+01. JCL01 - IEFBR14 - allocate a dataset.
+02. JCL02 - IEBGENER - display dataset contents in spool.
+03. JCL03 - IEFBR14 - delete a dataset
+04. JCL04 - IEBGENER - copy dataset
+05. JCL05 - SORT - Sort on one/two field/s
+06. JCL06 - SORT - INCLUDE/OMIT command to sort specific records.
+07. JCL07 - SORT - OUTREC to reformat fields in output file
+08. JCL08 - SORT - Copy all/specific records
+09. JCL09 - SORT - Copy records (split a file into two or more files)
+10. JCL10 - SORT - Eliminate duplicates
+11. JCL11 - Instream procedure 
+12. JCL12 - Instream procedure + symbolic parameter + default value
+13. JCL13 - Catalogued Procedure
+14. JCL14 - JCL using Multiple Job Steps
+15. JCL15 - Define a GDG
+16. JCL16 - Define a Model for the GDG
+17. JCL17 - Define a GDS
+18. JCL18 - Populate data in a GDS
+19. JCL19 - Using GDS in two job steps
+20. JCL20 - COND parameter in JOB statement
+21. JCL21 - COND parameter in EXEC statement
+
+COBOL programs
+--------------
+01. COBOL01 - Basic program - DISPLAY, ACCEPT, COMPUTE
+02. COBOL02 - IF - ELSE - END-IF
+03. COBOL03 - PERFORM
+04. COBOL04 - Validate the input, Nested IF ELSE END-IF, IS NOT NUMERIC
+05. COBOL05 - EVALUATE, Edit characters
+06. COBOL06 - PIC V, how to display numerical value using decimal point
+07. COBOL07 - PERFORM ... TIMES, display statistics
+08. COBOL08 - Sequential table
+09. COBOL09 - Indexed table, SEARCH, SET
+10. COBOL10 - Signed variable
+11. COBOL11 - Display all records of PS file in spool.
+12. COBOL12 - Copy all records of PS file to PS file.
+13. COBOL13 - String manipulation - INSPECT, STRING, UNSTRING commands.
+14. COBOL14 - Copy all records from PS file to KSDS.
+15. COBOL15 - Copy valid records of PS file to KSDS and invalid records of PS file to ERROR.PS file. + COPY command
+16. COBOL16 - Display all records of KSDS in spool. + COPY command
+17. COBOL17 - 88-level.
+18. COBOL18 - Alternate Index (unique)
+19. COBOL19 - ACCESS MODE DYNAMIC
+20. COBOL20 - SORT
+21. COBOL21S, COBOL21T - CALL / EXIT PROGRAM
+22. COBOL22S, COBOL22T - CALL .. USING / LINKAGE SECTION
+23. COBOL23S, COBOL23T - Product program
+24. COBOL24 - REDEFINES clause, SSRANGE compiler option
+
+VSAM programs
+-------------
+01. VSAM01  - DELETE KSDS -> DEFINE KSDS
+02. VSAM02  - REPRO (copy)
+03. VSAM03  - REPRO (REPRO options)
+04. VSAM04  - ALTER
+05. VSAM05  - LISTCAT
+06. VSAM06  - DELETE ESDS -> DEFINE ESDS -> REPRO
+07. VSAM07  - Alternate Index (Unique)    : DELETE -> DEFINE AIX -> BLDINDEX -> DEFINE PATH
+08. VSAM08  - Alternate Index (Nonunique) : DELETE -> DEFINE AIX -> BLDINDEX -> DEFINE PATH
+
+-----------------------------------------------------------------------------------------------------------------------------
+Knowledge Checks
+----------------
+01. If you want to execute a program using alternate index, then for which files will you type DD statements in RUN JCL ?
+02. If you type DDABC as the DD name for base cluster, then what DD name will you type for PATH ?
+03. How many READ statements will you use in a program where ACCESS MODE IS DYNAMIC ?
+04. Name the function to convert a date from standard format to Julian format ?
+05. Give me the Julian date equivalent of the date 18th Feb 2024. -> YYYYDDD -> 2024049
+06. What do you understand by Gregorian date ?
+07. How many ways are there to capture the system (current) date and time ? State the techniques.
+08. What points must you keep in mind while merging two or more files into one file ?
+09. What does FD and SD in File Section stand for ?
+10. REVERSE(), MAX(), MIN() are examples of _______ functions.
+----------------------------------------------------------------------------------------------------------------------------
+
+01.	Inter-program communication - CALL command
+
+	- Inter-program communication means one program would like to call another program to use the service of the program.
+	- This is implements by using CALL command.
+	- If program A wants to goto program B, then in program A you must code CALL command to call program B.
+	- In the above example, program A is called as "Calling Program" and program B is called as "Called Program".
+	  In other words, Calling Program is the Source Program and Called Program is the Target Program.
+	- Advantages of Inter-program communication :-
+		- Reusability - you can call the same code multiple times with different sets of inputs.
+		- Modularity - you can make your program logic modular - split the logic into different programs.
+
+
+02.	CALL command
+	- CALL command is used to call a program
+
+	- Syntax :-
+
+		Syntax 1 : Static CALL
+		CALL "program-name".
+
+		Syntax 2 : Dynamic CALL
+		MOVE "program-name" TO variable.
+		CALL variable.
+
+03.	COBOL21 - CALL command
+
+	Problem Definition :-
+	---------------------
+	Write a program which will display a message "HELLO" in calling program. After this, it should call a program in
+        which a message "HOW ARE YOU ? " must be displayed. The control should then come back to calling program and a
+	message "I AM FINE" should be displayed in calling program.
+
+			
+	Instructions :-
+	---------------
+	01. Using =3.2 allocate a new PDS as follows :-
+		PDS name : COBOL.PGMS.ADVANCED.TWO, space unit = TRKS, primary qty = 10, secondary qty = 7,
+		directory blocks = 3, record format = FB, record length = 80, blocksize = 800, dataset name type = PDS.
+
+	02. Type E on left of OZA???.COBOL.PGMS.ADVANCED.TWO and (COBOL21S) on right of TWO.
+	03. COPY "OZAGS3.COBOL.PGMS.ADVANCED.TWO(COBOL21S)". Save. End.
+	04. Type E on left of OZA???.COBOL.PGMS.ADVANCED.TWO and (COBOL21T) on right of TWO.
+	05. COPY "OZAGS3.COBOL.PGMS.ADVANCED.TWO(COBOL21T)". Save.
+
+	06. Open compiler JCL and make changes on line 12,14 in the JCL as shown below :-
+		000012 //COMPILE.SYSIN  DD DSN=OZAGS3.COBOL.PGMS.ADVANCED.TWO(COBOL21S),    <------ see here
+		000013 // DISP=SHR                                                          <------ see here
+		000014 //COMPILE.SYSLIB DD  DSN=OZAGS3.COBOL.COPYLIB,DISP=SHR               
+		000015 //LKED.SYSLMOD   DD  DSN=OZAGS3.COBOL.LOADLIB(COBOL21S),DISP=SHR      
+
+		Note that DD statement on line 12 is continued on line 13. There is a space after // on line 13.
+
+	07. Save. Submit.
+	08. Change the member name to COBOL21T on line 12,15. Save. Submit.
+
+	09. Open RUN JCL and change the program name on line 9 to COBOL21S. You can delete the DD statements for cluster.
+	10. Save. Submit. Goto spool and see the messages in spool.
+	
+	Pointers
+	--------
+	> You need to compile both the program - calling program and called program. 
+	> You need to specify calling program name (program which contains CALL command) in RUN JCL.
+
+	
+03.	COBOL22 - CALL command - passing input to called program.
+
+	Problem Definition :-
+	---------------------
+	Input two numbers in calling program. Pass the two numbers to a called program. Add the two numbers in the
+	called program and return the sum of two numbers. Display the sum of two numbers in calling program.
+
+
+	Pass by reference
+	-----------------
+
+		program-a			program-b
+		---------			---------
+		 X = 10 --------------------->  X = 10
+					  	X = X + 5 (X=15)
+		display X <------------------   exit program
+		(15)
+		  	
+	Pass by value
+	-------------
+
+		program-a			program-b
+		---------			---------
+		 X = 10 --------------------->  X = 10
+					  	X = X + 5 (X=15)
+		display X <------------------   exit program
+		(10)
+
+
+	BY REFERENCE/ BY CONTENT
+	-------------------------
+	a. You code BY REFERENCE in CALL command, and pass a variable in CALL command to the called program.
+	   If the value of this variable changes in called program, then on returning back to the calling program, you
+	   will see the modified value of the variable. This concept is called as "pass by reference".
+
+	b. You code BY CONTENT in CALL command, and pass a variable in CALL command to the called program.
+	   If the value of this variable changes in called program, then on returning back to the calling program, you
+	   will see the original value of the variable and not the modified value of the variable. This concept is called
+	   as "pass by value".
+
+	   If you do not code either BY REFERENCE or BY CONTENT clause in CALL command, then the default is BY REFERENCE.
+
+
+	Instructions :-
+	---------------
+	01. Type E on left of OZA???.COBOL.PGMS.ADVANCED.TWO and (COBOL22S) on right of TWO.
+	02. COPY "OZAGS3.COBOL.PGMS.ADVANCED.TWO(COBOL22S)". Save. End.
+	03. Type E on left of OZA???.COBOL.PGMS.ADVANCED.TWO and (COBOL22T) on right of TWO.
+	04. COPY "OZAGS3.COBOL.PGMS.ADVANCED.TWO(COBOL22T)". Save.
+
+	05. Compile COBOL22S. 
+	06. Compile COBOL22T.
+
+	07. Open RUN JCL and change program name to COBOL22S on line 9 and type SYSIN as follows :-
+		//SYSIN   DD   *
+		048
+		093
+		/*
+	08. Save. Submit. Goto spool and see the output. You will see the sum in RESULT.
+
+	09. In COBOL22S, change BY REFERENCE to BY CONTENT. Save.
+	10. Compile COBOL22S.
+	11. Run the program. Goto spool and see the output. You will see the result as 0000.
+
+	12. In COBOL22S, remove BY CONTENT clause. Save.   --->	(CALL PGM-NAME USING NUM-1, NUM-2, RESULT.)
+	13. Compile COBOL22S.
+	14. Run the program. Goto spool and see the output. You will see the sum in RESULT.
+
+
+04.	STOP RUN, EXIT PROGRAM, GOBACK commands
+
+	a. STOP RUN.
+		- STOP RUN command must always be coded in calling program.
+		- STOP RUN when coded in calling program will take you out of the program back to OS.
+	
+	b. EXIT PROGRAM
+		- EXIT PROGRAM command must always be coded in called program.
+		- EXIT PROGRAM when coded in called program will return the control back to calling program.
+
+	c. GOBACK
+		- GOBACK command can be coded in calling program as well as called program.
+		- GOBACK when coded in calling program will take you out of the program back to OS.
+		- GOBACK when coded in called program will return the control back to calling program.
+
+
+05.	Static CALL v/s Dynamic CALL
+
+	Static CALL
+	-----------
+	01. Syntax : CALL "program-name".
+	02. You must always compile the called program first before compiling the calling program.
+	03. If program-A is the calling program and program-B is the called program, then on compiling both these programs, you
+	    will get one load module for both the programs and the load module name will be named after calling program (program-A)
+	04. If you make a change in called program, then you must compile called program first and then compile calling program.
+
+	Dynamic CALL
+	------------
+	01. Syntax : CALL variable. 	where variable should have the program-name to be called.
+	02. You can compile either calling program before called program or you can compile called program before calling program.
+	03. If program-A is the calling program and program-B is the called program, then on compiling both these programs, you
+	    will get a separate load module of each of the programs (load module of program-A and load module of program-B)   
+	04. If you make a change in called program, then you need to compile only the called program. You need not compile the
+	    calling program.
+
+
+06.	COBOL23 
+
+	Problem Definition :-
+	---------------------
+	Input product name and price. Calculate discount as follows :-
+
+		Price		Discount
+		-----		--------
+		< 1000		  2%
+	   >= 1000 & < 5000       5%
+		>= 5000		 10%
+
+	Calculate the net price and display all the details of the product.
+
+	Discount and net price should be calculated in a sub program.
+
+	Instructions :-
+	---------------
+	01. Type E on left of OZA???.COBOL.PGMS.ADVANCED.TWO and (COBOL23S) on right of TWO.
+	02. COPY "OZAGS3.COBOL.PGMS.ADVANCED.TWO(COBOL23S)". Save. End.
+	03. Type E on left of OZA???.COBOL.PGMS.ADVANCED.TWO and (COBOL23T) on right of TWO.
+	04. COPY "OZAGS3.COBOL.PGMS.ADVANCED.TWO(COBOL23T)". Save.
+
+	05. Compile COBOL23S. 
+	06. Compile COBOL23T.
+
+	07. Open RUN JCL and change program name to COBOL22S on line 9 and type SYSIN as follows :-
+		//SYSIN   DD   *
+		LAPTOP--------- 035000 000000 000000
+		/*
+
+	08. Save. Submit. Goto spool and check the output in SYSOUT.
+
+07.	COBOL24 
+
+	Problem Definition :-
+	---------------------
+	Assign month name and days in a month to a table within the program and display data from all locations of the table.
+
+	Instructions :-
+	---------------
+	01. Type E on left of OZA???.COBOL.PGMS.ADVANCED.TWO and (COBOL24) on right of TWO.
+	02. COPY "OZAGS3.COBOL.PGMS.ADVANCED.TWO(COBOL24)". Save. End.
+
+	03. Compile COBOL24.
+	04. In RUN JCL, change program name to COBOL24 on line 9 and type SYSIN as follows :-
+		//SYSIN   DD   *
+		/*
+
+	05. Save. Submit. Goto spool and check the output in SYSOUT. You will see garbage data on the last line.
+
+	06. Now in compiler JCL, make changes on line 11 as follows :-
+		000011 //COBCL    EXEC COBCL,PARM='SSRANGE'     
+
+	07. Save. Submit.
+	08. Run the program. You will now get abend S000 U4038 which is correct.
+	09. Goto spool and check output in SYSOUT. You will see abend error message at the bottom. You can read the message.
+
+	10. In COBOL24 now, on line 36, type LOCN = 13.
+	11. Save. Compile. Run.
+	12. Goto spool and check the output. You will get proper output now since you are displaying the data within the 
+            boundary of array.
+
+	Notes
+	-----
+	01. REDEFINES clause is coded so that two variables can share the same memory location. One of the implementation of
+	    this concept is to assign data to a table within a program.
+	02. SSRANGE - This is a compiler option which will give you abend S000 U4038 if you try to access a location of a
+ 	    table outside the limits. i.e. if a table is having 5 locations and you try to access data from 6th location.
+
+
+
+08.	Assignment - COBOL25S, COBOLB25T
+
+
+	Problem Definition
+	------------------
+	Input student name and marks in three tests. Calculate total, percentage and class. The program should display
+	total, percentage and class.
+
+	total -> test1 + test2 + test3
+
+	percentage -> total / 3
+
+	If marks in all the tests is >= 35, then class is "PASS" else class is "FAIL".
+
+	The program should find total, percentage and class in a sub program (called program).
+
+		Hint :-
+		-------
+		> Logic as per COBOL23S, COBOl23T.
+		> You need to pass test1, test2, test3, total, percentage, class variables to called program.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

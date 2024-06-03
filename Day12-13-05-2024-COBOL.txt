@@ -1,0 +1,462 @@
+
+Ground Rules
+------------
+01. You need to be on the call from 9.00 to to 6.00 pm compulsory.
+02. Most of the training time will be utilized for hands on.
+03. Do daily revision of topics taught during the day.
+04. Ask questions in case of doubts. 
+05. Make the session interactive.
+-----------------------------------------------------------------------------------------------------------------------------
+
+Error messages :-
+-----------------
+TSO/ISPF
+--------
+01. No members in data set : this means your PDS is empty. There are no members in the PDS.
+02. No space in directory  : you have exceeded the limit of Directory Blocks
+
+VSAM error
+----------
+01. Invalid Related Object : You are creating an AIX for a base cluster which has been created using REUSE parameter.
+			     You must remove REUSE in DEFINE CLUSTER command to resolve this error.
+
+ABnormal ENDs (ABEND CODES)
+---------------------------
+01. 0B37 - if you do not have space left in dataset to enter data.
+02. S322 - you get this abend when your job has executed beyond the time limit specified in TIME parameter.
+03. S806 - invalid program name specified in PGM parameter of EXEC statement
+04. S804 - space limit exceeded in REGION parameter of JOB command.
+05. S80A - space limit exceeded in REGION parameter of JOB command.
+06. S0C7 - you have typed a special character in a numeric field data.
+07. S0C4 - 1. mismatch in DD names in RUN JCL and COBOL program.
+	   2. STOP RUN not coded in COBOL program.
+
+JCL programs
+------------
+01. JCL01 - IEFBR14 - allocate a dataset.
+02. JCL02 - IEBGENER - display dataset contents in spool.
+03. JCL03 - IEFBR14 - delete a dataset
+04. JCL04 - IEBGENER - copy dataset
+05. JCL05 - SORT - Sort on one/two field/s
+06. JCL06 - SORT - INCLUDE/OMIT command to sort specific records.
+07. JCL07 - SORT - OUTREC to reformat fields in output file
+08. JCL08 - SORT - Copy all/specific records
+09. JCL09 - SORT - Copy records (split a file into two or more files)
+10. JCL10 - SORT - Eliminate duplicates
+11. JCL11 - Instream procedure 
+12. JCL12 - Instream procedure + symbolic parameter + default value
+13. JCL13 - Catalogued Procedure
+14. JCL14 - JCL using Multiple Job Steps
+15. JCL15 - Define a GDG
+16. JCL16 - Define a Model for the GDG
+17. JCL17 - Define a GDS
+18. JCL18 - Populate data in a GDS
+19. JCL19 - Using GDS in two job steps
+20. JCL20 - COND parameter in JOB statement
+21. JCL21 - COND parameter in EXEC statement
+
+COBOL programs
+--------------
+01. COBOL01 - Basic program - DISPLAY, ACCEPT, COMPUTE
+02. COBOL02 - IF - ELSE - END-IF
+03. COBOL03 - PERFORM
+04. COBOL04 - Validate the input, Nested IF ELSE END-IF, IS NOT NUMERIC
+05. COBOL05 - EVALUATE, Edit characters
+06. COBOL06 - PIC V, how to display numerical value using decimal point
+07. COBOL07 - PERFORM ... TIMES, display statistics
+08. COBOL08 - Sequential table
+09. COBOL09 - Indexed table, SEARCH, SET
+10. COBOL10 - Signed variable
+11. COBOL11 - Display all records of PS file in spool.
+12. COBOL12 - Copy all records of PS file to PS file.
+
+VSAM programs
+-------------
+01. VSAM01  - DELETE KSDS -> DEFINE KSDS
+02. VSAM02  - REPRO (copy)
+03. VSAM03  - REPRO (REPRO options)
+04. VSAM04  - ALTER
+05. VSAM05  - LISTCAT
+06. VSAM06  - DELETE ESDS -> DEFINE ESDS -> REPRO
+07. VSAM07  - Alternate Index (Unique)    : DELETE -> DEFINE AIX -> BLDINDEX -> DEFINE PATH
+08. VSAM08  - Alternate Index (Nonunique) : DELETE -> DEFINE AIX -> BLDINDEX -> DEFINE PATH
+
+-----------------------------------------------------------------------------------------------------------------------------
+Knowledge Checks
+----------------
+01. What is an alternate index ? Why do we use it ?
+02. Can alternate index have duplicate values ?
+03. When do we get an error 'Invalid Related Object' while defining an alternate index ?
+04. State one difference between primary key and alternate key ?
+05. Explain UPGRADE option in DEFINE AIX command.
+06. I want to define AIX with duplicate values. What option must I code in DEFINE AIX to indicate duplicate values ?
+07. State two drawbacks of Alternate Index.
+08. Define the term PATH.
+09. If a base cluster has an alternate index and path, if you delete the path then what will happen with base cluster
+    and alternate index - will they continue to exist or will they get deleted ?
+10. Which command will populate records in alternate index from the base cluster ?
+-----------------------------------------------------------------------------------------------------------------------------
+
+01. 	PS File Handling 
+
+	- Using file handling concept, you can read a record, write a record, update a record, delete a record in file.
+	- Read, write, delete, update are called as file operations
+	- Before you perform any of the file operations - read, write, update, delete - you must open the file.
+	  Similarly after you perform any of the file operations - you must close the file at end of the program.
+	- File Operation Commands :- OPEN, READ, WRITE, REWRITE, DELETE, CLOSE
+
+02.	File Status variable
+
+	- After performing file operation in a program using OPEN, CLOSE, READ, WRITE, REWRITE, DELETE commands, you
+	  must check if file operation was successful before performing the next step in the program. 
+	  If the file operation was successful, you execute one set of commands else you execute another set of commands.		
+
+	- The above step is implemented using 'File Status Variable'. 
+
+	- File Status Variable is a user defined variable, but it should have PIC X(02).
+
+	- If the file operation is successful, then COBOL will place "00" in file status variable. 
+	  If the file operation was not successful, then COBOL will place a non-zero value in file status variable.
+
+		OPEN THE FILE
+		IF FILE-STATUS-VARIABLE = '00'
+			READ THE RECORD FROM THE FILE
+			IF FILE-STATUS-VARIABLE = '00'
+				DISPLAY THE RECORD
+			ELSE
+				DISPLAY ERROR MESSAGE
+			END-IF
+		ELSE
+			DISPLAY ERROR MESSAGE
+		END-IF.
+		CLOSE THE FILE
+		IF FILE-STATUS-VARIABLE NOT = '00'
+			DISPLAY ERROR MESSAGE
+		END-IF.
+
+	- File status variable is specific to a file. If you are using two files in the program, then you need to define
+	  file status variable for each of the files.
+
+
+03.	OPEN command - open a PS file
+
+	- OPEN command is used to open a Ps file. A PS file can be opened in one of the 4 modes :-
+	
+		Mode
+		----
+		OUTPUT	- you can write a new record in PS file. 
+			- you open a file in OUTPUT mode, when you want to write a record in PS file which is empty.
+			- If you have a PS file with 5 records and if you open PS file in OUTPUT mode to write a new
+		          record, then the 5 records will be deleted and the new record will be the only record in PS file.
+			- If you want to overwrite records of PS file, then you can open the file in OUTPUT mode.
+
+		EXTEND  - you can write a new record in PS file.
+			- you open a file in EXTEND mode when you want to add records in PS file.
+			- If you have a PS file with 5 records and if you open PS file in EXTEND mode to write a new
+		          record, then the new record will be added after the 5th record and there will be 6 records in 
+			  PS file.
+
+		INPUT	- you can read a record from PS file.
+
+		I-O 	- you can update an existing record in PS file.
+
+	- Records cannot be deleted in PS file.
+
+	- Syntax :-
+
+		OPEN  mode  logical-file-name.
+
+	- Each PS file used in the program, will have a physical name and a logical name. The physical name of PS file
+	  is specified in RUN JCL. The logical name of PS file is defined and used in COBOL program in OPEN, CLOSE statements.
+
+04.	CLOSE command - Close a PS file
+
+	- CLOSE command is used to close a PS file.
+
+	- Syntax :-
+
+		CLOSE logical-file-name.
+
+05. 	Define file specifications in COBOL program
+
+	- ENVIRONMENT DIVISION entries 
+
+		ENVIRONMENT DIVISION.
+		INPUT-OUPUT SECTION.
+		FILE-CONTROL.							-> is an in-built paragraph name.
+			SELECT logical-file-name ASSIGN TO dd-name
+			ORGANIZATION IS SEQUENTIAL
+			FILE STATUS IS file-status-variable.
+
+	- DATA DIVISION entries
+
+		Syntax 01
+		----------
+		DATA DIVISION.
+		FILE SECTION.
+		FD 	logical-file-name			-> logical-file-name is same as that coded in ENVIRONMENT DIVISION.
+			LABEL RECORDS ARE STANDARD
+			RECORDING MODE IS record-format.	-> record-format =  F - Fixed Length/ V - Variable Length
+		01	record-buffer.
+			05 	field-name-1	PIC data-type(width).
+			05 	field-name-2	PIC data-type(width).
+			05 	field-name-3	PIC data-type(width).
+			....
+			....
+	
+		Syntax 02
+		----------
+		DATA DIVISION.
+		FILE SECTION.
+		FD 	logical-file-name			-> logical-file-name is same as that coded in ENVIRONMENT DIVISION.
+			LABEL RECORDS ARE STANDARD
+			RECORDING MODE IS record-format.	-> record-format =  F - Fixed Length/ V - Variable Length
+		01	record-buffer.
+			05 	FILLER		PIC X(record-length).
+
+
+		Note
+		----
+		1. FD - File Descriptor
+
+		2. LABEL RECORDS ARE STANDARD - this will place a header label before each record and a footer label after each
+		   record of PS file. COBOL will store control information related to each record in these labels.
+
+
+06.	Program logic for COBOL11 - To display all records of PS file.
+
+
+	Problem Definition :-
+	---------------------
+	Write a program to display all records of a PS file. At the end of the program, display the total number of records.
+
+
+	PROGRAM LOGIC (PSEUDO CODE)
+	---------------------------
+	0000-MAIN-PARA.
+		OPEN THE PS FILE IN INPUT MODE.
+
+		READ A RECORD FROM PS FILE.			-> READ 1ST RECORD (101)
+		PERFORM 1000-PROCESS-PARA UNTIL END OF FILE
+		DISPLAY TOTAL-COUNT
+
+		CLOSE THE PS FILE.
+		STOP RUN.
+
+	1000-PROCESS-PARA.
+		DISPLAY RECORD					-> DISPLAY 4TH RECORD (104)
+		ADD 1 TO TOTAL-COUNT.
+		READ A RECORD FROM PS FILE.			-> READ EOF
+		EXIT.
+					
+	101	.....
+	102	.....
+	103	.....
+	104	..... 
+      > EOF
+
+
+	READ command 
+	------------
+	> READ command is used to read a record from PS file.
+
+	> Syntax :-
+
+		READ logical-file-name INTO WS-record.
+
+		If READ command executes sucessfully, then the data of the record read will be copied in WS-record and COBOL will
+		place "00" in file status variables indicating that READ command has executed successfully.
+
+		If READ command reads End Of File position, then COBOL will place "10" in file status variables indicating that
+		READ command has failed to read a record.
+
+		Summary :-
+		----------
+				       |---> READ A RECORD --> FILE STATUS VARIABLE = "00"  ---> WS-RECORD = RECORD-DATA
+			READ COMMAND ->|
+				       |---> READ EOF -------> FILE STATUS VARIABLE = "10". ---> WS-RECORD = EMPTY
+
+
+
+	Instructions 
+	------------
+	01. Using =3.2, allocate a PDS COBOL.PGMS.ADVANCED.
+	    Space Unit = TRKS, Primary Qty = 10, Secondary Qty = 7, Directory Blocks = 3, 
+	    Record Length = 80, Record Format = FB, Block Size = 800, Dataset Name Type = PDS
+	02. Using =3.4, check if COBOL.PGMS.ADVANCED PDS has been allocated.
+
+	03. Type E on left of COBOL.PGMS.ADVANCED and (COBOL11) on right of ADVANCED.
+	04. COPY "OZAGS3.COBOL.PGMS.ADVANCED(COBOL11)". Save.
+
+	05. Open Compiler JCL -> COBOL.COMPILER(CBLCMPLK).
+	06. On line 12, type DSN=OZA???.COBOL.PGMS.ADVANCED(COBOL11),DISP=SHR
+	07. On line 14, type DSN=OZA???.COBOL.LOADLIB(COBOL11),DISP=SHR
+	08. Save. Submit.
+
+	09. Open Run JCL -> COBOL.COMPILER(CBLRUN).
+	10. On line 9, type PGM=COBOL11
+	11. Before SYSIN, type the following line :-
+		//DD1	DD	DSN=OZA???.EMP.PS1,DISP=OLD
+	12. Save. Submit. Goto spool and check the output in SYSOUT.
+
+	13. In program source code, in ENVIRONMENT DIVISION -> SELECT clause -> change DD1 to DD01. Save.
+	14. Compile the program.
+	15. In RUN JCL, change DD1 to DD01. Save. Submit. Goto spool and check output in SYSOUT.
+
+
+07.	COBOL12 - to copy records from ps file to ps file.
+
+	Problem Definition :-
+	---------------------
+	Write a program to copy all records from EMP.PS1 to EMP.PS2. At the end of the program, display the
+	total number of records copied.
+
+
+		Source File		   Target File
+		    |				^
+		    V				|
+		Read a record		   Write record
+		    |				|
+		    |----> WS-RECORD ---------->|	
+
+
+	WRITE command 
+	-------------
+	- WRITE command is used to write a record in PS file.
+
+	- Syntax :-
+
+		WRITE record-buffer FROM WS-record.
+
+		When WRITE command is executed :-
+		> Record will be copied from WS-record to record-buffer.
+		> Record from record buffer will be written to the file.
+
+		Summary :-
+		----------
+			WS-record (record) ----> record buffer (record) ----> File (record)
+					
+
+	Instructions
+	------------
+	01. Type E on left of COBOL.PGMS.ADVANCED and (COBOL12) on right of ADVANCED.
+	02. COPY "OZAGS3.COBOL.PGMS.ADVANCED(COBOL12)". Save.
+	03. Open Compiler JCL -> Change COBOL11 to COBOL12 on line 12 and line 14. Save. Submit.
+	04. Open RUN JCL -> Change COBOL11 to COBOL12 on line 9. Code DD statements as follows :-
+
+		//CEEDUMP  DD  SYSOUT=*                                                
+		//*--- DD NAMES OF SOURCE FILE AND TARGET FILE ------------------------
+		//DD1      DD  DSN=OZAGS3.EMP.PS1,DISP=OLD                             
+		//DD2      DD  DSN=OZAGS3.EMP.PS2,DISP=OLD                             
+		//*--------------------------------------------------------------------
+		//SYSIN    DD  *                                                       
+		/*                                                                     
+
+	05. Save. Submit.
+	06. Goto spool. Check messages in SYSOUT.
+	07. Open EMP.PS2 and check if records have been copied.
+
+
+08.	COBOL13 - String Manipulation commands - STRING, UNSTRING, INSPECT
+
+	Problem Definition :-
+	----------------------
+	Write a program to copy all records from PS file 1 to PS file 2.
+	Before writing the record in PS file 2, do the following :-
+		1. Remove - (hyphens) from employee name and project.
+		2. Name should be written in - Surname FirstName - format.
+		3. Join date must be in dd/mm/yyyy format.
+
+	At the end, display total number of records copied.
+
+
+	INSPECT
+	-------
+	- INSPECT command can be used to replace all occurences of one character in a string with another character.
+
+	- Syntax :-
+
+		INSPECT string-variable REPLACING ALL "character-1" BY "character-2".
+
+	  Examples :-
+		- MOVE "RAJESH KUMAR----" TO EMP-NAME.
+	          INSPECT EMP-NAME REPLACING ALL "-" BY " ".
+		  DISPLAY EMP-NAME.				------> RAJESH KUMAR
+
+		- MOVE "23-04-2024" TO DATE-1.
+		  INSPECT DATE-1 REPLACING ALL "-" BY "/".
+		  DISPLAY DATE-1				------> 23/04/2024.
+
+	STRING, UNSTRING
+	----------------
+	- STRING command can be used to join two or more strings into one string.
+
+	- UNSTRING command can be used to split one string into two or more strings.
+	
+	- Example :-
+
+		NAME-1 -> "RAJESH KUMAR"
+		 > Split NAME-1 into two variables FNAME and SNAME. FNAME should contain RAJESH, SNAME should contain KUMAR
+		 > Join SNAME, FNAME -> NAME-1	(NAME-1 = SNAME + FNAME)
+		DISPLAY NAME-1 -> KUMAR RAJESH
+
+	Instructions 
+	------------
+	01. Type E on left of COBOL.PGMS.ADVANCED and (COBOL13) on right of ADVANCED.
+	02. COPY "OZAGS3.COBOL.PGMS.ADVANCED(COBOL13)". Save.
+	03. Open Compiler JCL -> Change COBOL12 to COBOL13 on line 12 and line 14. Save. Submit.
+	04. Open RUN JCL -> Change COBOL12 to COBOL13 on line 9. DD statements will be same as earlier - no change.
+	05. Save. Submit.
+	06. Goto spool and check the messages in SYSOUT.
+	07. Open EMP.PS1 file for reference.
+	08. Open EMP.PS2 file and check if emp-name, project and join date have been formatted as per specification.
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,527 @@
+
+Ground Rules
+------------
+01. You need to be on the call from 9.00 to to 6.00 pm compulsory.
+02. Most of the training time will be utilized for hands on.
+03. Do daily revision of topics taught during the day.
+04. Ask questions in case of doubts. 
+05. Make the session interactive.
+-----------------------------------------------------------------------------------------------------------------------------
+
+Error messages :-
+-----------------
+TSO/ISPF
+--------
+01. No members in data set : this means your PDS is empty. There are no members in the PDS.
+02. No space in directory  : you have exceeded the limit of Directory Blocks
+
+VSAM error
+----------
+01. Invalid Related Object : You are creating an AIX for a base cluster which has been created using REUSE parameter.
+			     You must remove REUSE in DEFINE CLUSTER command to resolve this error.
+
+COBOL file status codes
+-----------------------
+01. "00"	- File operation successful.
+02. "10"	- End of File
+03. "22"	- Duplicate primary key
+04. "23"	- Primary key/ Alternate key not found
+
+DB2 SQLCODEs
+-------------
+01.  0		- SQL command has executed successfully.
+02.  100	- End of SELECT, Delete all rows from an empty table.
+03. -117	- number of values in INSERT not matching with number of columns
+04. -181	- Date value invalid in date column.
+05. -204	- Invalid table name
+06. -206        - Invalid column name
+07. -408	- Invalid data type
+08. -601	- Object (table) already exists.
+09. -803 	- duplicate primary key
+
+
+ABnormal ENDs (ABEND CODES)
+---------------------------
+01. 0B37 - if you do not have space left in DATASET to enter data.
+02. 0E37 - No space in MEMBER of a PDS. You can compress the PDS using Z command and then try to save.
+03. S322 - you get this abend when your job has executed beyond the time limit specified in TIME parameter.
+04. S806 - invalid program name specified in PGM parameter of EXEC statement
+05. S804 - space limit exceeded in REGION parameter of JOB command.
+06. S80A - space limit exceeded in REGION parameter of JOB command.
+07. S0C7 - you have typed a special character in a numeric field data.
+08. S0C4 - 1. mismatch in DD names in RUN JCL and COBOL program.
+	   2. STOP RUN not coded in COBOL program.
+08. U4038 - 1. Accessing a location of a table outside its limits.
+
+JCL programs
+------------
+01. JCL01 - IEFBR14 - allocate a dataset.
+02. JCL02 - IEBGENER - display dataset contents in spool.
+03. JCL03 - IEFBR14 - delete a dataset
+04. JCL04 - IEBGENER - copy dataset
+05. JCL05 - SORT - Sort on one/two field/s
+06. JCL06 - SORT - INCLUDE/OMIT command to sort specific records.
+07. JCL07 - SORT - OUTREC to reformat fields in output file
+08. JCL08 - SORT - Copy all/specific records
+09. JCL09 - SORT - Copy records (split a file into two or more files)
+10. JCL10 - SORT - Eliminate duplicates
+11. JCL11 - Instream procedure 
+12. JCL12 - Instream procedure + symbolic parameter + default value
+13. JCL13 - Catalogued Procedure
+14. JCL14 - JCL using Multiple Job Steps
+15. JCL15 - Define a GDG
+16. JCL16 - Define a Model for the GDG
+17. JCL17 - Define a GDS
+18. JCL18 - Populate data in a GDS
+19. JCL19 - Using GDS in two job steps
+20. JCL20 - COND parameter in JOB statement
+21. JCL21 - COND parameter in EXEC statement
+
+COBOL programs
+--------------
+01. COBOL01 - Basic program - DISPLAY, ACCEPT, COMPUTE
+02. COBOL02 - IF - ELSE - END-IF
+03. COBOL03 - PERFORM
+04. COBOL04 - Validate the input, Nested IF ELSE END-IF, IS NOT NUMERIC
+05. COBOL05 - EVALUATE, Edit characters
+06. COBOL06 - PIC V, how to display numerical value using decimal point
+07. COBOL07 - PERFORM ... TIMES, display statistics
+08. COBOL08 - Sequential table
+09. COBOL09 - Indexed table, SEARCH, SET
+10. COBOL10 - Signed variable
+11. COBOL11 - Display all records of PS file in spool.
+12. COBOL12 - Copy all records of PS file to PS file.
+13. COBOL13 - String manipulation - INSPECT, STRING, UNSTRING commands.
+14. COBOL14 - Copy all records from PS file to KSDS.
+15. COBOL15 - Copy valid records of PS file to KSDS and invalid records of PS file to ERROR.PS file. + COPY command
+16. COBOL16 - Display all records of KSDS in spool. + COPY command
+17. COBOL17 - 88-level.
+18. COBOL18 - Alternate Index (unique)
+19. COBOL19 - ACCESS MODE DYNAMIC
+20. COBOL20 - SORT
+21. COBOL21S, COBOL21T - CALL / EXIT PROGRAM
+22. COBOL22S, COBOL22T - CALL .. USING / LINKAGE SECTION
+23. COBOL23S, COBOL23T - Product program
+24. COBOL24 - REDEFINES clause, SSRANGE compiler option
+
+VSAM programs
+-------------
+01. VSAM01  - DELETE KSDS -> DEFINE KSDS
+02. VSAM02  - REPRO (copy)
+03. VSAM03  - REPRO (REPRO options)
+04. VSAM04  - ALTER
+05. VSAM05  - LISTCAT
+06. VSAM06  - DELETE ESDS -> DEFINE ESDS -> REPRO
+07. VSAM07  - Alternate Index (Unique)    : DELETE -> DEFINE AIX -> BLDINDEX -> DEFINE PATH
+08. VSAM08  - Alternate Index (Nonunique) : DELETE -> DEFINE AIX -> BLDINDEX -> DEFINE PATH
+
+DB2 programs
+------------
+01. CREATE - create table/ create index/ drop table
+02. INSERT - insert/ delete
+03. UPDATE - update
+04. SELECT - select
+05. DB201  - copy records from PS file to table
+06. DB202  - select a row from the table
+07. DB203  - cursor - display all rows of table in spool
+
+-----------------------------------------------------------------------------------------------------------------------------
+Knowledge Checks
+----------------
+01. What is the name of pre-compiler program ?
+02. What are the two tasks performed by the pre-compiler ?
+03. What is the name of the COBOL compiler ?
+04. What is the input and output to BIND process ?
+05. What is a Plan ?
+06. When is the load module of the program created - during compilation, binding or run stage ?
+07. What is a cursor ? Why do we use it ?
+08. State the 4 isolation levels in DB2 ?
+09. State the 4 commands used for cursor ?
+10. Which isolation level is the strictest and which isolation level is the most lineant ?
+----------------------------------------------------------------------------------------------------------------------------
+
+	CICS
+	----
+
+01.	CICS
+	----
+	- CICS stands for Customer Information Control Systems
+	- CICS is one of the front end tools available in Mainframes.
+	- CICS is also known as "Mini Operating System"	because some of the less-critical functions of Operating System
+	  are performed by CICS.
+	- CICS is also known as "DB/DC system" because in CICS you can write interactive programs as well store/retrieve
+	  data to/from file/database. DB = Data Base, DC = Data Communication
+
+02.	CICS Area
+	---------
+
+	- RAM structure
+
+		- Assume RAM is 8GB
+
+			Operating System -> 1 GB
+			COBOL/DB2/JCL    -> 5 GB
+			CICS		 -> 2 GB -> CICS Area -> (0.5 GB -> CICS software, 1.5 GB -> Programmer programs)
+
+	- SOS - Short On Storage
+		- When CICS Area becomes full and there is no space in RAM to execute a new program, then we get SOS.
+		- When SOS occurs, the CICS server shuts down. The Admin will then have to restart the server to resume
+		  operations.
+		- SOS does not occur frequently because of a programming technique employed in CICS application programs.
+		  The programming technique employed in CICS is called as "Pseudo-Conversational Programming Technique".
+		
+03.	CICS restrictions
+	-----------------
+	- DISPLAY, ACCEPT, STOP RUN, GOBACK, EXIT PROGRAM, CALL are some of the commands which cannot be used in CICS
+	  program.
+	- OPEN, CLOSE, READ, WRITE, REWRITE, DELETE are not allowed in CICS program.
+	- INPUT-OUTPUT SECTION code, FILE SECTION code are not allowed in CICS program.
+
+04.	CICS modules 
+	------------
+	- A CICS module will comprise of one or more CICS commands. 
+	- Some of the CICS modules are as follows :-
+		- Program Control module - contain commands used to call one CICS program from another CICS program.
+					 - LINK, XCTL are the commands to call a CICS program.
+
+		- Terminal Control module - contains commands used to display data on the screen/ accept data from the
+					    the screen.
+					  - SEND MAP, RECEIVE MAP are the commands to display/accept data.
+		
+		- File Control module - contains commands used to perform file operations.
+				      - READ, WRITE, REWRITE, DELETE are commands to manage file operations.
+
+		- Temporary Storage module - contains commands to manage data in a queue (TSQ)
+					   - READQ TS , WRITEQ TS DELETEQ TS are the commands.
+
+		- Interval Control module - contains commands to start a program at a specific date/time.
+
+05.	Basic Terms used in CICS
+	------------------------
+
+	a. Transaction - In CICS, a program is called as a transaction.
+
+	b. Transaction id - Each transaction in CICS must be given a 1 to 4 character transaction-id.
+
+	c. Task - A task is a run-state of the transaction. A transaction can have one or more tasks. But each task
+		  can be associated with only one transaction.
+
+				Px --> User1 -> Px-Task-1
+				Px --> User2 -> Px-Task-2
+				Py --> User3 -> Py-Task-1
+
+	d. Field - A field is defined as an entity displayed on the screen.
+		 - There are three types of fields :-
+			- Protected Field
+			- Unprotected Field
+			- Askip (Auto Skip) Field
+
+		- Protected Field - is used to display caption/titles/messages on the screen.
+				  - Protected Field is also called as a "read-only field"
+				  
+		- Unprotected Field - is used to accept data on the screen.
+				    - Unprotected Field is also called as "data-entry field"
+
+		- Askip Field - Askip Field is always defined immediately at the end of each unprotected field. This
+				field is not visible on the screen.	
+			      - On entering the maximum characters in an unprotected-field, the askip field will
+				automatically place the cursor in the next unprotected field.
+
+	e. Map - In CICS, a screen layout is called as a Map. Technically, one Map contains one or more fields.
+
+	f. Mapset - In CICS, a mapset is defined as a collection of maps.
+
+				    |---> Map-1---> Field-1/ Field-2/ Field-3
+			Mapset -----|
+				    |---> Map-2---> Field-1/ Field-2/ Field-3/ Field-4/ Field-5
+
+	g. BMS - Basic Mapping Support
+
+		- BMS is a utility program to design your screen layout.
+		- We have 3 commands in BMS which are called as macro instructions :-
+			- DFHMSD - to define a mapset
+			- DFHMDI - to define a map
+			- DFHMDF - to define a field
+
+		- Template for the following screen layout
+
+				    |---> Map-1---> Field-1/ Field-2/ Field-3
+			Mapset -----|
+				    |---> Map-2---> Field-1/ Field-2/ Field-3/ Field-4/ Field-5
+
+			________ DFHMSD ____________________
+			--------------------------------------------------------
+			________ DFHMDI ____________________
+			________ DFHMDF ____________________
+			________ DFHMDF ____________________
+			________ DFHMDF ____________________
+			--------------------------------------------------------
+			________ DFHMDI ____________________
+			________ DFHMDF ____________________
+			________ DFHMDF ____________________
+			________ DFHMDF ____________________
+			________ DFHMDF ____________________
+			________ DFHMDF ____________________
+			--------------------------------------------------------
+
+
+06.	Feature of online applications
+
+	- Screen layout must be simple for the user to understand.
+	- The response time must be less.
+	- Error messages should be displayed on the screen immediately.
+	- Error messages must be user friendly and polite.
+	- Program output must be displayed on the screen.
+
+
+07.	CICS system tables
+	------------------
+	- Any entity (mapset, transaction (program), file, table) which you create must be entered in a system table.
+
+	- PCT - Program Control Table	- will contain entry of the transaction (program)
+	
+	- PPT - Processing Program Table - will contain entry of mapset and transaction (program)
+
+	- FCT - File Control Table - will contain entry of file
+
+
+08.	BMS - Basic Mapping Support
+
+	- Steps to write and execute BMS code :-
+		a. Write the BMS code in a member.
+		b. Assemble the BMS code. -> Similar to Compiling COBOL program
+		   If BMS code is assembled succeffuly, you will have two ouputs :-
+			1. Physical Map
+			2. Symbolic Map
+
+						   |---> Physical Map
+			BMS code ---> ASSEMBLE --->|
+						   |---> Symbolic Map
+
+	- Physical Map 
+		- Physical Map will contain attribute values. Example : row, col positions of a field.
+		- Physical Map is in binary format and is stored in an ADMIN PDS.
+
+	- Symbolic Map 
+		- Symbolic Map will contain attribute variables.
+		- Symbolic Map is in text format and is stored in user-defined PDS.
+
+	- BMS coding syntax
+
+		name	BMS-macro-instruction	parameter/s			char
+
+		- name can be coded on left of DFHMSD, DFHMDI or DFHMDF commands.
+			- name coded on left of DFHMSD command is called as "mapset name".
+			- name coded on left of DFHMDI command is called as "map name".
+			- name coded on left of DFHMDF command is called as "field name". This is optional.
+
+		- BMS-macro-instruction can be DFHMSD, DFHMDI or DFHMDF command.
+
+		- parameter/s can be coded for each BMS command. 
+
+		- char is used for continuing a command on next line. It must be coded in Column 72 only.
+
+		- Example :-
+
+			MAPSGS3  DFHMSD TYPE=&SYSPARM,                                         X
+	               		       MODE=INOUT,                                             X
+        		       	       LANG=COBOL,                                             X
+               			       TIOAPFX=YES,                                            X
+               			       DSATTS=(COLOR,HILIGHT),                                 X
+               			       MAPATTS=(COLOR,HILIGHT) 				       X
+					                                 
+
+	- Rule for continuing a command on next line :-
+		- Type a character in Column 72 only.
+		- Continue the command on the next from Column 16 only.
+
+	- Comment in BMS
+		- Type * in column 1 followed by the comment.
+
+
+09.	DFHMSD command
+
+	- TYPE=MAP|DSECT|&SYSPARM|FINAL		Preferred : TYPE=&SYSPARM
+		- MAP 		: on asembling BMS code, physical map will be created. Symbolic Map will not be created.	
+		- DSECT		: on asembling BMS code, symbolic map will be created. Physical Map will not be created.
+		- &SYSPARM	: on asembling BMS code, both physical map and symbolic map will be created.
+		- FINAL		: indicates END of BMS code.
+
+	- MODE=IN|OUT|INOUT			Preferred : MODE=INOUT
+		- IN	: You will be able to see only the input record (I) for each map in the symbolic map
+		- OUT	: You will be able to see only the output record (O) for each map in the symbolic map
+		- INOUT : You will be able to see both input record (I) and output record (O) for each map in the symbolic map
+
+	- LANG=COBOL|C|PL1			Preferred : LANG=COBOL
+		- COBOL : Variables will be declared in the symbolic map using COBOL syntax
+		- C	: Variables will be declared in the symbolic map using C syntax
+		- PL1	: Variables will be declared in the symbolic map using PL1 syntax
+ 
+	- TIOAPFX=YES|NO			Preferred : TIOAPFX=YES
+		- YES	: A 12-byte filler (X(12) will be placed immediately below each 01 level record in symbolic map.
+		- NO	: A 12-byte filler (X(12) will not be placed immediately below each 01 level record in symbolic map.
+
+		- If LANG=COBOL, then TIOAPFX=YES.
+		- The 12 byte filler will be used by COBOL to store control information while processing your map.
+		- TIOAPFX = Terminal Input Output Area PreFiX.
+
+	- DSATTS=(COLOR,HILIGHT), MAPATTS=(COLOR,HILIGHT)
+		DSATTS		-> always connected with symbolic map
+		------
+		- COLOR		: COLOR attribute variables (C-variable) will be declared in the symbolic map.	
+		- HILIGHT	: HILIGHT attribute variables (H-variable) will be declared in the symbolic map.
+
+		MAPATTS		-> always connected with physical map
+		-------
+		- COLOR		: COLOR attribute values (RED, BLUE, GREEN) will be stored in physical map.	
+		- HILIGHT	: HILIGHT attribute values (REVERSE,BLINK,UNDERLINE) will be stored in physical map.
+
+		Rule :-
+		> If you are using any color RED, GREEN, BLUE, NEUTRAL, TURQUOISE in BMS code, then you must code
+		  MAPATTS=COLOR and DSATTS=COLOR
+
+		> If you are using any hilight attribute value UNDERLINE, REVERSE, BLINK in BMS code, then you must code
+		  MAPATTS=HILIGHT and DSATTS=HILIGHT
+
+		> If you are using any color RED, GREEN, BLUE, NEUTRAL, TURQUOISE in BMS code as well as any hilight 
+		  attribute value UNDERLINE, REVERSE, BLINK in BMS code, then you must code MAPATTS=(COLOR,HILIGHT) 
+		  and DSATTS=(COLOR,HILIGHT)
+
+	- STORAGE=AUTO				Preferred : STORAGE=AUTO
+		- If you are using more than one maps in one mapset, then each map will occupy separate memory space.
+		- If you are using more than one maps in one mapset and if you do not code STORAGE=AUTO, then the same 
+		  memory space will be shared by each map.
+
+
+10.	DFHMDI command
+
+	- SIZE=(rows,cols)
+		- SIZE() parameter allows you to define dimension of the map.
+
+	- LINE=m,COLUMN=n
+		- LINE and COLUMN options are used to specify the line and column at which you want the map to be displayed.
+
+	- LINE,COLUMN options are optional. If omitted,the default value of LINE is 1 and COLUMN is 1.
+
+
+11.	DFHMDF commands
+
+	- POS=(row,column) - is used to specify the row and column at which you want the field to be displayed.
+
+	- LENGTH=w - is used to specify the width of the field.
+
+	- ATTRB=(PROT/UNPROT/ASKIP,NORM/BRT/DRK,IC,FSET,NUM)
+
+		- PROT/UNPROT/ASKIP -> this specifies the type of the field.
+
+		- NORM/BRT/DRK -> this specified intensity of data to be displayed in the file.
+					-> NORM - normal
+					-> BRT  - bright
+					-> DRK  - dark (password fields)
+
+		- IC -> Initial Cursor
+			-> For whichever field IC has been coded in ATTRB parameter, the cursor will be placed on that
+			   field when the map is displayed on the screen.
+
+		- FSET -> Forcibly Set
+			-> <to be explained....>
+
+		- NUM -> must be coded for Numeric Unprotected Field. Any field unprotected field having NUM in ATTRB 
+			 parameter can have only digits in the data.
+
+	- HILIGHT=UNDERLINE|REVERSE|BLINK -> is coded to give special effect on the screen.
+
+	- COLOR=RED|GREEN|BLUE|NEUTRAL|TURQUOISE|PINK|YELLOW -> is coded to display text in the specified color.
+
+	- INITIAL='value' -> is similar to VALUE clause in COBOL. It assigns an initial value to the field.
+
+	- PICIN='picture-clause',PICOUT='picture-clause' -> must be coded if you have type NUM in ATTRB parameter.
+		-> PICIN picture clause is applied to the input data captured from the screen.
+		-> PICOUT picture clause is applied to the output data to be displayed on the screen.
+
+
+12.	INSTRUCTIONS 01
+	---------------
+
+	01. Rename OZA???.DB2.COMPILER to OZA???.CICS.COMPILER. Refresh the screen.
+
+	02. Type E on left of OZA???.CICS.COMPILER and (CICSMAP) on right of COMPILER.
+
+	03. COPY "OZAGS3.CICS.COMPILER(CICSMAP)". Save.
+
+	04. Using =3.2, allocate a PDS -> CICS.PROGRAMS
+		Space Unit = TRKS,  Primary Qty = 10, Secondary Qty = 7,  Directory Blocks = 2
+		Record Format = FB,  Record Length = 80,  Block size = 800,  Dataset Name Type = PDS.
+
+	05. Type E on left of OZA???.CICS.PROGRAMS and (MAPSGS3) on right of PROGRAMS.
+
+	06. COPY "OZAGS3.CICS.PROGRAMS(MAPSGS3)". -> CHANGE ALL MAPSGS3 MAPS???  -> Save		(??? is your id no)
+
+	07. Close the member. Rename MAPSGS3 member to MAPS???.  Refresh the screen.
+
+	08. Using =3.2, allocate a PDS -> CICS.SYMBMAP
+		Space Unit = TRKS,  Primary Qty = 10, Secondary Qty = 7,  Directory Blocks = 2
+		Record Format = FB,  Record Length = 80,  Block size = 800,  Dataset Name Type = PDS.
+
+
+	INSTRUCTIONS 02
+	---------------
+	01. Open CICSMAP assembler JCL. -> CHANGE ALL  "GS3"  "???"  -> Save -> Submit -> You will get MAXCC=0.
+	02. Check if a member MAPS??? is created in OZA???.CICS.SYMBMAP.
+	03. Open the member and browse thru the code. This is the symbolic map. 
+	04. Type END to close the symbolic map. Type END to exit the PDS.
+	-----------------------------------------------------------------------------------------------------------------
+
+	Login to CICS region
+	--------------------
+	05. Create a new session in Mocha. Type CICSOZA in Enter your choice ===> prompt.
+	06. Type your TSO login + password. 
+	07. A blank screen will be displayed with a message 'Sign on complete' at the bottom of the screen.
+
+	08. On top left corner of screen type CECI SEND MAP(LOGMAP) MAPSET(MAPS???) ERASE   <enter>  <enter>
+	09. You will be able to see the output of login map.
+	10. Press <enter>.  Move cursor to 3 END option on last line and press <enter>.
+	11. You will see CECI command again.
+
+	12. Type CECI SEND MAP(STUDMAP) MAPSET(MAPS???) ERASE   <enter>  <enter>
+	13. You will be able to see the output of student map.
+	14. Press <enter>.  Move cursor to 3 END option on last line and press <enter>.
+	15. You will see CECI command again.
+ 
+	16. Type CECI SEND MAP(LOGMAP) MAPSET(MAPS???) ERASE   <enter>  <enter>
+	17. You will be able to see the output of login map.
+	18. Press <enter>.  Move cursor to 3 END option on last line and press <enter>.
+	19. You will see CECI command again.
+
+	20. You can delete CECI command and type CESF <enter> to logoff from CICS.
+	21. You will get a message 'Sign off is complete'.
+	-----------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			
+
+
+
+	

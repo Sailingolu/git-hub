@@ -1,0 +1,526 @@
+
+Ground Rules
+------------
+01. You need to be on the call from 9.00 to to 6.00 pm compulsory.
+02. Most of the training time will be utilized for hands on.
+03. Do daily revision of topics taught during the day.
+04. Ask questions in case of doubts. 
+05. Make the session interactive.
+-----------------------------------------------------------------------------------------------------------------------------
+
+Error messages :-
+-----------------
+TSO/ISPF
+--------
+01. No members in data set : this means your PDS is empty. There are no members in the PDS.
+02. No space in directory  : you have exceeded the limit of Directory Blocks
+
+VSAM error
+----------
+01. Invalid Related Object : You are creating an AIX for a base cluster which has been created using REUSE parameter.
+			     You must remove REUSE in DEFINE CLUSTER command to resolve this error.
+
+COBOL file status codes
+-----------------------
+01. "00"	- File operation successful.
+02. "10"	- End of File
+03. "22"	- Duplicate primary key
+04. "23"	- Primary key/ Alternate key not found
+
+DB2 SQLCODEs
+-------------
+01.  0		- SQL command has executed successfully.
+02.  100	- End of SELECT, Delete all rows from an empty table.
+03. -117	- number of values in INSERT not matching with number of columns
+04. -181	- Date value invalid in date column.
+05. -204	- Invalid table name
+06. -206        - Invalid column name
+07. -408	- Invalid data type
+08. -601	- Object (table) already exists.
+09. -803 	- duplicate primary key
+
+
+ABnormal ENDs (ABEND CODES)
+---------------------------
+01. 0B37 - if you do not have space left in DATASET to enter data.
+02. 0E37 - No space in MEMBER of a PDS. You can compress the PDS using Z command and then try to save.
+03. S322 - you get this abend when your job has executed beyond the time limit specified in TIME parameter.
+04. S806 - invalid program name specified in PGM parameter of EXEC statement
+05. S804 - space limit exceeded in REGION parameter of JOB command.
+06. S80A - space limit exceeded in REGION parameter of JOB command.
+07. S0C7 - you have typed a special character in a numeric field data.
+08. S0C4 - 1. mismatch in DD names in RUN JCL and COBOL program.
+	   2. STOP RUN not coded in COBOL program.
+08. U4038 - 1. Accessing a location of a table outside its limits.
+
+JCL programs
+------------
+01. JCL01 - IEFBR14 - allocate a dataset.
+02. JCL02 - IEBGENER - display dataset contents in spool.
+03. JCL03 - IEFBR14 - delete a dataset
+04. JCL04 - IEBGENER - copy dataset
+05. JCL05 - SORT - Sort on one/two field/s
+06. JCL06 - SORT - INCLUDE/OMIT command to sort specific records.
+07. JCL07 - SORT - OUTREC to reformat fields in output file
+08. JCL08 - SORT - Copy all/specific records
+09. JCL09 - SORT - Copy records (split a file into two or more files)
+10. JCL10 - SORT - Eliminate duplicates
+11. JCL11 - Instream procedure 
+12. JCL12 - Instream procedure + symbolic parameter + default value
+13. JCL13 - Catalogued Procedure
+14. JCL14 - JCL using Multiple Job Steps
+15. JCL15 - Define a GDG
+16. JCL16 - Define a Model for the GDG
+17. JCL17 - Define a GDS
+18. JCL18 - Populate data in a GDS
+19. JCL19 - Using GDS in two job steps
+20. JCL20 - COND parameter in JOB statement
+21. JCL21 - COND parameter in EXEC statement
+
+COBOL programs
+--------------
+01. COBOL01 - Basic program - DISPLAY, ACCEPT, COMPUTE
+02. COBOL02 - IF - ELSE - END-IF
+03. COBOL03 - PERFORM
+04. COBOL04 - Validate the input, Nested IF ELSE END-IF, IS NOT NUMERIC
+05. COBOL05 - EVALUATE, Edit characters
+06. COBOL06 - PIC V, how to display numerical value using decimal point
+07. COBOL07 - PERFORM ... TIMES, display statistics
+08. COBOL08 - Sequential table
+09. COBOL09 - Indexed table, SEARCH, SET
+10. COBOL10 - Signed variable
+11. COBOL11 - Display all records of PS file in spool.
+12. COBOL12 - Copy all records of PS file to PS file.
+13. COBOL13 - String manipulation - INSPECT, STRING, UNSTRING commands.
+14. COBOL14 - Copy all records from PS file to KSDS.
+15. COBOL15 - Copy valid records of PS file to KSDS and invalid records of PS file to ERROR.PS file. + COPY command
+16. COBOL16 - Display all records of KSDS in spool. + COPY command
+17. COBOL17 - 88-level.
+18. COBOL18 - Alternate Index (unique)
+19. COBOL19 - ACCESS MODE DYNAMIC
+20. COBOL20 - SORT
+21. COBOL21S, COBOL21T - CALL / EXIT PROGRAM
+22. COBOL22S, COBOL22T - CALL .. USING / LINKAGE SECTION
+23. COBOL23S, COBOL23T - Product program
+24. COBOL24 - REDEFINES clause, SSRANGE compiler option
+
+VSAM programs
+-------------
+01. VSAM01  - DELETE KSDS -> DEFINE KSDS
+02. VSAM02  - REPRO (copy)
+03. VSAM03  - REPRO (REPRO options)
+04. VSAM04  - ALTER
+05. VSAM05  - LISTCAT
+06. VSAM06  - DELETE ESDS -> DEFINE ESDS -> REPRO
+07. VSAM07  - Alternate Index (Unique)    : DELETE -> DEFINE AIX -> BLDINDEX -> DEFINE PATH
+08. VSAM08  - Alternate Index (Nonunique) : DELETE -> DEFINE AIX -> BLDINDEX -> DEFINE PATH
+
+DB2 programs
+------------
+01. CREATE - create table/ create index/ drop table
+02. INSERT - insert/ delete
+03. UPDATE - update
+04. SELECT - select
+05. DB201  - copy records from PS file to table
+06. DB202  - select a row from the table
+07. DB203  - cursor - display all rows of table in spool
+
+-----------------------------------------------------------------------------------------------------------------------------
+Knowledge Checks
+----------------
+01. What should be the PIC clause for indicator variable ?
+02. Indicator variable is used for which column ?
+03. If indicator variable is -1, what does it mean ?
+04. How should we code indicator variable in a SQL command in EXEC SQL block ?
+05. Is the name of indicator variable user defined or pre-defined ?
+06. State the two type of variables declared at 49 level for a host variable of VARCHAR column.
+07. What will LEN and TEXT variable of a VARCHAR column host variable contain ?
+08. Can we use LEN, TEXT variables of a VARCHAR column host variable inside an EXEC SQL block ?
+09. What is the difference between LENGTH and LEN ?
+10. How do we define a NULL column in a table in CREATE TABLE command ?
+----------------------------------------------------------------------------------------------------------------------------
+
+01. 	Cursor
+
+	- Cursor is a concept which is used in a program when a SELECT command returns > 1 rows in the output.
+
+	- Cursor commands :-
+		A. DECLARE CURSOR - Define the cursor - code in DATA DIVISION -> WORKING-STORAGE SECTION.
+		B. OPEN		  - Open the cursor - code in PROCEDURE DIVISION.
+		C. FETCH	  - Fetch the data using the cursor - code in PROCEDURE DIVISION.
+		D. CLOSE	  - Close the cursor - code in PROCEDURE DIVISION.
+
+
+02.	DECLARE CURSOR command
+
+	- DECLARE CURSOR command is used to define a cursor and associate a SELECT command with the cursor.
+
+	- Syntax :-
+		EXEC SQL
+			DECLARE cursor-name CURSOR FOR SELECT-command
+		END-EXEC.
+
+	- Example :-
+
+		EXEC SQL
+			DECLARE CUR01 CURSOR FOR SELECT EMPNO, EMPNAME, MOBILENO FROM EMPLOYEE
+		END-EXEC.
+
+		In the above example, the SELECT command coded will be mapped to CUR01 cursor and DB2 will
+		make an entry of CUR01 and SELECT command in a DB2 system table meant for cursor.
+
+		*** IMPORTANT POINT *** -> SELECT command is not executed by DECLARE CURSOR command.
+
+03.	OPEN command
+
+	- OPEN command will open the cursor. OPEN command will do the following while opening the cursor :-
+		> OPEN command will check if the entry of the cursor is made in system table meant for cursor.
+		  If entry is not present, you will get an error.
+		  If entry is present, it will execute the SELECT command associated with the cursor. DB2 will
+		  then place the row pointer "before the first row" of the SELECT command output.
+
+			       >101 A
+				^
+				102 B
+				103 C
+				104 D
+				105 E	
+
+
+			In the above example > means before the row and ^ means on the row.
+			OPEN command will place the cursor pointer before 101 of the first row.		
+
+	- Syntax :-
+
+		EXEC SQL
+			OPEN cursor-name
+		END-EXEC.
+
+	- Example :-
+
+		EXEC SQL
+			OPEN CUR01
+		END-EXEC.
+
+
+04.	FETCH command
+
+	- FETCH command is used to fetch data from the cursor controlled table. FETCH command will copy the data
+	  from the row fetched into the corresponding host variables.
+
+				|<--- table
+			FETCH --|
+				|---> host variable
+		
+	- When FETCH command is executed for the FIRST TIME, then it will change the cursor pointer position
+	  from "before the first row" to "on the first row" and then fetch the data of the first row and copy it
+	  in the corresponding host variables.
+
+	  Subsequent execution of FETCH command will fetch the data from subsequent rows.
+
+		FETCH -> BEFORE to ON -> fetch 1st row from table -> copy data of 1st row in host variables
+		FETCH -> fetch 2nd row from table -> copy data of 2nd row in host variable
+		FETCH -> fetch 3rd row from table -> copy data of 3rd row in host variables
+		FETCH -> fetch 4th row from table -> copy data of 4th row in host variables
+
+	  If all the rows have been fetched and if you execute FETCH command again, then SQLCODE will be 100
+	  indicating end of data.
+
+	- Syntax :-
+
+		EXEC SQL
+			FETCH cursor-name INTO host-variable-names
+		END-EXEC.
+
+	- Example :-
+
+		EXEC SQL
+			FETCH CUR01 INTO :HV-EMPNO, :HV-EMPNAME, :HV-MOBILENO
+		END-EXEC.
+
+05.	CLOSE command
+
+	- CLOSE command will close the cursor. If you want to fetch a row from cursor controlled table after
+	  closing the cursor, you must then open the cursor first and then fetch the row.
+	
+	- Syntax :-
+		
+		EXEC SQL
+			CLOSE cursor-name
+		END-EXEC.
+
+	- Example :-
+	
+		EXEC SQL
+			CLOSE CUR01
+		END-EXEC.
+
+
+06.	DB203 - Cursor
+
+	Problem Defintion :-
+	Write a program which will display all the rows of the table in spool.
+
+	INITIALIZE command
+	------------------
+	- INITIALIZE command is used to initialize variables.
+
+	- Syntax 01 :-
+		
+		INITIALIZE variable.
+
+		If the variable is a numeric variable, then INITIALIZE command will initialize the variable to 0.
+		If the variable is a alphanumeric/ alphabetic variable, then INITIALIZE command will initialize the variable
+	        to SPACES.
+
+	- Syntax 02 :-
+		
+		INITIALIZE record-variable.
+
+		INITIALIZE command will initialize all the child elements of the record.
+		If the child element is a numeric variable, then INITIALIZE command will initialize the child element to 0.
+		If the child element is a alphanumeric/ alphabetic variable, then INITIALIZE command will initialize the 
+		child element to SPACES.
+
+	Instructions
+	------------
+	01. Type E on left of OZA???.DB2.PROGRAMS and (DB203) on right of PROGRAMS
+	02. COPY "OZAGS3.DB2.PROGRAMS(DB203)".  -> Save.
+	03. Open compiler CBLDBCMP -> type DB203 on line 19,20,21 -> Save -> Submit -> MAXCC=0 
+	04. Open bind CBLDBBND -> type DB203 on line 23 -> Save -> Submit -> MAXCC=4 -> Ignore this
+	05. Open run CBLDBRUN -> type DB203 on line 19 -> Save -> Submit -> MAXCC=0.
+	06. Goto spool and check the output in SYSOUT.
+	07. In a new screen, Run SELECT01 in SPUFI. Check if table rows data is matching with spool output.
+
+	08. Test the program for -> SELECT EMPNO, EMPNAME, MOBILENO FROM EMPLOYEE WHERE MOBILENO IS NULL ORDER BY EMPNAME
+	09. Test the program for -> SELECT EMPNO, EMPNAME, MOBILENO FROM EMPLOYEE WHERE MOBILENO IS NOT NULL 
+	10. Test the program for -> SELECT EMPNO, EMPNAME, MOBILENO FROM EMPLOYEE WHERE LEFT(EMPNAME,1) = "V" 
+	11. Test the program for -> SELECT EMPNO, EMPNAME, MOBILENO FROM EMPLOYEE WHERE LEFT(MOBILENO,2) = "97".
+
+
+07.	FOR UPDATE OF option, WHERE CURRENT OF option, WITH HOLD option
+
+	Let us consider we want to add 500 to salary of all employees.
+
+	DATA DIVISION.
+
+		DECLARE CUR01 CURSOR WITH HOLD FOR SELECT EMPNO, NAME, SALARY FROM EMP
+				     FOR UPDATE OF SALARY
+
+	-------------------------------------------------------------------------
+	PROCEDURE DIVISION.
+	MAIN-PARA.
+		OPEN CUR01
+
+		FETCH 1ST ROW IN :HV-EMPNO, :HV-NAME, :HV-SALARY
+		PERFORM PROCESS-PARA UNTIL SQLCODE =  100
+
+		CLOSE CUR01.
+		......
+	-------------------------------------------------------------------------
+	PROCESS-PARA.
+		ADD 500 TO HV-SALARY
+		UPDATE EMP SET SALARY = :HV-SALARY WHERE CURRENT OF CUR01	
+		COMMIT							---> reduces rework in case of power failure
+		FETCH NEXT ROW IN :HV-EMPNO, :HV-NAME, :HV-SALARY
+		EXIT.
+	-------------------------------------------------------------------------
+
+	A. 	WHERE CURRENT OF cursor-name	-> update current row of a cursor controlled table
+		
+		In the above example, we are fetching a row in a loop since we want to update salary for all employees.
+		The logic is    fetch a row -> update salary -> fetch next row -> update salary -> and so on.
+
+		Since we want UPDATE command to update the current row which has been fetched, we should code WHERE
+		CURRENT OF option in UPDATE command as shown in the example above. If you do not code this option,
+		then UPDATE when executed once will update all the rows of the table which is not right.
+
+	B.	FOR UPDATE OF column-name	-> take permission from DB2 to update a column.
+
+		This option is coded in DECLARE CURSOR command. By default, we do not have permission from DB2 to
+		update any column in the COBOL/DB2 program. FOR UPDATE OF option will give you permission to update
+	 	the column specified in FOR UPDATE OF option.
+
+
+	C.	WITH HOLD			-> keep cursor open on execution of COMMIT command
+		
+		If you are updating rows in a loop, then all updates will be COMMITTED when you exit the program.
+		So, while you are in the loop and if there is a power failure, whatever updates you have done till then
+		will be lost.
+	
+		If you execute COMMIT command in a program, then DB2 will forcibly close the cursor. Due to this,
+		the subsequent FETCH commands will not fetch the row for you since the cursor is closed.
+
+		If you want the cursor to remain opened on execution of COMMIT command, then you must code WITH HOLD
+		option in DECLARE CURSOR command as shown above.
+
+
+
+08.	COBOL program compilation process
+
+	CBLCMPLK member : COMPILE + LINK-EDIT
+	-------------------------------------
+	01. 	COBCL is a catalogued procedure present in OZAADM.ADMIN.PROCLIB		-> refer to JCLLIB operator
+	
+	02.	COBCL is a two-step JCL
+			1st step -> IGYCRCTL program is being executed
+					-> IGYCRCTL program will compile your COBOL source code and if there are no
+					   errors, it will create an object module of the program. This object module
+					   will be passed as an input to the 2nd step below.
+
+			2nd step -> HEWL program is being executed
+					-> HEWL will link-edit the object module of the program and if there are no
+					   errors, it will create a load module (executable module)of the program. 
+					   This load module will be copied in your COBOL.LOADLIB PDS.
+
+		Summary :-
+		----------
+		cobol source code -> IGYCRCTL -> object module of pgm -> HEWL -> executable module of pgm
+
+	CBLRUN member : RUN
+	-------------------
+	01. We specify the load module of the program to be executed in EXEC statement. The PDS in which this
+	    load module is present must be specified in STEPLIB DD statement which is coded below EXEC statement.
+
+
+09.	DB2 program compilation process
+
+	DB2 program compilation a three step process
+
+	01. Compile
+	02. Bind
+	03. Run
+
+	CBLDBCMP member : PRE-COMPILE + COMPILE + LINK-EDIT
+	---------------------------------------------------
+	01.	PRCDBCOB is a catalgoued procedures which is being executed in this JCL. It is present in OZADM.ADMIN.PROCLIB PDS
+
+	02.	The code written in PRCDBCOB is a 3 step JCL :-
+			1st step -> DSNHPC program is being executed
+					-> DSNHPC is called as a "Pre-compiler program". This program will perform two tasks :-
+					   1. DSNHPC will comment all EXEC SQL blocks written in COBOL/DB2 program and replace 
+					      these blocks with CALL/PERFORM statements. Such a program is called as 
+					      'Modified Source Code'. 
+					      The Modified Source Code will contain only COBOL code and it will passed as an 
+					      input to 2nd step below.
+
+					   2. DSNHPC will then copy the SQL code written in EXEC SQL blocks to a DBRM member.
+					      This DBRM member will be placed in DB2.DBRMLIB PDS allocated by the programmer.
+					      DBRM stands for Data Base Request Module.	
+					      The SQL code copied in DBRM member is not checked for errors. So, the code in
+					      DBRM member may contain errors. DSNHPC will not check SQL code for errors.
+					
+					      DBRM member is passed as an input to Bind program in CBLDBBND member.
+
+			2nd step -> IGYCRCTL program is being executed
+					-> IGYCRCTL is a COBOL compiler program.
+					-> IGYCRCTL will compile the Modified Source Code create in 1st step. If there are no
+					   compilation errors, it will create an object module of the Modified Source Code.
+					   This object module is passed as an input to the 3rd step below.							  
+			3rd step -> IEWL program is being executed.
+					-> IEWL is a link-edit program.
+					-> IEWL will link-edit the object module of Modified Source Code. If there are no
+					   link-edit errors, it will create a load module (executable module) of Modified
+					   Source Code and copy the load module in DB2.LOADLIB PDS
+
+			Summary :-
+			----------
+						   |-> Modified Source Code -> IGYCRCTL -> Object Module -> IEWL -> Load Module
+			COBOL/DB2 code -> DSNHPC ->|							            (DB2.LOADLIB)
+						   |-> DBRM module
+						       (DB2.DBRMLIB)
+
+	CBLDBBND member : BIND
+	----------------------
+	01.	This code is executing a program IKJEFT01. This program is used to bind your SQL code. During binding, the
+		IKJEFT01 program will check your SQL code for syntax errors, permissions, authorization errors, access paths, etc.
+		and if there are no errors, it will create an output which is called as a "Plan".
+
+		Plan is the executable version of SQL code.
+
+			DBRM -> IKJEFT01 -> Plan
+
+
+	CBLDBRUN member : RUN
+	---------------------
+	01.	This code is executing a program IKJEFT01. This program will take two inputs - Load Module of the program and 
+		Plan and then execute the program logic.
+
+			Load Module of Program ->|
+		                                 |-> IKJEFT01 -> Program output.
+			       Plan ------------>|
+
+
+10.	Isolation Level
+
+	- Isolation Level is define as "how much you want one program to execute in an isolated manner from another program"
+
+	- There 4 isolation levels :-
+		a. RR - Repeatable Read		(most strict)
+		b. RS - Read Stability		(less strict compared to RR)
+		c. CS - Cursor Stability	(less strict compared to RS)
+		d. UR - Uncommitted Read	(most lineant)
+
+	- Isolation level for a program is specified in BIND JCL.
+
+	- To understand isolation, let us consider two programs Px and Py and a table T
+		a. RR - Repeatable Read
+			
+			Px is accessing T to perform some database operation. Around the same time, Py tries to access the 
+			same table T. If Px isolation level is RR, then no other program can access T till Px completes
+			its execution or COMMIT/ROLLBACK command has executed in Px.
+
+		b. RS - Read Stability			
+		
+			RS works for "qualified rows" of a table.  Qualified rows are those rows which result as an output
+			of SELECT command. For example, in SELECT * FROM EMP WHERE LOCATION = "BANGALORE" command, the
+			BANGALORE rows will be called as "Qualified Rows" and rows of other locations will be called as
+			"Non-Qualified Rows".
+
+			If RS isolation level is specified for Px, Px will be allowed to work only on the qualified rows
+			of the resultset. Around the same time, if Py tries to access one of the qualified rows, it will be
+			denied acces. But if Py tries to access one of the non-qualified rows, it will be allowed access.
+
+		c. CS - Cursor Stability (most preferred isolation level)
+
+			Px is working on a row (Rx) of table T. If Px is having CS isolation level, then Rx will be locked for
+			Px. If Py tries to access Rx, it will be denied access. However, if Py tries to access any other row
+			except Rx, it will be allowed access.
+
+		d. UR - Uncommitted Read (should be avoided for insert, update, delete operations, should be given for select)
+
+			Px is working on a row (Rx) of table T. If Px is having UR isolation level, then Px can work on Rx.
+			Around the same time, if Py tries to access Rx, it will be allowed access. This means, two or more
+			programs can access the same row at the same time. This can create a conflict if Px and Py are 
+			performing insert/update/delete operation in the program.
+
+			UR is best suited for read-only programs (using select command). Since reading is harmless, two
+			or more programs can access the same row of the same table at the same time for reading purpose.
+
+					Px -> isolation level -> UR
+					Px -> access the 3rd record
+					Px -> in the process of updating 3rd record
+					Py -> access the 3rd record
+					Py -> in the process of deleting the 3rd record
+					Px -> COMMITs the changes
+					Py -> COMMITS the changes
+					Px -> SELECT * FROM table (will see the 3rd record)
+											
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		

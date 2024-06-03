@@ -1,0 +1,456 @@
+
+Ground Rules
+------------
+01. You need to be on the call from 9.00 to to 6.00 pm compulsory.
+02. Most of the training time will be utilized for hands on.
+03. Do daily revision of topics taught during the day.
+04. Ask questions in case of doubts. 
+05. Make the session interactive.
+-----------------------------------------------------------------------------------------------------------------------------
+
+Error messages :-
+-----------------
+TSO/ISPF
+--------
+01. No members in data set : this means your PDS is empty. There are no members in the PDS.
+02. No space in directory  : you have exceeded the limit of Directory Blocks
+
+VSAM error
+----------
+01. Invalid Related Object : You are creating an AIX for a base cluster which has been created using REUSE parameter.
+			     You must remove REUSE in DEFINE CLUSTER command to resolve this error.
+
+COBOL file status codes
+-----------------------
+01. "00"	- File operation successful.
+02. "10"	- End of File
+03. "22"	- Duplicate primary key
+04. "23"	- Primary key/ Alternate key not found
+
+DB2 SQLCODEs
+-------------
+01.  0		- SQL command has executed successfully.
+02.  100	- End of SELECT, Delete all rows from an empty table.
+03. -117	- number of values in INSERT not matching with number of columns
+04. -181	- Date value invalid in date column.
+05. -204	- Invalid table name
+06. -206        - Invalid column name
+07. -408	- Invalid data type
+08. -601	- Object (table) already exists.
+09. -803 	- duplicate primary key
+
+ABnormal ENDs (ABEND CODES)
+---------------------------
+01. 0B37 - if you do not have space left in DATASET to enter data.
+02. 0E37 - No space in MEMBER of a PDS. You can compress the PDS using Z command and then try to save.
+03. S322 - you get this abend when your job has executed beyond the time limit specified in TIME parameter.
+04. S806 - invalid program name specified in PGM parameter of EXEC statement
+05. S804 - space limit exceeded in REGION parameter of JOB command.
+06. S80A - space limit exceeded in REGION parameter of JOB command.
+07. S0C7 - you have typed a special character in a numeric field data.
+08. S0C4 - 1. mismatch in DD names in RUN JCL and COBOL program.
+	   2. STOP RUN not coded in COBOL program.
+08. U4038 - 1. Accessing a location of a table outside its limits.
+
+CICS Response codes
+-------------------
+01. 00 - NORMAL
+02. 27 - PGMIDERR - AEI0 -> invalid program name is specifed in LINK/XCTL command.
+03. 36 - MAPFAIL  - AEI9 -> no data has been entered on the screen and RECEIVE MAP command has been executed.
+
+JCL programs
+------------
+01. JCL01 - IEFBR14 - allocate a dataset.
+02. JCL02 - IEBGENER - display dataset contents in spool.
+03. JCL03 - IEFBR14 - delete a dataset
+04. JCL04 - IEBGENER - copy dataset
+05. JCL05 - SORT - Sort on one/two field/s
+06. JCL06 - SORT - INCLUDE/OMIT command to sort specific records.
+07. JCL07 - SORT - OUTREC to reformat fields in output file
+08. JCL08 - SORT - Copy all/specific records
+09. JCL09 - SORT - Copy records (split a file into two or more files)
+10. JCL10 - SORT - Eliminate duplicates
+11. JCL11 - Instream procedure 
+12. JCL12 - Instream procedure + symbolic parameter + default value
+13. JCL13 - Catalogued Procedure
+14. JCL14 - JCL using Multiple Job Steps
+15. JCL15 - Define a GDG
+16. JCL16 - Define a Model for the GDG
+17. JCL17 - Define a GDS
+18. JCL18 - Populate data in a GDS
+19. JCL19 - Using GDS in two job steps
+20. JCL20 - COND parameter in JOB statement
+21. JCL21 - COND parameter in EXEC statement
+
+COBOL programs
+--------------
+01. COBOL01 - Basic program - DISPLAY, ACCEPT, COMPUTE
+02. COBOL02 - IF - ELSE - END-IF
+03. COBOL03 - PERFORM
+04. COBOL04 - Validate the input, Nested IF ELSE END-IF, IS NOT NUMERIC
+05. COBOL05 - EVALUATE, Edit characters
+06. COBOL06 - PIC V, how to display numerical value using decimal point
+07. COBOL07 - PERFORM ... TIMES, display statistics
+08. COBOL08 - Sequential table
+09. COBOL09 - Indexed table, SEARCH, SET
+10. COBOL10 - Signed variable
+11. COBOL11 - Display all records of PS file in spool.
+12. COBOL12 - Copy all records of PS file to PS file.
+13. COBOL13 - String manipulation - INSPECT, STRING, UNSTRING commands.
+14. COBOL14 - Copy all records from PS file to KSDS.
+15. COBOL15 - Copy valid records of PS file to KSDS and invalid records of PS file to ERROR.PS file. + COPY command
+16. COBOL16 - Display all records of KSDS in spool. + COPY command
+17. COBOL17 - 88-level.
+18. COBOL18 - Alternate Index (unique)
+19. COBOL19 - ACCESS MODE DYNAMIC
+20. COBOL20 - SORT
+21. COBOL21S, COBOL21T - CALL / EXIT PROGRAM
+22. COBOL22S, COBOL22T - CALL .. USING / LINKAGE SECTION
+23. COBOL23S, COBOL23T - Product program
+24. COBOL24 - REDEFINES clause, SSRANGE compiler option
+
+VSAM programs
+-------------
+01. VSAM01  - DELETE KSDS -> DEFINE KSDS
+02. VSAM02  - REPRO (copy)
+03. VSAM03  - REPRO (REPRO options)
+04. VSAM04  - ALTER
+05. VSAM05  - LISTCAT
+06. VSAM06  - DELETE ESDS -> DEFINE ESDS -> REPRO
+07. VSAM07  - Alternate Index (Unique)    : DELETE -> DEFINE AIX -> BLDINDEX -> DEFINE PATH
+08. VSAM08  - Alternate Index (Nonunique) : DELETE -> DEFINE AIX -> BLDINDEX -> DEFINE PATH
+
+DB2 programs
+------------
+01. CREATE - create table/ create index/ drop table
+02. INSERT - insert/ delete
+03. UPDATE - update
+04. SELECT - select
+05. DB201  - copy records from PS file to table
+06. DB202  - select a row from the table
+07. DB203  - cursor - display all rows of table in spool
+
+CICS programs
+-------------
+01. MAPSGS3  - BMS code
+02. CICSGS3A - Login Program
+03. CICSGS3B - Student Program
+
+-----------------------------------------------------------------------------------------------------------------------------
+Knowledge Checks
+----------------
+01. Which constant will you move to H-variable if you want to blink the text ?
+02. In which copybook is color constant DFHRED defined ?
+03. In which copybook is DFHBLINK defined ?
+04. What definitions will you find in DFHAID copybook ?
+05. To place a cursor on a field at run time, we must move _____ to ___-variable of the field.
+06. To check if data has been entered in a field, we must check ____-variable of the field.
+07. DFHRED, DFHBLUE, DFHGREEN color constants must be moved to ____-variable of the field.
+08. After moving -1 to L-variable of a field, we must send a map using ______ option.
+09. Why must we code CEMT SET PROG transaction ?
+10. Why do we code CEDA DEF TRANS transaction ?
+----------------------------------------------------------------------------------------------------------------------------
+
+01.	Inter-program communication
+
+	- Inter-program communication is a concept using which you can call a CICS program from another CICS program.
+	- There are two commands to call a CICS program - LINK command, XCTL command.
+
+	- LINK command syntax :-
+
+		EXEC CICS
+			LINK PROGRAM('program-name')
+				COMMAREA(WS-commarea-variable)	
+				RESP(error-code-variable)
+		END-EXEC.
+
+	- XCTL command syntax :-
+
+		EXEC CICS
+			XCTL PROGRAM('program-name')
+				COMMAREA(WS-commarea-variable)
+				RESP(error-code-variable)
+		END-EXEC.
+
+		- PROGRAM('program-name') -> specify the name of the program which you want to call
+		
+		- COMMAREA(WS-commarea-variable) -> This parameter is optional. It is coded when you want to pass
+		  input data to the called program. This parameter is similar to USING option in CALL statement in COBOL.
+		  When you pass WS-commarea-variable to a called program, then the data stored in WS-commarea-variable
+		  will be assigned to DFHCOMMAREA variable in LINKAGE SECTION of the called program
+
+		  In other words, DFHCOMMAREA variable of called program will receive the data from the variable 
+		  specified in COMMAREA option of LINK/XCTL command.
+
+		- RESP(error-code-variable) -> RESP option is coded to check if the CICS command has executed successfully.
+		  This option is similar to file status variable in COBOL and SQLCODE variable in DB2.
+		
+		  Whenever a CICS command executes successfully, error-code-variable coded in RESP option will have a
+		  value 0. If the CICS command fails in execution, then error-code-variable will contain a CICS error code.
+
+		  RESP option is the only option in CICS which can be code for all CICS commands.
+
+		  The PIC clause of error-code-variable must be S9(08) COMP. 
+
+		  If LINK/XCTL command calls a called program successfully, then error-code variable will contain 0
+		  value which stands for NORMAL. If an invalid program name is specified in PROGRAM option of LINK/XCTL
+		  command, then the error-code-variable will contain the error code 27 of PGMIDERR
+
+
+02.	Difference between LINK and XCTL command
+
+	LINK command
+	------------
+	01. If program A calls program B using LINK command, then program A is considered to be one level higher than
+	    program B.
+
+				program A
+				   |
+				   V
+				program B
+
+	02. When program A calls program B using LINK command, both program A and program B will remain in the memory.
+	    There is a risk of reaching 'SOS - Short on Storage' since both programs will be in memory. If this chain
+	    is long, then we may get SOS.
+
+	03. You can return back from program B to program A. When you return to program A, the control will be passed
+	    to the next statement after LINK command. You must code RETURN command to return back to calling program.
+
+			program A				program B
+			---------				---------
+			....					......
+			....					......
+			LINK PROGRAM('program-B')		RETURN
+			.... -> (on return from program B)
+
+	XCTL command
+	------------
+	01. If program A calls program B using XCTL command, then both program A and program B are considered to be at 
+	    the same level.
+
+				program A -----> program B	
+
+	02. When program A calls program B using XCTL command, program A will be released from the memory and program B
+	    will be in the memory. In general, the calling program will be removed from the memory and the called program
+	    will be the only program in the memory.
+
+	03. There is no question of returning back from program B to program A since program A was removed from the memory.
+	    You can XCTL PROGRAM('program-A') to execute program-A but this will start the execution of program-A from
+	    the beginning (IDENTIFICATION DIVISION) and not from the point where you had called program B.
+	
+
+03.	CICSGS3A, CICSGS3B (revised)
+
+	Problem Definition (Revised) :-
+	--------------------------------
+	If you enter a valid login and password, the student program should be executed.
+	If you enter 9999 as roll number in student program, then it should run login program.
+
+	INSTRUCTIONS :-
+	---------------
+	01. Delete CICS???A and CICS???B.
+	02. Type E on left of OZA???.CICS.PROGRAMS and (CICS???A) on right of PROGRAMS
+	03. COPY "OZAGS3.CICS.PROGRAMS(CICSGS3A)"
+	04. CHANGE ALL  "GS3"  "???"   -> Save.
+
+	05. Type E on left of OZA???.CICS.PROGRAMS and (CICS???B) on right of PROGRAMS
+	06. COPY "OZAGS3.CICS.PROGRAMS(CICSGS3B)"
+	07. CHANGE ALL  "GS3"  "???"   -> Save.
+
+	08. Delete MAPS???
+	09. Type E on left of OZA???.CICS.PROGRAMS and (MAPS???) on right of PROGRAMS
+	10. COPY "OZAGS3.CICS.PROGRAMS(MAPSGS3)"
+	11. CHANGE ALL  "GS3"  "???"   -> Save.
+	
+	12. Open Assembler JCL -> CICSMAP -> Save -> Submit -> You will get MAXCC = 0.
+	13. Open Compiler JCL -> CBLCSCMP -> On line 12 and 14, type CICS???A -> Save -> Submit -> You will get MAXCC = 0.
+	14. Open Compiler JCL -> CBLCSCMP -> On line 12 and 14, type CICS???B -> Save -> Submit -> You will get MAXCC = 0.
+
+	15. Login to CICSOZA region
+	16. CEMT SET PROG(MAPS???) NEWC	-> RESPONSE : NORMAL will be displayed.
+	17. CEMT SET PROG(CICS???A) NEWC -> RESPONSE : NORMAL will be displayed.
+	18. CEMT SET PROG(CICS???B) NEWC -> RESPONSE : NORMAL will be displayed.
+
+	19. Run transaction AGS3. 
+	20. Check if XCTL concept is working correctly in both the programs.
+
+
+04.	Capture system date and time
+
+	WORKING-STORAGE SECTION.                                    
+	77   DATE-TIME-WS        PIC S9(15) COMP-3.                 
+                                                            
+	LINKAGE SECTION.                                            
+	01   DFHCOMMAREA.                                           
+	     05   CURR-DATE           PIC X(10).                    
+	     05   CURR-TIME           PIC X(08).                    
+	PROCEDURE DIVISION.                                        
+	-----------------------------------------------------------
+	--- SUB PROGRAM LOGIC STARTS HERE -------------------------
+	-----------------------------------------------------------
+	0000-MAIN-PARA.                                            
+	    EXEC CICS                                              
+	         ASKTIME ABSTIME(DATE-TIME-WS)                 	<---- DATE-TIME-WS = 20240529115545.    
+	    END-EXEC.                                              
+	    EXEC CICS                                              
+	         FORMATTIME ABSTIME(DATE-TIME-WS) 		<---- DATE-TIME-WS = input variable = 20240529115545.              
+	                    DDMMYYYY(CURR-DATE) DATESEP('-')    <---- CURR-DATE = 29-05-2024
+	                    TIME(CURR-TIME)     TIMESEP(':')    <---- CURR-TIME = 11:55:45   		HH:MM:SS
+	    END-EXEC.                                              
+
+	- There are two commands you have to use if you want to capture system date and sytem time in a program -
+	  ASKTIME, FORMATTIME
+
+	- ASKTIME captures the system date and time and stores it in a date-time-variable specified in ABSTIME option
+	  as shown in the syntax below.
+
+		Syntax :-
+			
+			EXEC CICS
+				ASKTIME ABSTIME(date-time-variable)
+			END-EXEC
+
+		Note :-
+		-------
+		01. date-time-variable is user defined variable but the PIC clause of the date-time-variable must be
+		    S9(15) COMP-3.
+
+		02. date-time-variable will contain the system date and time packed together.
+
+		03. date-time-variable value will be passed as an input to FORMATTIME command as shown above.
+
+	- FORMATTIME command will format the date and the time as per user specification. You can refer to the example
+	  above.
+
+05.	CICSGS3A, CICSGS3B (Revised)
+
+	Problem Definition
+	------------------
+	Current Date and Time should be displayed on Login Screen and Student Screen.
+
+
+	Instructions 
+	------------
+	01. Delete CICS???A and CICS???B.
+	02. Type E on left of OZA???.CICS.PROGRAMS and (CICS???A) on right of PROGRAMS
+	03. COPY "OZAGS3.CICS.PROGRAMS(CICSGS3A)"
+	04. CHANGE ALL  "GS3"  "???"   -> Save.
+
+	05. Type E on left of OZA???.CICS.PROGRAMS and (CICS???B) on right of PROGRAMS
+	06. COPY "OZAGS3.CICS.PROGRAMS(CICSGS3B)"
+	07. CHANGE ALL  "GS3"  "???"   -> Save.
+
+	08. Type E on left of OZA???.CICS.PROGRAMS and (CDCT???) on right of PROGRAMS
+	09. COPY "OZAGS3.CICS.PROGRAMS(CDCTGS3)"
+	10. CHANGE ALL  "GS3"  "???"   -> Save.
+	
+	11. Open Compiler JCL -> CBLCSCMP -> On line 12 and 14, type CICS???A -> Save -> Submit -> You will get MAXCC = 0.
+	12. Open Compiler JCL -> CBLCSCMP -> On line 12 and 14, type CICS???B -> Save -> Submit -> You will get MAXCC = 0.
+	13. Open Compiler JCL -> CBLCSCMP -> On line 12 and 14, type CDCT??? -> Save -> Submit -> You will get MAXCC = 0.
+
+	14. Login to CICSOZA region
+	15. Make entry of CDCT??? in PPT -> CEDA DEF PROG(CDCT???) LANG(COBOL) GROUP(OZA???)
+	16. Install entry of CDCT??? of PPT -> CEDA INS PROG(CDCT???) GROUP(OZA???)
+
+	17. CEMT SET PROG(CICS???A) NEWC -> RESPONSE : NORMAL will be displayed.
+	18. CEMT SET PROG(CICS???B) NEWC -> RESPONSE : NORMAL will be displayed.
+
+	19. Run transaction AGS3. 
+	20. Try all combinations while you are running the transaction. Check if date and time is getting displayed
+	    on top right corner of the screen every time.
+
+
+06.	CICSGS3A, CICSGS3B (Revised)
+
+	Problem Definition
+	------------------
+	> F1:QUIT message should be displayed in GREEN color.
+	> On pressing F1 key, the control should be passed to login program.
+
+	> F7:RESET message should be displayed in GREEN color.
+	> On pressing F7 key, the data in the textboxes should be cleared.
+
+	> If user presses an aid key other than Enter, F1, F7, then the program should display an error message.
+
+	Instructions
+	------------
+	01. Delete CICS???B.
+	02. Type E on left of OZA???.CICS.PROGRAMS and (CICS???B) on right of PROGRAMS
+	03. COPY "OZAGS3.CICS.PROGRAMS(CICSGS3B)"
+	04. CHANGE ALL  "GS3"  "???"   -> Save.
+
+	05. Open Compiler JCL -> CBLCSCMP -> On line 12 and 14, type CICS???B -> Save -> Submit -> You will get MAXCC = 0.
+
+	06. Login to CICSOZA region
+	07. CEMT SET PROG(CICS???B) NEWC -> RESPONSE : NORMAL will be displayed.
+
+	08. Run transaction AGS3. 
+	09. Try all combinations while you are running the transaction. Check if F1 and F7 keys are working.  Also
+	    press an invalid AID key and check if the error message is getting displayed.
+
+
+07.	Attribute Byte
+
+
+					XABC COMPANY
+
+			XEMPNO		X_____________________XA
+
+			XNAME		X_____________________XA
+
+			XMOBILENO	X_____________________XA
+
+
+	- Attribute byte is displayed on the screen but it is invisible on the screen.
+
+	- Attribute byte is displayed before each field on the screen.
+
+	- In the above example attribute byte has been represented by X.
+
+	- Attribute byte will contain the information which you code in ATTRB parameter of DFHMDF command.
+
+	- Askip field must begin immediately at the end of every unprotected field. In the above example XA represents
+	  the askip field - X is the attribute byte of the askip field and A is the askip field.
+
+
+08.	AEI9 abend
+
+	- AEI9 stands for MAPFAIL abend.
+
+	- This abend occurs when you press an AID key without entering any data on the screen AND you do not code FSET
+	  in any of the unprotected fields.
+
+	- If you code FSET in all unprotected fields of the map, you will never get AEI9 abend message at the bottom of the screen.
+
+	- AEI9 abend is initiated by RECEIVE MAP command.
+
+	- Sequence :-  You do not enter data in any field -> Press AID Key -> RECEIVE MAP -> AEI9 abend message is displayed
+
+09.	RESP parameter
+
+	- If you do not code RESP parameter in a command and if the command fails in execution, then you will get system abend
+	  message at the bottom of the screen.
+
+	- If you do not want such a message to appear on the screen and instead you want a customized error message, then
+	  you must code RESP parameter in the command and write EVALUATE block to handle the abend as shown below :-
+
+		EXEC CICS                                                   
+		   RECEIVE MAP('STUDMAP') MAPSET('MAPSGS3') RESP(ERROR-CODE)
+		END-EXEC.                                                   
+		EVALUATE TRUE                                               
+		   WHEN ERROR-CODE = DFHRESP(MAPFAIL)                       
+		        MOVE 'YOU HAVE NOT ENTERED ANY DATA !!!' TO MESG2O  
+		        MOVE DFHRED                              TO MESG2C  
+		        MOVE DFHBLINK                            TO MESG2H  
+		        PERFORM 6000-SEND-PARA                              
+		        PERFORM 8000-REMOVE-TEMP-PARA                       
+		END-EVALUATE.                                               
+
+
+10	Requirement :
+
+	a. change sytem date format from mm/dd/yyyy format to dd-mm-yyyy format
+
+
+
+

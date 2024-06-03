@@ -1,0 +1,547 @@
+
+Ground Rules
+------------
+01. You need to be on the call from 9.00 to to 6.00 pm compulsory.
+02. Most of the training time will be utilized for hands on.
+03. Do daily revision of topics taught during the day.
+04. Ask questions in case of doubts. 
+05. Make the session interactive.
+-----------------------------------------------------------------------------------------------------------------------------
+
+Error messages :-
+-----------------
+TSO/ISPF
+--------
+01. No members in data set : this means your PDS is empty. There are no members in the PDS.
+02. No space in directory  : you have exceeded the limit of Directory Blocks
+
+VSAM error
+----------
+01. Invalid Related Object : You are creating an AIX for a base cluster which has been created using REUSE parameter.
+			     You must remove REUSE in DEFINE CLUSTER command to resolve this error.
+
+COBOL file status codes
+-----------------------
+01. "00"	- File operation successful.
+02. "10"	- End of File
+03. "22"	- Duplicate primary key
+
+
+ABnormal ENDs (ABEND CODES)
+---------------------------
+01. 0B37 - if you do not have space left in dataset to enter data.
+02. S322 - you get this abend when your job has executed beyond the time limit specified in TIME parameter.
+03. S806 - invalid program name specified in PGM parameter of EXEC statement
+04. S804 - space limit exceeded in REGION parameter of JOB command.
+05. S80A - space limit exceeded in REGION parameter of JOB command.
+06. S0C7 - you have typed a special character in a numeric field data.
+07. S0C4 - 1. mismatch in DD names in RUN JCL and COBOL program.
+	   2. STOP RUN not coded in COBOL program.
+
+JCL programs
+------------
+01. JCL01 - IEFBR14 - allocate a dataset.
+02. JCL02 - IEBGENER - display dataset contents in spool.
+03. JCL03 - IEFBR14 - delete a dataset
+04. JCL04 - IEBGENER - copy dataset
+05. JCL05 - SORT - Sort on one/two field/s
+06. JCL06 - SORT - INCLUDE/OMIT command to sort specific records.
+07. JCL07 - SORT - OUTREC to reformat fields in output file
+08. JCL08 - SORT - Copy all/specific records
+09. JCL09 - SORT - Copy records (split a file into two or more files)
+10. JCL10 - SORT - Eliminate duplicates
+11. JCL11 - Instream procedure 
+12. JCL12 - Instream procedure + symbolic parameter + default value
+13. JCL13 - Catalogued Procedure
+14. JCL14 - JCL using Multiple Job Steps
+15. JCL15 - Define a GDG
+16. JCL16 - Define a Model for the GDG
+17. JCL17 - Define a GDS
+18. JCL18 - Populate data in a GDS
+19. JCL19 - Using GDS in two job steps
+20. JCL20 - COND parameter in JOB statement
+21. JCL21 - COND parameter in EXEC statement
+
+COBOL programs
+--------------
+01. COBOL01 - Basic program - DISPLAY, ACCEPT, COMPUTE
+02. COBOL02 - IF - ELSE - END-IF
+03. COBOL03 - PERFORM
+04. COBOL04 - Validate the input, Nested IF ELSE END-IF, IS NOT NUMERIC
+05. COBOL05 - EVALUATE, Edit characters
+06. COBOL06 - PIC V, how to display numerical value using decimal point
+07. COBOL07 - PERFORM ... TIMES, display statistics
+08. COBOL08 - Sequential table
+09. COBOL09 - Indexed table, SEARCH, SET
+10. COBOL10 - Signed variable
+11. COBOL11 - Display all records of PS file in spool.
+12. COBOL12 - Copy all records of PS file to PS file.
+13. COBOL13 - String manipulation - INSPECT, STRING, UNSTRING commands.
+14. COBOL14 - Copy all records from PS file to KSDS.
+15. COBOL15 - Copy valid records of PS file to KSDS and invalid records of PS file to ERROR.PS file. + COPY command
+16. COBOL16 - Display all records of KSDS in spool. + COPY command
+17. COBOL17 - 88-level.
+18. COBOL18 - Alternate Index (unique)
+19. COBOL19 - ACCESS MODE DYNAMIC
+20. COBOL20 - SORT
+
+VSAM programs
+-------------
+01. VSAM01  - DELETE KSDS -> DEFINE KSDS
+02. VSAM02  - REPRO (copy)
+03. VSAM03  - REPRO (REPRO options)
+04. VSAM04  - ALTER
+05. VSAM05  - LISTCAT
+06. VSAM06  - DELETE ESDS -> DEFINE ESDS -> REPRO
+07. VSAM07  - Alternate Index (Unique)    : DELETE -> DEFINE AIX -> BLDINDEX -> DEFINE PATH
+08. VSAM08  - Alternate Index (Nonunique) : DELETE -> DEFINE AIX -> BLDINDEX -> DEFINE PATH
+
+-----------------------------------------------------------------------------------------------------------------------------
+Knowledge Checks
+----------------
+01. For a KSDS, Access Mode can be ____, _____, ______.
+02. If you open a KSDS in I-O mode, then what operations you can perform on a KSDS ?
+03. What is the file status code for duplicate primary key ?
+04. Why do we use 88-level in a program ?
+05. Why do we use COPY statement in a program ?
+06. While using COPY command, the member which contains the reusable code is called as _______ member.
+07. What is the advantage of using 88-level in a program ?
+08. Which are the entries you code in FILE-CONTROL for a KSDS ?
+09. If you want to add records to a KSDS, then in which mode will you open the file ?
+10. COPY command executes during compilation or during run of the program ?
+-----------------------------------------------------------------------------------------------------------------------------
+
+01. 	How to use alternate index in a COBOL program ?
+
+	COBOL18 - Alternate Index (unique)
+	----------------------------------
+
+	Problem Definition :-
+	---------------------
+	Write a program which will accept mobile number from the user. The program should display details of the employee having
+	this mobile number. If the mobile number is invalid, then display suitable error message.
+
+
+	READ command to search based on alternate key
+	---------------------------------------------
+	- Syntax :- READ logical-file INTO WS-record KEY IS alternate-key-field.
+
+	- Example :- READ KSDS-FILE INTO WS-RECORD KEY IS KSDS-MOBILE-NO.
+
+	- READ command when executed once will search the mobile number in the entire alternate index.
+	  If READ command is able to find mobile number in alternate index, then the data of the mobile number will be copied
+	  in WS-record and File Status will be "00".
+	  If READ command is not able to find mobile number in alternate index, then File Status variable will be "23".
+
+
+	DD name rule for path name in RUN JCL
+	-------------------------------------
+	- DD name of path = DD name of base cluster with a suffix of 1.
+	
+	- Example : 
+		> If DD name of base cluster is ABC, then DD name of path will be ABC1.
+		> If DD name of base cluster is DDIN, then DD name of path will be DDIN1.
+		> If DD name of base cluster is DD1, then DD name of path will be DD11.
+
+
+	Instructions
+	------------
+	00.  Open EMP.PS1 file. Ensure that your employee numbers in the file are unique and in the ascending order.
+	01. In VSAM.PGMS, delete your member VSAM01.
+	02. Type E on left of VSAM.PGMS and (VSAM01) on right of VSAM.
+	03. COPY "OZAGS3.VSAM.PGMS(VSAM01)"
+	04. CHANGE ALL  OZAGS3  OZA???
+	05. Save. Submit. Check if OZA???.COMPANY.KSDS.CLUSTER, OZA???.COMPANY.KSDS.DATA and OZA???.COMPANY.KSDS.INDEX have 
+            been created.
+	06. Open OZA???.COMPANY.KSDS.CLUSTER in FM in View mode and check if records have been copied.
+
+	07. Open VSAM07. Submit. If you are getting MAXCC=8, then submit again else do not submit again.
+	08. Check if OZA???.COMPANY.MOBILENO.AIX.CLUSTER, OZA???.COMPANY.MOBILENO.AIX.DATA, OZA???.COMPANY.MOBILENO.AIX.INDEX
+            have been created.
+	09. Open OZA???.COMPANY.MOBILENO.AIX.CLUSTER in FM in View mode and check if records have been copied.
+
+	10. Type E on left of COBOL.PGMS.ADVANCED and (COBOL18) on right of ADVANCED.
+	11. COPY "OZAGS3.COBOL.PGMS.ADVANCED(COBOL18)"
+	13. Save.
+	14. In compiler -> change program name to COBOL18 on line 12, 14 -> Save -> Submit.
+	15. In run jcl  -> change program name to COBOL18 on line 9 -> code dd statement and SYSIN as shown below :-
+
+		//*--- CODE DD NAMES HERE ---------------------------------------------
+		//DDIN     DD  DSN=OZA???.COMPANY.KSDS.CLUSTER,DISP=OLD                
+		//DDIN1    DD  DSN=OZA???.COMPANY.MOBILENO.AIX.PATH,DISP=OLD           
+		//*--------------------------------------------------------------------
+		//SYSIN    DD  *                                                       
+		9866887799                                                             
+		/*                                                                     
+
+	16. Save. Submit. Goto spool and check the output in SYSOUT.
+	17. Test this program for some other valid mobile number which is present in KSDS. Check output in spool -> SYSOUT.
+	18. Test this program for some invalid mobile number which is not present in KSDS. Check output in spool -> SYSOUT.
+
+
+02.	How you can read a KSDS dynamically ?
+
+	- Dynamic = Random Read + Sequential Read (in a loop)	(Analogy : Book, Gramaphone/LP)	
+
+	- If ACCESS MODE IS DYNAMIC in a program, then you need to code 2 READ commands in the program -
+	  one READ for random read and one READ for sequential read in a loop.
+
+
+	Problem Definition :-
+	--------------------
+	Accept an employee number. The program will search empno in KSDS randomly. If empno is not present in KSDS,
+	the program will display an error message. If empno is present in KSDS, then the program will display all 
+	records from that empno till the last record. The program should also display a count of total records displayed
+
+	Instructions :-
+	---------------
+	01. Type E on left of COBOL.PGMS.ADVANCED and (COBOL19) on right of ADVANCED.
+	02. COPY "OZAGS3.COBOL.PGMS.ADVANCED(COBOL19)"
+	03. Save.
+	04. In compiler -> change program name to COBOL19 on line 12, 14 -> Save -> Submit.
+	05. In run jcl  -> change program name to COBOL19 on line 9 -> code dd statement and SYSIN as shown below :-
+
+		//*--- CODE DD NAMES HERE ---------------------------------------------
+		//DDIN     DD  DSN=OZA???.COMPANY.KSDS.CLUSTER,DISP=OLD                
+		//*--------------------------------------------------------------------
+		//SYSIN    DD  *                                                       
+		1050                                                             
+		/*                                                                     
+
+	06. Save. Submit. Goto spool and check the output in SYSOUT.
+	07. Test this program for some other valid empno which is present in KSDS. Check output in spool -> SYSOUT.
+	08. Test this program for some invalid empno which is not present in KSDS. Check output in spool -> SYSOUT.
+
+
+	88-level in COBOL19
+	-------------------
+	01. Delete COBOL19 from your PDS.
+	02. Type E on left of COBOL.PGMS.ADVANCED and (COBOL19) on right of ADVANCED.
+	03. COPY "OZAGS3.COBOL.PGMS.ADVANCED(COBOL19)"
+	04. Save. Compile. Run.
+
+
+03.	SORT command
+
+	- Syntax :-
+
+		SORT work-file-logical-name	ON ASCENDING/DESCENDING  work-file-field-name
+						USING input-file-logical-name
+						GIVING output-file-logical-name.
+
+	
+	COBOL20 - Sort records
+
+	Instruction
+	-----------
+	01. Rename any one PS file which you do not require to OZA???.EMP.SORT.PS
+	02. Type E on left of COBOL.PGMS.ADVANCED and (COBOL20) on right of ADVANCED.
+	03. COPY "OZAGS3.COBOL.PGMS.ADVANCED(COBOL20)"
+	04. Save. 
+
+------> 05. Delete at least 10 members from OZA???.COBOL.LOADLIB pds. <-------------------------------------
+
+	06. In compiler -> change program name to COBOL20 on line 12, 14 -> Save -> Submit.
+	07. You will get MAXCC=4. You can ignore this and go to Step 08.
+
+	08. In run jcl  -> change program name to COBOL20 on line 9 -> code dd statement and SYSIN as shown below :-
+
+		//*--- CODE DD NAMES HERE ---------------------------------------------
+		//DD1     DD  DSN=OZA???.EMP.PS1,DISP=OLD                
+		//DD2     DD  UNIT=SYSDA,SPACE=(TRK,(1,1))                
+		//DD3     DD  DSN=OZA???.EMP.SORT.PS,DISP=OLD                
+		//*--------------------------------------------------------------------
+		//SYSIN    DD  *                                                       
+		/*                                                                     
+
+	09. Save. Submit. Open EMP.SORT.PS and check if it has sorted records.
+
+
+	Other Features of SORT command
+	------------------------------
+	01. Sort specific records -> Use RELEASE (write the record from input file to work file)
+		
+		Filter condition
+		----------------
+		> read a record from input file
+		> check the filter condition
+		> if condition satisfies, then release the record in work file.
+
+
+	02. Format records in output file, select fields to be saved in output file, change sequence of fields in 
+	    output file. -> Use RETURN command.
+	
+	03. You can validate the input data before sorting.
+
+
+04.	MERGE command
+
+	> MERGE command is used to merge data from two or more files into one file.	
+
+	> The following points must be noted while using MERGE command :-
+		1. There should be at least 2 input files.
+		2. All input files must be sorted on the same field, same sort sequence.
+		   (In the example below, all three input files have been sorted in ascending order of name)
+
+			INPUT-FILE-1		INPUT-FILE-2		INPUT-FILE-3
+			WIPRO.PUNE		WIPRO.BLORE		WIPRO.HYD
+			----------		-----------		---------
+			AJAY------ 021000	MITESH---- 034000	CHANDRESH- 025000	
+			SHYAM----- 043000	VARUN----- 010000	NIMESH---- 031000
+			TARUN----- 028000				RAJ------- 028000
+									SURESH---- 034000
+
+		3. In MERGE command, you must specify the same sort field and sort sequence as that in Step 02 above.
+		   (Since sort field is name and sort sequence in ascending, we need to specify name & ascending in
+		    MERGE command)
+
+			Syntax :-
+				MERGE work-file-logical-name ON sort-sequence work-file-field-name
+					USING input-file-1-logical-name, input-file-2-logical-name, ...... 
+					GIVING output-file-logical-name.
+
+				MERGE WORK-FILE ON ASCENDING EMP-NAME
+					USING INPUT-FILE-1, INPUT-FILE-2, INPUT-FILE-3
+					GIVING OUTPUT-FILE.
+	
+				OUTPUT-FILE
+				WIPRO.EMP
+				---------
+				AJAY------ 021000		
+				CHANDRESH- 025000
+				MITESH---- 034000
+				NIMESH---- 031000
+				RAJ------- 028000
+				SHYAM----- 043000
+				SURESH---- 034000
+				TARUN----- 028000
+				VARUN----- 010000
+
+	> If you are sorting all records or merging all records, you should not open the input/output files before
+	  SORT/MERGE command and close the input/output files after SORT/MERGE command because SORT/MERGE itself will
+	  open and close the files.
+
+
+05.	INTRINSIC Functions - inbuilt-functions of COBOL
+
+
+	01.	REVERSE() to reverse a string.
+
+		MOVE "ABCDE" TO STRING-1.
+		MOVE FUNCTION REVERSE(STRING-1) TO STRING-2.
+		DISPLAY STRING-1.			-> ABCDE
+		DISPLAY STRING-2.			-> EDCBA
+
+	02.	UPPER-CASE() to convert alphabets of a string to uppercase.
+	
+		MOVE "abcde" TO STRING-1.
+		MOVE FUNCTION UPPER-CASE(STRING-1) TO STRING-2.
+		DISPLAY STRING-1.			-> abcde
+		DISPLAY STRING-2.			-> ABCDE
+
+
+	03.	LOWER-CASE() to convert alphabets of a string to lowercase.
+	
+		MOVE "ABCDE" TO STRING-1.
+		MOVE FUNCTION LOWER-CASE(STRING-1) TO STRING-2.
+		DISPLAY STRING-1.			-> ABCDE
+		DISPLAY STRING-2.			-> abcde
+
+	04.	SUM() to add more than one numbers
+
+		MOVE 45 TO NUM1.
+		MOVE 70 TO NUM2.
+		MOVE 40 TO NUM3.
+		COMPUTE RES = FUNCTION SUM(NUM1 NUM2 NUM3).
+		DISPLAY RES.				-> 155
+
+	05.	MAX() to find maximum number
+
+		MOVE 45 TO NUM1.
+		MOVE 70 TO NUM2.
+		MOVE 40 TO NUM3.
+		COMPUTE MAXNUM = FUNCTION MAX(NUM1 NUM2 NUM3).
+		DISPLAY MAXNUM.				-> 70
+
+	06.	MIN() to find minimum number
+
+		MOVE 45 TO NUM1.
+		MOVE 70 TO NUM2.
+		MOVE 40 TO NUM3.
+		COMPUTE MINNUM = FUNCTION MIN(NUM1 NUM2 NUM3).
+		DISPLAY MINNUM.				-> 40
+
+	07.	MOD() to find remainder
+
+		MOVE 25 TO NUM1.
+		MOVE 7  TO NUM2.
+		COMPUTE REM = MOD(NUM1 NUM2).
+		DISPLAY REM.				-> 4
+
+	08.	CURRENT-DATE will capture the system date and time.
+
+		01	DATE-RECORD.
+			05	C-DATE		PIC 9(08).
+			05	C-TIME		PIC 9(06).
+
+		MOVE FUNCTION CURRENT-DATE TO DATE-RECORD.		-> 20240515162503
+		DISPLAY DATE-RECORD.					-> 20240515162503
+		DISPLAY C-DATE.						-> 20240515
+		DISPLAY C-TIME.						-> 162503
+
+		One more technique to capture current date and current time.
+		------------------------------------------------------------
+		01	DATE-RECORD.
+			05	C-DATE		PIC 9(08).
+			05	C-TIME		PIC 9(06).
+
+		ACCEPT C-DATE FROM DATE YYYYMMDD.
+		ACCEPT C-TIME FROM TIME.			
+		DISPLAY C-DATE.						-> 20250515
+		DISPLAY C-TIME.						-> 162503
+
+
+	09.	Date Formats :-
+
+		Standard Format		: YYYYMMDD
+
+		Gregorian Date Format	: date is represented as a number.
+					  This number is the number of days passed since 31st Dec 1600.
+
+		Julian Date Format	: format is YYYYDDD where DDD is a number from 1 to 365/366
+					  Example : 15th May -> DDD = 31 + 29 + 31 + 30 + 15 = 136
+					  Julian date for 15th May is 2024136
+	
+		Remember the following keywords :-
+		01. DATE  	-> standard format
+		02. DAY		-> julian date
+		03. INTEGER	-> gregorian date
+
+
+		FUNCTIONS
+		---------
+		01. INTEGER-OF-DATE -> converts date from standard format to gregorian format.
+
+		02. DAY-OF-DATE     -> converts date from standard format to julian format.
+
+		03. DATE-OF-INTEGER -> converts date from gregorian format to standard format.
+
+		04. DATE-OF-DAY	    -> converts date from julian format to standard format.
+
+		Example
+		-------
+			MOVE "20240515" TO DATE-1.
+			COMPUTE DATE-2 = FUNCTION DAY-OF-DATE(DATE-1)
+			DISPLAY DATE-1.				-> 20240515
+			DISPLAY DATE-2.				-> 2024136
+
+			COMPUTE DATE-3 = FUNCTION DATE-OF-DATE(DATE-2).
+			DISPLAY DATE-2.				-> 2024136
+			DISPLAY DATE-3.				-> 20240515
+
+
+06.	Assignment
+	----------
+	01. Rename any PS file which you do not require to OZA???.FRIENDS.PS
+
+	02. Enter 10 records for the following fields in OZA???.FRIENDS.PS.
+
+			FRIEND-CODE 9(04)	FRIEND-NAME X(20)	EMAIL-ID X(25).
+	---------------------------------------------------------------------------------------------------------------
+	03. Define a KSDS cluster - OZA???.FRIENDS.KSDS.CLUSTER, OZA???.FRIENDS.KSDS.DATA, OZA???.FRIENDS.KSDS.INDEX
+	    Do not code REUSE in DEFINE CLUSTER.
+
+	    Copy records from OZA???.FRIENDS.PS to OZA???.FRIENDS.KSDS.CLUSTER
+	
+		Hint : Use VSAM01 and make necessary changes as applicable.
+	----------------------------------------------------------------------------------------------------------------
+	04. Define an alternate index for email-id - OZA???.FRIENDS.EMAIL.AIX.CLUSTER, OZA???.FRIENDS.EMAIL.AIX.DATA,
+	    OZA???.FRIENDS.EMAIL.AIX.INDEX.
+
+	    Define a PATH - OZA???.FRIENDS.EMAIL.AIX.PATH
+
+		Hint : Use VSAM07 and make necessary changes as applicable
+	----------------------------------------------------------------------------------------------------------------
+	05. Write a program which will accept email id from the user. The program should display details of the friend
+	    having that email id. If the email id is invalid, display suitable error message.
+
+		Hint : Use COBOL18 logic	
+	----------------------------------------------------------------------------------------------------------------
+	06. Write a program which will accept a friend's code. The program should display all records from the friend's
+	    code to the last record. If the friend's code is invalid, display suitable error message. The program should
+	    also display the total number of records displayed.
+
+		Hint : Use COBOL19 logic
+	----------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

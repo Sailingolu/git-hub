@@ -1,0 +1,446 @@
+
+Ground Rules
+------------
+01. You need to be on the call from 9.00 to to 6.00 pm compulsory.
+02. Most of the training time will be utilized for hands on.
+03. Do daily revision of topics taught during the day.
+04. Ask questions in case of doubts. 
+05. Make the session interactive.
+-----------------------------------------------------------------------------------------------------------------------------
+
+Error messages :-
+-----------------
+TSO/ISPF
+--------
+01. No members in data set : this means your PDS is empty. There are no members in the PDS.
+02. No space in directory  : you have exceeded the limit of Directory Blocks
+
+ABnormal ENDs (ABEND CODES)
+---------------------------
+01. 0B37 - if you do not have space left in dataset to enter data.
+02. S322 - you get this abend when your job has executed beyond the time limit specified in TIME parameter.
+03. S806 - invalid program name specified in PGM parameter of EXEC statement
+04. S804 - space limit exceeded in REGION parameter of JOB command.
+05. S80A - space limit exceeded in REGION parameter of JOB command.
+06. S0C7 - you have typed a special character in a numeric field data.
+
+JCL programs
+------------
+01. JCL01 - IEFBR14 - allocate a dataset.
+02. JCL02 - IEBGENER - display dataset contents in spool.
+03. JCL03 - IEFBR14 - delete a dataset
+04. JCL04 - IEBGENER - copy dataset
+05. JCL05 - SORT - Sort on one/two field/s
+06. JCL06 - SORT - INCLUDE/OMIT command to sort specific records.
+07. JCL07 - SORT - OUTREC to reformat fields in output file
+08. JCL08 - SORT - Copy all/specific records
+09. JCL09 - SORT - Copy records (split a file into two or more files)
+10. JCL10 - SORT - Eliminate duplicates
+11. JCL11 - Instream procedure 
+12. JCL12 - Instream procedure + symbolic parameter + default value
+13. JCL13 - Catalogued Procedure
+14. JCL14 - JCL using Multiple Job Steps
+15. JCL15 - Define a GDG
+16. JCL16 - Define a Model for the GDG
+17. JCL17 - Define a GDS
+18. JCL18 - Populate data in a GDS
+19. JCL19 - Using GDS in two job steps
+20. JCL20 - COND parameter in JOB statement
+21. JCL21 - COND parameter in EXEC statement
+
+COBOL programs
+--------------
+01. COBOL01 - Basic program - DISPLAY, ACCEPT, COMPUTE
+02. COBOL02 - IF - ELSE - END-IF
+03. COBOL03 - PERFORM
+04. COBOL04 - Validate the input, Nested IF ELSE END-IF, IS NOT NUMERIC
+05. COBOL05 - EVALUATE, Edit characters
+06. COBOL06 - PIC V, how to display numerical value using decimal point
+07. COBOL07 - PERFORM ... TIMES, display statistics
+08. COBOL08 - Sequential table
+09. COBOL09 - Indexed table, SEARCH, SET
+10. COBOL10 - Signed variable
+
+VSAM programs
+-------------
+01. VSAM01  - DELETE KSDS -> DEFINE KSDS
+02. VSAM02  - REPRO (copy)
+03. VSAM03  - REPRO (REPRO options)
+04. VSAM04  - ALTER
+05. VSAM05  - LISTCAT
+06. VSAM06  - DELETE ESDS -> DEFINE ESDS -> REPRO
+
+-----------------------------------------------------------------------------------------------------------------------------
+Knowledge Checks
+----------------
+01. State one difference between a sequential table and indexed table.
+02. Which command will you use to search elements in a table using binary search ?
+03. I want to add 2 to index variable IDX. What command will you give ?
+04. State the 5 types of conditions we have in COBOL.
+05. In which type of condition we use IS NUMERIC clause ?
+06. I have a variable NUM and I want to store 3 +ve as well as -ve digits in this variable. What would be the PIC clause ?
+07. What rule is followed for COMP-3 variable ?
+08. If USAGE clause is not coded, then what is the default USAGE ?
+09. I have a variable X PIC 9(08) USAGE COMP. How many bytes will this variable occupy in memory ?
+10. How many digits maximum you can store in a numeric variable? 
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+VSAM
+----
+01.	VSAM - Virtual Storage Access Method.
+
+02. 	VSAM is all about File Management. VSAM provided 4 types of files in which we can add/update/delete/read records.
+		a. KSDS - Key Sequenced Data Set
+		b. ESDS - Entry Sequenced Data Set
+		c. RRDS - Relative Record Data Set
+		d. LDS  - Linear Data Set
+	
+03.	In VSAM, a file is called as a "cluster". A cluster contains index component + data component.
+	Index component will contain primary key data. Data component will contain records.
+
+04.	In non-VSAM (PS/PDS), attributes of dataset are stored in VTOC - Volume Table Of Contents
+	In VSAM, attributes of dataset are stored in a catalog.
+
+05.	VSAM advantages :-
+		a. Code is easy to read and maintain.
+		b. VSAM datasets are secure and stable compared to non-VSAM dataset (PS).
+
+	VSAM drawbacks :-
+		a. Space wastage
+		b. Slow in accessing data (sometimes)
+
+06.	In VSAM, we use only one utility - IDCAMS
+
+VSAM datasets
+-------------
+a.	KSDS - Key Sequence Data Set
+
+	- KSDS is an indexed file.
+
+	- KSDS has an index component and a data component. 
+
+	- In KSDS, we can perform the following operations :-
+		- add/insert a new record.
+		- read a record
+		- update a record
+		- delete a record
+
+	- How data is stored in a KSDS ?
+
+				OZAGS3.EMP.KSDS.CLUSTER
+				-----------------------
+
+		OZAGS3.EMP.KSDS.INDEX			OZAGS3.EMP.KSDS.DATA
+		---------------------			--------------------
+		101 #A1 ----------------------------->  #A1 -> 101 RAJESH---- 12000
+		102 #A2	----------------------------->	#A2 -> 102 MITESH---- 18000
+		103 #A3	----------------------------->	#A3 -> 103 RITESH---- 21000
+		104 #A4	----------------------------->	#A4 -> 104 YOGESH---- 28000
+		105 #A5	----------------------------->	#A5 -> 105 RAMESH---- 17000
+
+		Cluster component will contain :-
+			- Index component 
+			- Data component
+
+		Index component will contain :-
+			- primary key data
+			- address at which the corresponding record begins in the data component.
+
+		Data component will contain :-
+			- records. Each record will begin at some address (#A1, #A2, ....)
+
+	- In a KSDS, records are searched based on primary key. KSDS processing is fast.
+
+
+
+b.	ESDS - Entry Sequenced Data Set
+
+	- ESDS is a sequential file. It is similar to PS file in non-VSAM.
+
+	- ESDS has only data component. It does not have index component.
+
+	- In ESDS, we can note the following :-
+		- add a new record after the last record.
+		- update a record.
+		- read a record.
+		- cannot insert a new record between two records.
+		- cannot delete a record.
+
+				OZAGS3.EMP.ESDS.CLUSTER
+				-----------------------
+
+ 				OZAGS3.EMP.KSDS.DATA
+				--------------------
+				 #A1 -> 101 RAJESH---- 12000
+				 #A2 -> 102 MITESH---- 18000
+			 	 #A3 -> 103 RITESH---- 21000
+			 	 #A4 -> 104 YOGESH---- 28000
+				 #A5 -> 105 RAMESH---- 17000
+
+		- ESDS cluster will contain only data component.
+		- Data component will contain records beginning at some address (#A1, #A2, ....)
+
+	- In ESDS, to search a record you need to read each record sequentially beginning from the 1st record. ESDS search
+	  process is slower than KSDS. In ESDS records are searched based on RBA (Relative Byte Address - #A1, #A2,....)
+
+c.	RRDS - Relative Record Data Set
+
+	- RRDS is a numbered file. Each record in RRDS is given a serial number (1,2,3). This serial is called as 
+	  RRN - Relative Record Number.
+
+	- RRDS has only data component. It does not have index component.
+
+	- In RRDS, we can note the following :-
+		- add/insert a new record. Insert operation is conditional.
+		- read a record.
+		- update a record
+		- delete a record.
+
+		Hotel						OZAGS.EMP.RRDS.CLUSTER
+		-----						----------------------
+								
+								OZAGS2.EMP.RRDS.DATA
+								--------------------
+		Room #		Guest				RRN	Record
+		------		-----				---	------
+		  1		Rajesh  			1	101 RAJESH 10000
+		  2		Suresh  			2	102 SURESH 20000
+		  3		 				3	                
+		  4		Sitesh				4	104 SITESH 19000
+		  5		Haresh				5	105 HARESH 21000
+
+
+		- While inserting a new record, the record number at which the new record is being inserted should not have
+	  	  any data. If it has data, then new record cannot be inserted. In the above example you will be able to
+		  insert a new record in 3rd position. But you will not be able to insert a new record in 2nd position.
+
+		- If you delete a record in a RRDS, the size of the RRDS will remain the same.
+
+	- In RRDS, a record is searched based on RRN - Relative Record Number.
+
+d.	LDS - Linear Data Set
+
+	- LDS is used to implement tables of a database.
+
+	- Analogy
+		- In Bank example, you have an account in which you have some cash. You cannot see an account. The
+		  cash which is deposited in kept in a locker. Here account is a logical term and locker is a physical term.
+		  You relate cash to both these terms - account , locker
+
+		- In LDS, a table is implemented as a LDS. Table contains rows. But these rows are not stored in a table,
+		  they are stored in LDS. Table is term given to the real world for understanding purpose.
+
+		- Account = Table, Locker = LDS, Cash = Rows.
+
+
+03.	Define a cluster
+
+	- To define a cluster, we have DEFINE CLUSTER command. This command must be coded in SYSIN of IDCAMS utility.
+
+	- DEFINE CLUSTER command syntax :-
+
+		DEFINE CLUSTER(NAME(base-cluster-name)
+				VOLUMES(volume-serial-name)
+				INDEXED | NONINDEXED | NUMBERED | LINEAR
+				space-unit(primary-qty, secondary-qty)
+				KEYS(length,offset)
+				RECORDSIZE(avg-rec-len,max-rec-len)
+				REUSE | NOREUSE
+			      )
+			DATA(NAME(data-component-name))
+			INDEX(NAME(index-component-name))
+					
+		VOLUMES - specify the volume serial name of the device on which you want the cluster to be created.
+			  Volume serial name is a logical name of device. It can contain 1 to 6 characters.
+
+		INDEXED | NONINDEXED | NUMBERED | LINEAR
+				INDEXED 	-> KSDS		(DEFAULT)
+				NONINDEXED 	-> ESDS
+				NUMBERED 	-> RRDS
+				LINEAR 		-> LDS
+
+		space-unit(primary-qty, secondary-qty)	-> TRACKS(10,7)
+		
+		KEYS(length,offset) - KEYS parameter must be coded only if you are defining a KSDS.
+				    - length = width of primary key field 
+				    - offset = position at which primary key field begins.
+
+		RECORDSIZE(avg-rec-len,max-rec-len)
+				    - avg-rec-len = average length of the record.
+				      max-rec-len = maximum length of the record.
+				    - if avg-rec-len = max-rec-len -> it means you are having fixed length records in file.
+				      if avg-rec-len < max-rec-len -> it means you are having variable length records in file.
+				    - Example :- RECORDSIZE(80,80)
+				
+		REUSE | NOREUSE - REUSE - overrite KSDS records with new records.
+				  NOREUSE - will not allow you to overwrite KSDS with new records.
+
+04.	Delete a cluster
+
+	- To delete a cluster, we need to code DELETE command in SYSIN of IDCAMS command.
+
+	- DELETE syntax :-
+
+		DELETE cluster-name
+
+
+05.	VSAM01 - Delete + Define the cluster 
+
+
+	STEP01 -> DELETE 	        -> OZAGS3.EMP.KSDS.CLUSTER	-> MAXCC=0008
+	STEP02 -> DEFINE CLUSTER 	-> OZAGS3.EMP.KSDS.CLUSTER	-> MAXCC=0000	
+
+
+	SUBMIT -> MAXCC=8 FOR STEP01, MAXCC=0 FOR STEP02
+	SUBMIT -> MAXCC=0 FOR STEP02, MAXCC=0 FOR STEP02
+	SUBMIT -> MAXCC=0 FOR STEP02, MAXCC=0 FOR STEP02
+
+
+	Instructions
+	------------
+	01. Using =3.2, allocate a PDS VSAM.PGMS with the following attributes :-
+		SPACE UNIT = TRKS, PRIMARY QTY = 10, SECONDARY QTY = 7, DIRECTORY BLOCKS = 2,
+		RECORD FORMAT =  FB, RECORD LENGTH = 80, BLOCK SIZE = 800, DATASET NAME TYPE = PDS.
+
+	02. Using =3.4, check if the PDS has been allocated.
+
+	03. Type E on left of VSAM.PGMS and (VSAM01) on right of PGMS.
+	04. COPY 'OZAGS3.VSAM.PGMS(VSAM01). 
+	05. CHANGE ALL OZAGS3 OZA???
+	06. Save. Submit.
+	07. You will get MAXCC=8. Goto spool. In JESYSMSG, check Condition code of STEP01 and STEP02. It will be 8 for STEP01
+	    and 0 for STEP02.
+	08. Type END and type S on SYSPRINT of STEP01. You will see error message DATASET NOT FOUND
+
+	09. Submit your JCL again. You will get MAXCC=0.
+	10. Using =3.4, check if cluster, data and index components have been created.
+
+	11. Submit your JCL again. You will get MAXCC=0.
+	12. Using =3.4, check if cluster, data and index components have been created.
+
+	13. Submit your JCL again. You will get MAXCC=0.
+	14. Using =3.4, check if cluster, data and index components have been created.
+
+06.	VSAM02 - Copy data from PS file to KSDS file
+
+	Instructions
+	------------
+	01. Type E of left of EMP.PS1 and press Enter. If there are any records in the file, you can delete the records. Save.
+	02. COPY 'OZAGS3.EMP.PS1'. Save.
+	03. Type E on left of VSAM.PGMS and (VSAM02) on right of PGMS.
+	04. COPY 'OZAGS3.VSAM.PGMS(VSAM02)'. 
+	05. CHANGE ALL OZAGS3 OZA???
+	06. Save. Submit.
+	
+	07. Type =FM on command line.
+	08. Type Option 1 or 2 to view / edit data.
+	09. Type 'OZA???.EMPLOYEE.KSDS.CLUSTER16' in Data set/path name and press <enter>
+	10. You will be able to see the records on EMP.PS1 file in the KSDS file.
+
+	11. In EMP.PS1 file, you can make changes in any 3 records. Save.
+------>	12. Switch to VSAM02. Type REUSE at end of REPRO command. Save. Submit.
+	13. Open KSDS cluster in File Manager and check if KSDS contains the updated data.
+
+07.	REPRO command
+
+	- REPRO is used copy data from PS to VSAM file (KSDS, ESDS, RRDS) or VSAM file to PS or VSAM file to VSAM file.
+	- REPRO can also be used to display VSAM file data in spool.
+	- If you want your VSAM file to be overwritten with new set of data, you must code REUSE option in DEFINE CLUSTER
+	  and REPRO commands. If you do not code REUSE in REPRO command, then if a new record's primary key already 
+	  exist in KSDS, then such a record will not be overwritten.
+
+
+08.	VSAM03 - REPRO options (COUNT(), SKIP(), FROMKEY(), TOKEY())
+
+	Instructions
+	------------
+	01. Type E on left of VSAM.PGMS and (VSAM03) on right of PGMS.
+	02. COPY 'OZAGS3.VSAM.PGMS(VSAM03)'. 
+	03. CHANGE ALL OZAGS3 OZA???
+	04. Save. Submit.
+	05. Goto spool and check all the outputs in DD02 of each step.
+	
+	06. You can try your own combination by making changes in the REPRO command as applicable.
+
+	07. In STEP05, remove FROMKEY('1051'). Save. Submit. Goto spool and check the output.
+	08. In STEP05, remove TOKEY('1051') and type FROMKEY('1051'). Save. Submit. Goto spool and check the output.
+
+09.	VSAM04 - ALTER command (to rename a VSAM file)
+
+	Instructions
+	------------
+	01. Type E on left of VSAM.PGMS and (VSAM04) on right of PGMS.
+	02. COPY 'OZAGS3.VSAM.PGMS(VSAM04)'. 
+	03. CHANGE ALL OZAGS3 OZA???
+	04. Save. Submit. Using =3.4, check if the VSAM file has been renamed.
+	05. Submit again. This time, you will get an error since EMPLOYEE file has already been renamed.
+
+10.	VSAM05 - LISTCAT command (to display VSAM file attributes)
+
+	Instructions
+	------------
+	01. Type E on left of VSAM.PGMS and (VSAM05) on right of PGMS.
+	02. COPY 'OZAGS3.VSAM.PGMS(VSAM05)'. 
+	03. CHANGE ALL OZAGS3 OZA???
+	04. Save. Submit. Goto spool in SYSPRINT and check all the attributes of your VSAM file.
+
+11.	VSAM06 - ESDS
+
+	Instructions
+	------------
+	01. Type E on left of VSAM.PGMS and (VSAM06) on right of PGMS.
+	02. COPY 'OZAGS3.VSAM.PGMS(VSAM06)'. 
+	03. CHANGE ALL OZAGS3 OZA???
+	04. Save. Submit. 
+	05. Using =3.4 check if ESDS file has been created.
+	06. Goto File Manager (=9.FM) and check if EMP.PS1 records have been copied in ESDS cluster.
+
+12.	How is the value of MAXCC determined ?
+
+	MAXCC value = MAXIMUM(COND CODE of all Job Steps).
+
+	COND CODE of job steps are displayed in spool in JESYSMSG.
+
+	Example : If STEP01 COND CODE = 0008, STEP02 COND CODE = 0012, STEP03 COND CODE = 0000, 
+		  then MAXCC = 0012
+
+13.	Loading Records
+
+	- Loading Records means Copying Records.
+
+	- Whenever you are copying (loading ) records from PS file to KSDS file, you need to keep in mind the
+	  following point :-
+
+		>. PS file must have records sorted in ascending order of the field which is identified as the
+		   primary key field in the KSDS file. Such a field must not have duplicate values in PS file.	 
+		
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

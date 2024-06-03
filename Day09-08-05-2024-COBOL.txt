@@ -1,0 +1,566 @@
+
+Ground Rules
+------------
+01. You need to be on the call from 9.00 to to 6.00 pm compulsory.
+02. Most of the training time will be utilized for hands on.
+03. Do daily revision of topics taught during the day.
+04. Ask questions in case of doubts. 
+05. Make the session interactive.
+-----------------------------------------------------------------------------------------------------------------------------
+
+Error messages :-
+-----------------
+TSO/ISPF
+--------
+01. No members in data set : this means your PDS is empty. There are no members in the PDS.
+02. No space in directory  : you have exceeded the limit of Directory Blocks
+
+ABnormal ENDs (ABEND CODES)
+---------------------------
+01. 0B37 - if you do not have space left in dataset to enter data.
+02. S322 - you get this abend when your job has executed beyond the time limit specified in TIME parameter.
+03. S806 - invalid program name specified in PGM parameter of EXEC statement
+04. S804 - space limit exceeded in REGION parameter of JOB command.
+05. S80A - space limit exceeded in REGION parameter of JOB command.
+06. S0C7 - you have typed a special character in a numeric field data.
+
+JCL programs
+------------
+01. JCL01 - IEFBR14 - allocate a dataset.
+02. JCL02 - IEBGENER - display dataset contents in spool.
+03. JCL03 - IEFBR14 - delete a dataset
+04. JCL04 - IEBGENER - copy dataset
+05. JCL05 - SORT - Sort on one/two field/s
+06. JCL06 - SORT - INCLUDE/OMIT command to sort specific records.
+07. JCL07 - SORT - OUTREC to reformat fields in output file
+08. JCL08 - SORT - Copy all/specific records
+09. JCL09 - SORT - Copy records (split a file into two or more files)
+10. JCL10 - SORT - Eliminate duplicates
+11. JCL11 - Instream procedure 
+12. JCL12 - Instream procedure + symbolic parameter + default value
+13. JCL13 - Catalogued Procedure
+14. JCL14 - JCL using Multiple Job Steps
+15. JCL15 - Define a GDG
+16. JCL16 - Define a Model for the GDG
+17. JCL17 - Define a GDS
+18. JCL18 - Populate data in a GDS
+19. JCL19 - Using GDS in two job steps
+20. JCL20 - COND parameter in JOB statement
+21. JCL21 - COND parameter in EXEC statement
+
+COBOL programs
+--------------
+01. COBOL01 - Basic program - DISPLAY, ACCEPT, COMPUTE
+02. COBOL02 - IF - ELSE - END-IF
+03. COBOL03 - PERFORM
+04. COBOL04 - Validate the input, Nested IF ELSE END-IF, IS NOT NUMERIC
+05. COBOL05 - EVALUATE, Edit characters
+06. COBOL06 - PIC V, how to display numerical value using decimal point
+07. COBOL07 - PERFORM ... TIMES, display statistics
+08. COBOL08 - Sequential table
+09. COBOL09 - Indexed table, SEARCH, SET
+10. COBOL10 - Signed variable
+-----------------------------------------------------------------------------------------------------------------------------
+Knowledge Checks
+----------------
+01. Which is the optional clause in EVALUATE ?
+02. When should we use EVALUATE statement ?(instead of if end statement)
+03. Why do we use edit characters ?(to format the data in output)
+04. Which are some of the edit characters ?(z*,.+/)
+05. ZERO, SPACE are called as _______ ________.(FIGURATIVE CONSTANT)
+06. Which Figurative Constant cannot be coded in Procedure Division ?(ALL,FILLER)
+07. Explain edit character Z.(it gives space)
+08. If you have a variable with PIC 9(04)V9(02), then what is the width of this variable ?
+09. State the 3 points you must keep in mind while using edit characters.
+10. Why do we code VALUE clause ?(To assign an initial value to a variable)
+-----------------------------------------------------------------------------------------------------------------------------
+
+01. 	Arrays (Tables)
+
+	- A table (array) is a group of locations storing data of the same data type.
+	- Differences between C array and COBOL table
+
+			C array						COBOL table
+			-------						-----------
+		1. Arrays starts from 0th location.		1. A table starts from 1st location
+		2. To refer to nth location of array arr,	2. To refer to nth location of table tbl,
+		   you must code arr[n]				   you must code tbl(n)
+		3. arr[n+1] is valid.				3. tbl(n+1) is invalid.
+		4. An array can have 2 dimensions.		4. A table can have maximum 7 dimension.
+
+	- Drawbacks :-
+		1. Array is static - fixed number of locations.
+		2. We have to write logic to search/ add/ delete elements from a table.
+		3. Data stored in an array is temporary. Array data will be lost when you quit the program.
+
+	- In COBOL, we have two types of tables :-
+		a. Sequential table
+			- Elements are searched sequentially starting from 1st location.
+			- Real world example : Lift
+			- We need to write our own logic to search for an element sequentially.
+			- We code OCCURS clause to define a sequential table.
+
+		b. Indexed table
+			- Elements are searched sequentially as well as randomly.
+			- Real world example : Gramaphone/LP, Book
+			- We have commands to search for elements :-
+				- SEARCH - allows you to search an element sequentially. (linear search algorithm)
+				- SEARCH ALL - allows you to search an element randomly. (binary search algorithm)
+			- We code OCCURS clause and INDEXED BY clause to define an indexed table.
+
+02.	How do we define a table in COBOL ?
+
+	Syntax :-
+		01	<in-memory-table-name>.
+			05	<table-name>	OCCURS	<n> TIMES.
+				10	<table-element-1>	PIC 	data-type(width).
+				10	<table-element-2>	PIC 	data-type(width).
+				10	<table-element-3>	PIC 	data-type(width).
+
+	Example :-
+
+		01	TABLE-1.
+			05	EMPLOYEE-TABLE	OCCURS 5 TIMES.
+				10	EMP-NO		PIC 9(03).
+				10	EMP-NAME	PIC X(10).
+				10	SALARY		PIC 9(06).
+
+
+	- OCCURS clause is used to define the size of the table.
+	- OCCURS clause must never be coded in level number 01.
+
+				
+03.	COBOL08 - Sequential table
+	--------------------------
+
+	Problem Definition
+	------------------
+	Implement Student program (COBOL07) with sequential table.
+
+	
+	Instructions
+	------------
+	01. Type E on left of COBOL.PGMS.BASIC and (COBOL08) on right of BASIC.
+	02. COPY 'OZAGS3.COBOL.PGMS.BASIC(COBOL08). Save.
+	03. In compiler JCL, on line 12 & 14, type COBOL08. Save. Submit.
+	04. In run JCL, on line 9, type COBOL08. Enter input data in SYSIN as follows :
+
+		//SYSIN    DD  *                                          
+		RAHUL SHARMA-------- 07775 06575 00425 00000 0000 ----    
+		SATISH DESHPANDE---- 06500 08125 04575 00000 0000 ----    
+		ARUN DEB------------ 04025 07000 03875 00000 0000 ----    
+		VARUN KHANNA-------- 05900 04350 07300 00000 0000 ----    
+		GANESH RAO---------- 04300 00000 05625 00000 0000 ----    
+		SATISH KAPUR-------- 05300 06700 05800 00000 0000 ----    
+		/*                                                        
+
+	05. Save. Submit. Goto spool and check the output. Check if the statistics are correct.
+	06. Change some data in the input records. Save. Submit. 
+	07. Goto spool and check the output. Check if the statistics are correct.
+
+	08. Check if your program is working for all invalid conditions - 
+		> data missing in name
+		> mks out of range, 
+		> S0C7 (non-numeric data in marks)
+
+
+04.	COBOL09 - Indexed table
+	-----------------------
+
+	Problem Definition
+	-------------------
+	Implement Student program using indexed table.
+
+	Input a class (PASS/FAIL/----). The program should display only those records where class = the class you have entered.
+	If you enter a class other than PASS, FAIL or ----, then the program should display an error message 'CLASS NOT VALID'
+
+	SEARCH statement
+	----------------
+	- SEARCH statement is used to search for an element in an indexed table. 
+	- SEARCH statement implements linear search logic.
+
+	- Syntax :-
+
+		SEARCH 05-level-table-name
+			AT END
+				statement-1
+			WHEN filter-condition
+				statement-2
+		END-SEARCH.
+		statement-3.
+
+	- Example :-
+
+		SEARCH STUDENT-TABLE
+			AT END
+				DISPLAY "END OF TABLE REACHED"
+			WHEN RESULT(IDX) = "PASS"
+				DISPLAY STUD-NAME(IDX), " ", TOTAL(IDX), " ", PERCENT(IDX)
+		END-SEARCH.
+		DISPLAY "SEARCH COMPLETED".
+
+	- SEARCH statement will check your filter-condition with all records starting from 1st record.
+	- If the filter-condition, satisfies any record, then statement-2 will be executed and control will pass to statement-3.
+	- If SEARCH has reached end of table, then statement-1 will be executed and control will pass to statement-3.
+	- Conclusion :-
+		filter-condition satisfies a record -> enter WHEN
+		end of table is reached		    -> enter AT END
+	- Note : AT END clause must always be coded before WHEN clause.	
+	
+
+	- sample data
+		IDX	NAME		RESULT
+		---	----		------
+		001	RAJESH		PASS
+		002	SURESH		PASS
+		003	PARESH		FAIL
+		004	JITESH		PASS
+		005	NIMESH		PASS
+		006	MITESH		PASS
+		007	YOGESH		FAIL
+		008	RAMESH		PASS
+		009	SITESH		FAIL
+		010	GANESH		PASS
+
+
+		MOVE 1 TO IDX.		-> I will get an error. MOVE cannot be used for index variable.
+
+		01.	SET IDX TO 1.		-> Initialize your index variable to 1.
+		02 	SEARCH STUDENT-TABLE
+				AT END
+					DISPLAY "END OF TABLE REACHED"
+				WHEN RESULT(IDX) = "FAIL"
+					DISPLAY NAME(IDX), " ", RESULT(IDX)	-> IDX = 9
+					SET IDX UP BY 1.			-> IDX = 10
+					GOTO STEP 02
+			END-SEARCH.
+		03.	DISPLAY "SEARCH PROCESS COMPLETED".
+
+		OUTPUT
+		------
+		PARESH FAIL
+		YOGESH FAIL
+		SITESH FAIL
+
+
+	Instructions
+	------------
+	01. Type E on left of COBOL.PGMS.BASIC and (COBOL09) on right of BASIC.
+	02. COPY 'OZAGS3.COBOL.PGMS.BASIC(COBOL09). Save.
+	03. In compiler JCL, on line 12 & 14, type COBOL09. Save. Submit.
+	04. In run JCL, on line 9, type COBOL09. Enter input data in SYSIN as follows :
+
+		//SYSIN    DD  *                                          
+		RAHUL SHARMA-------- 07775 06575 00425 00000 0000 ----    
+		SATISH DESHPANDE---- 06500 08125 04575 00000 0000 ----    
+		ARUN DEB------------ 04025 07000 03875 00000 0000 ----    
+		VARUN KHANNA-------- 05900 04350 07300 00000 0000 ----    
+		GANESH RAO---------- 04300 00000 05625 00000 0000 ----    
+		SATISH KAPUR-------- 05300 06700 05800 00000 0000 ----    
+------>		PASS						
+		/*                                                        
+
+	05. Save. Submit. Goto spool and check the output. Check if the correct records are displayed.
+	06. Change the class in SYSIN. Save. Submit. 
+	07. Goto spool and check the output. Check if the correct records are displayed.
+	08. Input an invalid class in SYSIN. Save. Submit.
+	09. Goto spool and check the output. Check if the error message is displayed.
+
+
+	Questions :-
+	------------
+	01. Can the filter-condition in WHEN clause satisfy for more than one records ?
+		Yes.
+
+	02. If SEARCH statement has searched the entire table, which clause of SEARCH will be executed ?
+		AT END clause
+
+	03. When will you enter WHEN clause of SEARCH statement ?
+		If the condition is true for any of the record.
+
+	04. Which statement will you use to initialize an index ?
+		SET statement
+
+	05. If IDX is an index variable, how will you add 1 to the index variable ?
+		SET IDX UP BY 1.
+
+	06. Can I use MOVE command to initialize an index variable ?
+		No
+
+	07. Can I use COMPUTE command to add 1 to index variable ?
+		No.	
+
+	08. Assume IDX = 5. If I code SET IDX TO 3, what will be the value of IDX ?
+		3
+
+	09. Can I use subscript in SEARCH statement ?
+		No
+
+	10. I must compulsorily use index variable in SEARCH statement. True or False.
+		True.	
+
+			
+05.	PERFORM ... UNTIL
+
+	- PERFORM ... UNTIL is used to repeat a para more than once.
+
+	- Syntax :-
+
+		PERFORM para-name UNTIL condition.
+
+
+	  Example :-
+
+		0000-MAIN-PARA.
+			MOVE 1 TO I.
+			PERFORM 1000-PARA-1 UNTIL I = 4.	if condition does not satisfy, execute 1000-para-1
+			DISPLAY "OVER".
+			STOP RUN.
+		1000-PARA-1.
+			DISPLAY "HELLO ", I.
+			COMPUTE I = I + 1.			-> 4
+			EXIT.
+
+
+		OUTPUT
+		------
+		HELLO 1
+		HELLO 2
+		HELLO 3
+		OVER
+
+		As long as the condition does not satisfy, execute the para specified in PERFORM ... UNTIL command.
+		The moment the condition satisfies, the control will be passed to the next statement after PERFORM ...
+		UNTIL statement.
+		
+ 
+06.	Types of Condition
+
+	1. Class Condition
+		- IS NUMERIC, IS ALPHABETIC, IS ALPHABETIC-UPPER are examples of Class Condition.
+		- IF NUM IS NOT NUMERIC / IF NUM IS NUMERIC
+
+	2. Sign Condition
+		- ZERO, POSITIVE, NEGATIVE are examples of Sign Condition
+		
+		- ACCEPT INV-AMT.
+		  ACCEPT MAT-AMT.
+		  COMPUTE AMT = MAT-AMT - INV-AMT.
+		  EVALUATE TRUE
+			WHEN AMT IS POSITIVE
+				DISPLAY "PROFIT"
+			WHEN AMT IS NEGATIVE
+				DISPLAY "LOSS"
+			WHEN AMT IS ZERO
+				DISPLAY "NP-NL"
+		  END-EVALUATE.
+
+	3. Relational Condition
+		- Relational Condition makes use of  <  <=  >  >=  =  NOT=
+		- IF X > Y
+
+	4. Compound Condition
+		- Compound Condition makes use of AND, OR operators
+		- IF AMT > 10000 AND AMT < 25000
+		- Compound Condition is used to join two or more conditions using AND, OR operators.
+
+	5. Conditional Name
+		- If you are using 88-level name in a program, it means you are implementing Conditional Name.
+
+
+07.	COMP variables
+	--------------
+
+	- COMP variables means Computational variables.
+	- Use of COMP variables improves the speed of calculations in a program and also uses optimum space for variables.
+	- COMP variables - COMP, COMP-1, COMP-2, COMP-3 are some examples of COMP variables.
+
+	- USAGE clause
+
+		- USAGE clause is coded in a variable declaration.
+		- If USAGE is not coded in a variable declaration, then the default usage is DISPLAY.
+		- In the examples below, VAR-3 is a DISPLAY variable.
+
+		- Examples :-
+			77	VAR-1		PIC 9(03)	VALUE 0		USAGE COMP.
+			77	VAR-2		PIC 9(05)	VALUE 0		USAGE COMP-3
+			77	VAR-3		PIC 9(06)	VALUE 0.
+
+	- USAGE DISPLAY.
+
+		77	VAR-1		PIC 9(03)	VALUE 0		USAGE DISPLAY.		-> 03 bytes
+		77	VAR-2		PIC 9(07)	VALUE 0		USAGE DISPLAY.		-> 07 bytes
+		77	VAR-3		PIC 9(12)	VALUE 0		USAGE DISPLAY.		-> 12 bytes
+
+
+		Rule : If USAGE is DISPLAY, then the variable will use 1 byte for each digit.	
+
+	- USAGE COMP
+
+		77	VAR-1		PIC 9(03)	VALUE 0		USAGE COMP.		-> 02 bytes
+		77	VAR-2		PIC 9(07)	VALUE 0		USAGE COMP.		-> 04 bytes
+		77	VAR-3		PIC 9(12)	VALUE 0		USAGE COMP.		-> 08 bytes
+		77	VAR-3		PIC 9(19)	VALUE 0		USAGE COMP.		-> Error
+		
+		Rule:-
+		------
+			Width		Space
+			--------	-----
+			01 to 04	2 bytes
+			05 to 09	4 bytes
+			10 to 18	8 bytes
+
+	- USAGE COMP-1
+
+		77	VAR-1		USAGE COMP-1.		-> 4 bytes
+		77	VAR-2		USAGE COMP-1.		-> 4 bytes
+
+		Rule :-
+		-------
+		1. All COMP-1 variables occupy 4 bytes in memory.
+		2. COMP-1 variables must not have PIC and VALUE clauses in declaration.
+		3. COMP-1 variables are usually used in scientific calculations.		
+		
+	- USAGE COMP-2
+
+		77	VAR-1		USAGE COMP-2.		-> 8 bytes
+		77	VAR-2		USAGE COMP-2.		-> 8 bytes
+
+		Rule :-
+		-------
+		1. All COMP-2 variables occupy 8 bytes in memory.
+		2. COMP-2 variables must not have PIC and VALUE clauses in declaration.
+		3. COMP-2 variables are usually used in scientific calculations.
+
+	- USAGE COMP-3
+
+		77	VAR-1		PIC 9(03)	VALUE 0		USAGE COMP-3.		-> 2 bytes
+		77	VAR-2		PIC 9(07)	VALUE 0		USAGE COMP-3.		-> 4 bytes
+		77	VAR-3		PIC 9(12)	VALUE 0		USAGE COMP-3.		-> 6 bytes
+
+		Rule :-
+		-------
+		1. COMP-3 variables will store 2 digits per byte.
+
+		
+
+08.	Signed variable
+
+	77	VAR-1		PIC  9(05)	VALUE 0.	-> I can store only positive values.
+	77	VAR-2		PIC S9(05)	VALUE 0.	-> I can store positive as well as negative values.
+
+	- S is not included in the width of the variable.
+	- If you have a variable declared as PIC S(05), then the width of this variable will be 5 and not 6.
+
+	- How data is stored in a signed variable ?
+
+
+			Positive Number			Negative Number
+			---------------			---------------
+			    0 = {			      0 = }
+			    1 = A			      1 = J
+			    2 = B			      2 = K
+			    3 = C                             3 = L
+			    4 = D			      4 = M			  	
+			    5 = E			      5 = N
+			    6 = F			      6 = O
+			    7 = G			      7 = P
+			    8 = H			      8 = Q	
+			    9 = I			      9 = R	
+
+
+		Example :-
+		----------
+		77	VAR-1	PIC S9(05).
+
+			MOVE -24068 TO VAR-1.
+			DISPLAY VAR-1.		-> 2406Q
+
+			MOVE -15000 TO VAR-1.
+			DISPLAY VAR-1.		-> 1500}
+
+			MOVE 643 TO VAR-1.	-> 00643
+			DISPLAY VAR-1.		-> 0064C
+
+			MOVE 87529 TO VAR-1.
+			DISPLAY VAR-1.		-> 8752I
+
+		
+09.	COBOL10 - Signed variable
+
+	01. Type E on left of COBOL.PGMS.BASIC and (COBOL10) on right of BASIC.
+	02. COPY 'OZAGS3.COBOL.PGMS.BASIC(COBOL10). Save.
+	03. In compiler JCL, on line 12 & 14, type COBOL10. Save. Submit.
+	04. In run JCL, on line 9, type COBOL10. Enter SYSIN as follows :
+	
+		//SYSIN  DD  *
+		/*
+
+	05. Save. Submit. Goto spool and check the output.
+	06. Test the program multiple times for numbers of your choice. Save. Submit. Goto spool and check the output.
+
+			Positive Number			Negative Number
+			---------------			---------------
+			    0 = {			      0 = }
+			    1 = A			      1 = J
+			    2 = B			      2 = K
+			    3 = C                             3 = L
+			    4 = D			      4 = M			  	
+			    5 = E			      5 = N
+			    6 = F			      6 = O
+			    7 = G			      7 = P
+			    8 = H			      8 = Q	
+			    9 = I			      9 = R	
+
+
+	
+
+10	Assignment 
+	-----------
+	Make changes in COBOL09 to make your program work for 12 students.
+
+11.	Self study
+	----------
+	1. What is the significance of NOTIFY=&SYSUID ?
+	2. Do more reading and go thru examples on PERFORM ... UNTIL
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

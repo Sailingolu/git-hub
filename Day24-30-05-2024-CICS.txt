@@ -1,0 +1,378 @@
+
+Ground Rules
+------------
+01. You need to be on the call from 9.00 to to 6.00 pm compulsory.
+02. Most of the training time will be utilized for hands on.
+03. Do daily revision of topics taught during the day.
+04. Ask questions in case of doubts. 
+05. Make the session interactive.
+-----------------------------------------------------------------------------------------------------------------------------
+
+Error messages :-
+-----------------
+TSO/ISPF
+--------
+01. No members in data set : this means your PDS is empty. There are no members in the PDS.
+02. No space in directory  : you have exceeded the limit of Directory Blocks
+
+VSAM error
+----------
+01. Invalid Related Object : You are creating an AIX for a base cluster which has been created using REUSE parameter.
+			     You must remove REUSE in DEFINE CLUSTER command to resolve this error.
+
+COBOL file status codes
+-----------------------
+01. "00"	- File operation successful.
+02. "10"	- End of File
+03. "22"	- Duplicate primary key
+04. "23"	- Primary key/ Alternate key not found
+
+DB2 SQLCODEs
+-------------
+01.  0		- SQL command has executed successfully.
+02.  100	- End of SELECT, Delete all rows from an empty table.
+03. -117	- number of values in INSERT not matching with number of columns
+04. -181	- Date value invalid in date column.
+05. -204	- Invalid table name
+06. -206        - Invalid column name
+07. -408	- Invalid data type
+08. -601	- Object (table) already exists.
+09. -803 	- duplicate primary key
+
+ABnormal ENDs (ABEND CODES)
+---------------------------
+01. 0B37 - if you do not have space left in DATASET to enter data.
+02. 0E37 - No space in MEMBER of a PDS. You can compress the PDS using Z command and then try to save.
+03. S322 - you get this abend when your job has executed beyond the time limit specified in TIME parameter.
+04. S806 - invalid program name specified in PGM parameter of EXEC statement
+05. S804 - space limit exceeded in REGION parameter of JOB command.
+06. S80A - space limit exceeded in REGION parameter of JOB command.
+07. S0C7 - you have typed a special character in a numeric field data.
+08. S0C4 - 1. mismatch in DD names in RUN JCL and COBOL program.
+	   2. STOP RUN not coded in COBOL program.
+08. U4038 - 1. Accessing a location of a table outside its limits.
+
+CICS Response codes
+-------------------
+01. 00 - NORMAL
+02. 14 - DUPREC   - AEIN -> duplicate primary key
+03. 16 - INVREQ   - AEIP -> you do not have ADD/UPD/DEL/REA permission on the file
+04. 19 - NOTOPEN  - AEIS -> you are performing a file operation on a file which is closed.
+05. 27 - PGMIDERR - AEI0 -> invalid program name is specifed in LINK/XCTL command.
+06. 36 - MAPFAIL  - AEI9 -> no data has been entered on the screen and RECEIVE MAP command has been executed.
+07. 84 - DISABLED - AEXL -> file is disabled
+
+JCL programs
+------------
+01. JCL01 - IEFBR14 - allocate a dataset.
+02. JCL02 - IEBGENER - display dataset contents in spool.
+03. JCL03 - IEFBR14 - delete a dataset
+04. JCL04 - IEBGENER - copy dataset
+05. JCL05 - SORT - Sort on one/two field/s
+06. JCL06 - SORT - INCLUDE/OMIT command to sort specific records.
+07. JCL07 - SORT - OUTREC to reformat fields in output file
+08. JCL08 - SORT - Copy all/specific records
+09. JCL09 - SORT - Copy records (split a file into two or more files)
+10. JCL10 - SORT - Eliminate duplicates
+11. JCL11 - Instream procedure 
+12. JCL12 - Instream procedure + symbolic parameter + default value
+13. JCL13 - Catalogued Procedure
+14. JCL14 - JCL using Multiple Job Steps
+15. JCL15 - Define a GDG
+16. JCL16 - Define a Model for the GDG
+17. JCL17 - Define a GDS
+18. JCL18 - Populate data in a GDS
+19. JCL19 - Using GDS in two job steps
+20. JCL20 - COND parameter in JOB statement
+21. JCL21 - COND parameter in EXEC statement
+
+COBOL programs
+--------------
+01. COBOL01 - Basic program - DISPLAY, ACCEPT, COMPUTE
+02. COBOL02 - IF - ELSE - END-IF
+03. COBOL03 - PERFORM
+04. COBOL04 - Validate the input, Nested IF ELSE END-IF, IS NOT NUMERIC
+05. COBOL05 - EVALUATE, Edit characters
+06. COBOL06 - PIC V, how to display numerical value using decimal point
+07. COBOL07 - PERFORM ... TIMES, display statistics
+08. COBOL08 - Sequential table
+09. COBOL09 - Indexed table, SEARCH, SET
+10. COBOL10 - Signed variable
+11. COBOL11 - Display all records of PS file in spool.
+12. COBOL12 - Copy all records of PS file to PS file.
+13. COBOL13 - String manipulation - INSPECT, STRING, UNSTRING commands.
+14. COBOL14 - Copy all records from PS file to KSDS.
+15. COBOL15 - Copy valid records of PS file to KSDS and invalid records of PS file to ERROR.PS file. + COPY command
+16. COBOL16 - Display all records of KSDS in spool. + COPY command
+17. COBOL17 - 88-level.
+18. COBOL18 - Alternate Index (unique)
+19. COBOL19 - ACCESS MODE DYNAMIC
+20. COBOL20 - SORT
+21. COBOL21S, COBOL21T - CALL / EXIT PROGRAM
+22. COBOL22S, COBOL22T - CALL .. USING / LINKAGE SECTION
+23. COBOL23S, COBOL23T - Product program
+24. COBOL24 - REDEFINES clause, SSRANGE compiler option
+
+VSAM programs
+-------------
+01. VSAM01  - DELETE KSDS -> DEFINE KSDS
+02. VSAM02  - REPRO (copy)
+03. VSAM03  - REPRO (REPRO options)
+04. VSAM04  - ALTER
+05. VSAM05  - LISTCAT
+06. VSAM06  - DELETE ESDS -> DEFINE ESDS -> REPRO
+07. VSAM07  - Alternate Index (Unique)    : DELETE -> DEFINE AIX -> BLDINDEX -> DEFINE PATH
+08. VSAM08  - Alternate Index (Nonunique) : DELETE -> DEFINE AIX -> BLDINDEX -> DEFINE PATH
+
+DB2 programs
+------------
+01. CREATE - create table/ create index/ drop table
+02. INSERT - insert/ delete
+03. UPDATE - update
+04. SELECT - select
+05. DB201  - copy records from PS file to table
+06. DB202  - select a row from the table
+07. DB203  - cursor - display all rows of table in spool
+
+CICS programs
+-------------
+01. MAPSGS3  - BMS code
+02. CICSGS3A - Login Program
+03. CICSGS3B - Student Program
+
+-----------------------------------------------------------------------------------------------------------------------------
+Knowledge Checks
+----------------
+01. What does abend AEI9 stand for ?
+02. When does MAPFAIL abend occur ?
+03. If you code an invalid program name in LINK command, then what error will you get ?
+04. What is the difference between LINK and XCTL command ?
+05. Name the option which you can code in any command to handle the error generated by the command ?
+06. What is the PIC clause of the variable which you code in RESP option ?
+07. What is the four character abend code of PGMIDERR ?
+08. Which variable will you check to check the code of the AID key pressed ?
+09. If ____ command is coded in program A to call program B, both program A and program B are said to be at same level.
+10. Which command will you code in called program to return back to calling program ?
+----------------------------------------------------------------------------------------------------------------------------
+
+01.	File Handling
+
+	- You must not code INPUT-OUTPUT SECTION -> FILE-CONTROL -> SELECT, ORGANIZATION, FILE STATUS
+	- You must not code FILE SECTION
+	- You must not code OPEN, CLOSE, READ, WRITE, REWRITE, DELETE commands of COBOL in CICS program.
+	- The above must not be coded since CICS provides commands to handle files.
+
+	- CICS handles only VSAM files (KSDS, ESDS, RRDS). PS files are not handled by CICS.
+	- To use a VSAM file in a CICS program, you must make an entry of VSAM file in FCT - File Control Table.
+	- WRITE, READ, REWRITE, DELETE commands of CICS allows you to perform file operations.
+	- We must not open a file and close a file in CICS program because CICS always will open all files which have 
+	  an entry in FCT when the CICS server starts and CICS always will close all the files which have an entry in FCT
+	  when the CICS server shuts down.
+
+
+02.	How to make an entry of a file in FCT ?
+
+	01. 	Define an entry of the file in FCT
+
+		CEDA DEF FILE(logical-file-name)  DSNAME(physical-file-name) GROUP(groupname)
+		
+		CEDA DEF FILE(STUDGS3) DSNAME(OZAGS3.STUDENT.KSDS.CLUSTER) GROUP(OZAGS3)
+
+	02.	Install the entry from FCT
+
+		CEDA INS FILE(logical-file-name)  GROUP(groupname)
+		
+		CEDA INS FILE(STUDGS3) GROUP(OZAGS3)
+
+	03.	CEMT SET FILE(logical-file-name)
+
+		CEMT SET FILE(STUDGS3) 
+	
+		> You will see the logical file name in FIL and physical file name in DSN
+
+		> You can open a file by overwriting CLO with OPE.
+	  	  You can close a file by overwriting OPE with CLO.
+
+		> You can give write permission, update permission and delete permission to a file by type ADD, UPD, DEL
+		  with CEMT transaction as shown below :-
+
+			CEMT SET FILE(logical-file-name) ADD UPD DEL
+
+		  Note :- For the above command to work, the file must be DISabled and CLOsed
+
+		  If you want to remove ADD, UPD and DEL permission from the file, you must code NOADD, NOUPD, NODEL with
+		  CEMT transaction as shown below :
+
+			CEMT SET FILE(logical-file-name) NOADD NOUPD NODEL
+
+		  Note :- For the above command to work, the file must be DISabled and CLOsed
+
+		> If you want the file to be used by only program at a time, then you must overwrite SHA with OLD.
+
+		  Note :- For the above command to work, the file must be DISabled and CLOsed
+
+
+
+02.	INSTRUCTIONS for FCT
+
+	01. Delete VSAM01 from your OZA???.VSAM.PGMS pds.
+	02. Type E on left of OZA???.VSAM.PGMS and (VSAM01) on right of PGMS
+	03. COPY "OZAGS3.VSAM.PGMS(VSAM01)"
+	04. CHANGE ALL  OZAGS3  OZA???	-> Save -> Submit -> You will get MAXCC=8 or MAXCC=0
+	05. Using =3.4, check if OZA???.STUDENT.KSDS.CLUSTER has been defined.
+
+	06. Login to CICSOZA region.
+	07. CEDA DEF FILE(STUD???) DSNAME(OZA???.STUDENT.KSDS.CLUSTER) GROUP(OZA???) -> DEFINE SUCCESSFUL message will be shown.
+
+	08. CEMT SET FILE(STUD???) -> Check if you are able to see STUD??? in FIL and OZA???.STUDENT.KSDS.CLUSTER in DSN.
+	09. Close the file if it is open by overwriting OPE with CLO
+	10. Disable the file if it is enabled by overwriting ENA with DIS
+	11. CEMT SET FILE(STUD???) ADD UPD DEL OLD
+	12. Check if you are able to see ADD, UPD, DEL and OLD in the entry.
+	13. Now you can open the file and enable the file by overwriting CLO and DIS by OPE and ENA respectively.
+
+
+03.	CICSGS3A 
+
+	Problem Definition (Revised)
+	----------------------------
+	The program should write the record in VSAM KSDS file.
+
+	WRITE Command :-
+	----------------
+		
+	- Syntax :-
+			
+		EXEC CICS
+			WRITE DATASET('logical-file-name')		<----- where to write ?
+				FROM(WS-record-variable)		<----- what to write ?
+				RIDFLD(primary-key-variable)
+				RESP(error-code-variable)
+		END-EXEC.
+
+		- DATASET('logical-file-name') -> we specify the logical-file-file of KSDS file in which we want the 					  record to be written. The entry of 'logical-file-name' must be present in FCT.
+
+		- FROM(WS-record-variable) -> WS-record-variable must contain the data which you want to write in the file.
+
+		- RIDFLD(primary-key-variable) ->  must be coded only if you want to write a record in a KSDS. Primary-key-
+		  variable must contain the primary-key-value of the new record to be written in KSDS.
+
+		- RESP(error-code-variable) -> must be coded to check if WRITE command has worked correctly or not.
+
+
+	INSTRUCTIONS
+	------------
+	01. Delete MAPS??? and CICS???B from OZA???.CICS.PROGRAMS pds and delete VSAM02 from OZA???.VSAM.PGMS pds.
+
+	02. Create new member MAPS??? in CICS.PROGRAMS -> COPY "OZAGS3.CICS.PROGRAMS(MAPSGS3)" -> CHANGE ALL "GS3" "???" -> Save
+
+	03. Create new member CICS???B in CICS.PROGRAMS -> COPY "OZAGS3.CICS.PROGRAMS(CICS???B)" -> C ALL "GS3" "???" -> Save
+
+	04. Create new member VSAM02 in VSAM.PGMS -> COPY "OZAGS3.VSAM.PGMS(VSAM02)" -> C ALL "GS3" "???" -> Save
+	------------------------------------------------------------------------------------------------------------------------
+
+	05. Assemble MAPS??? -> Compile CICS???B 
+
+	06. In CICS region -> CEMT SET PROG(MAPS???) NEWC -> CEMT SET PROG(CICS???B)
+
+	07. CEMT SET FILE(STUD???) OPE ENA -> Run transaction AGS3 -> Enter 3 records in KSDS
+
+	08. CEMT SET FILE(STUD???) CLO DIS -> Open VSAM02 -> Save -> Submit -> Check if you are able to see 3 records in spool.
+	------------------------------------------------------------------------------------------------------------------------
+
+	09. CEMT SET FILE(STUD???) NOADD -> Run transaction -> Enter a record -> Check if correct error message is displayed
+
+	10. CEMT SET FILE(STUD???) ADD   -> Run transaction -> Enter a record -> Check if correct error message is displayed
+
+	11. CEMT SET FILE(STUD???) ENA   -> Run transaction -> Enter a record -> Check if correct error message is displayed
+
+	12. CEMT SET FILE(STUD???) OPE   -> Run transaction -> Enter new record with duplicate rollno -> Check error message
+
+	13. Enter 4 more new records in KSDS -> Close the file -> Submit VSAM02 and check if new records have been added in KSDS.
+	------------------------------------------------------------------------------------------------------------------------
+	
+
+
+04	Instructions for running a program in debugging mode
+
+
+	A. Type CEMT SET FILE(STUD???) transaction and create some error situation - no add permission OR file is disabled
+	   or file is closed
+
+	B. Run the transaction without debugger.
+
+	C. Enter a record -> you will encounter a 4-character abend code and an abend message at the bottom of the screen.
+
+	D. Enabled the debugger by typing CEDF on top left corner of the screen. A message will be displayed.
+
+	E. Run the transaction -> You will enter the debugger mode -> Press Enter till you reach WRITE command
+
+	F. Keep observing the information on the screen each time you press Enter.
+
+	G. When WRITE comand EXECUTION IS COMPLETE, check the response code and response name at the bottom and cross
+	   check with notepad.
+
+	H. Repeat A to G for some other abend.
+
+	I. Check DUPREC in debugger.
+   
+	
+		Summary :-
+		----------
+		a. Create an error situation with CEDF SET FILE
+		b. Run transaction without debugger -> Enter data -> Press Enter 
+		c. You will get 4 character abend code -> Make a note of it.
+		d. Run transaction in debugger -> Check RESPONSE NAME and RESPONSE CODE after WRITE
+		e. Match it with 4 character abend code (Step c).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	

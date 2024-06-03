@@ -1,0 +1,448 @@
+
+Ground Rules
+------------
+01. You need to be on the call from 9.00 to to 6.00 pm compulsory.
+02. Most of the training time will be utilized for hands on.
+03. Do daily revision of topics taught during the day.
+04. Ask questions in case of doubts. 
+05. Make the session interactive.
+-----------------------------------------------------------------------------------------------------------------------------
+
+Error messages :-
+-----------------
+TSO/ISPF
+--------
+01. No members in data set : this means your PDS is empty. There are no members in the PDS.
+02. No space in directory  : you have exceeded the limit of Directory Blocks
+
+VSAM error
+----------
+01. Invalid Related Object : You are creating an AIX for a base cluster which has been created using REUSE parameter.
+			     You must remove REUSE in DEFINE CLUSTER command to resolve this error.
+
+COBOL file status codes
+-----------------------
+01. "00"	- File operation successful.
+02. "10"	- End of File
+03. "22"	- Duplicate primary key
+04. "23"	- Primary key/ Alternate key not found
+
+DB2 SQLCODEs
+-------------
+01.  0		- SQL command has executed successfully.
+02.  100	- End of SELECT, Delete all rows from an empty table.
+03. -117	- number of values in INSERT not matching with number of columns
+04. -181	- Date value invalid in date column.
+05. -204	- Invalid table name
+06. -206        - Invalid column name
+07. -408	- Invalid data type
+08. -601	- Object (table) already exists.
+09. -803 	- duplicate primary key
+
+
+ABnormal ENDs (ABEND CODES)
+---------------------------
+01. 0B37 - if you do not have space left in dataset to enter data.
+02. S322 - you get this abend when your job has executed beyond the time limit specified in TIME parameter.
+03. S806 - invalid program name specified in PGM parameter of EXEC statement
+04. S804 - space limit exceeded in REGION parameter of JOB command.
+05. S80A - space limit exceeded in REGION parameter of JOB command.
+06. S0C7 - you have typed a special character in a numeric field data.
+07. S0C4 - 1. mismatch in DD names in RUN JCL and COBOL program.
+	   2. STOP RUN not coded in COBOL program.
+08. U4038 - 1. Accessing a location of a table outside its limits.
+
+JCL programs
+------------
+01. JCL01 - IEFBR14 - allocate a dataset.
+02. JCL02 - IEBGENER - display dataset contents in spool.
+03. JCL03 - IEFBR14 - delete a dataset
+04. JCL04 - IEBGENER - copy dataset
+05. JCL05 - SORT - Sort on one/two field/s
+06. JCL06 - SORT - INCLUDE/OMIT command to sort specific records.
+07. JCL07 - SORT - OUTREC to reformat fields in output file
+08. JCL08 - SORT - Copy all/specific records
+09. JCL09 - SORT - Copy records (split a file into two or more files)
+10. JCL10 - SORT - Eliminate duplicates
+11. JCL11 - Instream procedure 
+12. JCL12 - Instream procedure + symbolic parameter + default value
+13. JCL13 - Catalogued Procedure
+14. JCL14 - JCL using Multiple Job Steps
+15. JCL15 - Define a GDG
+16. JCL16 - Define a Model for the GDG
+17. JCL17 - Define a GDS
+18. JCL18 - Populate data in a GDS
+19. JCL19 - Using GDS in two job steps
+20. JCL20 - COND parameter in JOB statement
+21. JCL21 - COND parameter in EXEC statement
+
+COBOL programs
+--------------
+01. COBOL01 - Basic program - DISPLAY, ACCEPT, COMPUTE
+02. COBOL02 - IF - ELSE - END-IF
+03. COBOL03 - PERFORM
+04. COBOL04 - Validate the input, Nested IF ELSE END-IF, IS NOT NUMERIC
+05. COBOL05 - EVALUATE, Edit characters
+06. COBOL06 - PIC V, how to display numerical value using decimal point
+07. COBOL07 - PERFORM ... TIMES, display statistics
+08. COBOL08 - Sequential table
+09. COBOL09 - Indexed table, SEARCH, SET
+10. COBOL10 - Signed variable
+11. COBOL11 - Display all records of PS file in spool.
+12. COBOL12 - Copy all records of PS file to PS file.
+13. COBOL13 - String manipulation - INSPECT, STRING, UNSTRING commands.
+14. COBOL14 - Copy all records from PS file to KSDS.
+15. COBOL15 - Copy valid records of PS file to KSDS and invalid records of PS file to ERROR.PS file. + COPY command
+16. COBOL16 - Display all records of KSDS in spool. + COPY command
+17. COBOL17 - 88-level.
+18. COBOL18 - Alternate Index (unique)
+19. COBOL19 - ACCESS MODE DYNAMIC
+20. COBOL20 - SORT
+21. COBOL21S, COBOL21T - CALL / EXIT PROGRAM
+22. COBOL22S, COBOL22T - CALL .. USING / LINKAGE SECTION
+23. COBOL23S, COBOL23T - Product program
+24. COBOL24 - REDEFINES clause, SSRANGE compiler option
+
+VSAM programs
+-------------
+01. VSAM01  - DELETE KSDS -> DEFINE KSDS
+02. VSAM02  - REPRO (copy)
+03. VSAM03  - REPRO (REPRO options)
+04. VSAM04  - ALTER
+05. VSAM05  - LISTCAT
+06. VSAM06  - DELETE ESDS -> DEFINE ESDS -> REPRO
+07. VSAM07  - Alternate Index (Unique)    : DELETE -> DEFINE AIX -> BLDINDEX -> DEFINE PATH
+08. VSAM08  - Alternate Index (Nonunique) : DELETE -> DEFINE AIX -> BLDINDEX -> DEFINE PATH
+
+-----------------------------------------------------------------------------------------------------------------------------
+Knowledge Checks
+----------------
+01. You can pass variables to a program by _______ and by _______.
+02. Variables specified in PROCEDURE DIVISION USING statement must be declared in ________ SECTION.
+03. LINKAGE SECTION must be coded in which program - calling program or called program ?
+04. CALL statement must be coded in which program - calling program or called program ?
+05. State two points of difference between static call and dynamic call.
+06. CALL "program" is an example of which call - static call or dynamic call ?
+07. What is the difference between STOP RUN, EXIT PROGRAM and GOBACK ?
+08. Which command will you give to return the control back from called program to calling program ?
+09. Why do we specify compiler option SSRANGE ?
+10. What abend will we get if we code SSRANGE and we try to access a table location outside its limits ?
+----------------------------------------------------------------------------------------------------------------------------
+
+DB2
+---
+
+01.	Types of databases
+	------------------
+	01. Relational		- data is stored in a table in the form of rows and columns - Oracle, DB2
+	02. Hierarchial		- data is stored in the form of a binary tree. A record will have only one parent record - IMS/DB
+	03. Network		- data is stored in the form of a tree. A record may have one or parent records. - IDMS
+	04. Object Oriented	- data is stored in the form of objects. - Oracle
+
+
+02.	DBMS v/s RDBMS
+	--------------
+	DBMS
+	----
+	01. Data is stored in the form of files.
+	02. File cannot be shared by two or more programs.
+	03. Normalization cannot be implemented.
+	04. Data security is low.
+	05. No concept of Foreign key, No concept of Joins/ sub-queries
+
+	RDBMS
+	-----
+	01. Data is stored in the form of tables.
+	02. Table can be shared by two or more programs.
+	03. Normalization can be implemented.
+	04. Data security is high.
+	05. Concept of Foreign key, Joins/sub-queries can be implemented via commands.
+
+
+03.	DB2 objects
+	-----------
+	- Any entity which can be created, altered and dropped is called as a "DB2 object".
+	- Database, Tablespace, Indexspace, Table, Index, View, Alias, Synonym are examples of objects.
+
+
+04.	DB2 terminologies
+
+	a. Database - A database is defined as a collection of one or more tables.
+
+	b. Table - A table defined as a collection of records in the form of rows and columns.
+
+	c. Row - A row is a collection of data elements related to an entity.
+
+	d. Column - A column is defined as an attribute which describes the entity
+
+	e. Tablespace - A tablespace is defined as a space allocated to a table. There are three types of tablespaces :-
+		a. Simple Tablespace
+			- You can store data from one or more tables within a simple tablespace.
+
+				Simple Tablespace
+				-----------------
+				table-1   row-1
+				table-1   row-2
+				table-1   row-3
+			        table-2   row-1
+			        table-2   row-2
+				table-1   row-4
+				table-3   row-1
+
+			- Simple table space is best used when you want to store few records ( < 1000).
+			- Searching a record will take more time.
+
+		b. Segmented Tablespace
+			- Segement tablespace contains one or more segments where each segment will contain data from
+			  one table only.
+
+
+							Segmented Tablespace
+							---------------------
+			
+				Segment-1		Segment-2			Segement-3
+				---------		---------			----------
+				table-1   row-1		table-2   row-1			table-3    row-1
+				table-1   row-2		table-2	  row-2			table-3	   row-2
+				table-1   row-3		table-2   row-3
+				table-1   row-4
+
+			- Segmented table space is best used when you want to store records in lakhs.
+			- Searching a record will take less time compared to Simple tablepsace.
+
+		c. Partitioned Tablespace
+			- Partitioned Tablespace is divided into two or more partitions. In each partition, you can
+			  logically group the records from a table and store it in a partition.
+
+							Partitioned Tablespace
+							---------------------
+			
+				Partition-1		Partition-2			Partition-3
+				-----------		-----------			-----------
+				table-1   row-1		table-2   row-1			table-3    row-1
+				table-1   row-2		table-2	  row-2			table-3	   row-2
+				table-1   row-3		table-2   row-3
+				table-1   row-4
+
+			- Partitioned table space is best used when you want to store records in millions.
+			- Searching a record will take less time compared to Segemented tablepsace.
+
+		Points
+		------
+		01. The administrator will create a tablespace for each database using CREATE TABLESPACE command. 
+		    You can specify the tablespace type (simple/segmented/partitioned) which you would like to create 
+                    in CREATE TABLESPACE command.
+		    If tablespace type is not specified in CREATE TABLESPACE command, the Segmented Tablespace will be
+		    the default tablespace.
+
+		02. The following steps must be executed if you want to store data in tables :-
+		
+				01. Create a database using CREATE DATABASE command.			- Administrator
+				02. Create a tablespace using CREATE TABLESPACE command.		- Administrator
+				03. Create a table using CREATE TABLE command.				- Programmer
+				04. Create an index for primary key using CREATE UNIQUE INDEX command.	- Programmer
+				05. Insert rows in the table using INSERT command.			- Programmer
+
+
+	f. Indexspace - Indexspace is defined as the space allocated for index component.
+
+
+05.	How to execute SQL commands in DB2 ?
+
+	- You can execute SQL commands using one of the two utilities given below :-
+
+		a. SPUFI - Sql Processing Using File Input
+
+		b. QMF	 - Query Management Facility
+		
+		
+06.	How to execute SQL commands in SPUFI ?
+
+	- You need to allocate Input PDS or Input PS file and you need to allocate OUTPUT PS file.
+	- You can type one or more SQL commands which you want to executed in Input PDS member or Input PS file.
+	- Run SPUFI utility :-
+	  - SPUFI will read each SQL command written in Input PDS member / Input PS file.
+	  - SPUFI will execute SQL command
+	  - SPUFI will copy each SQL command and the output/error of the SQL command in OUTPUT PS file.
+	  - Programmer can then refer to OUTPUT PS file for output.
+
+07.	SQL command categories :-
+	
+	a. DDL - Data Definition Language - CREATE, ALTER, DROP
+	b. DML - Data Manipulation Language - INSERT, UPDATE, DELETE
+	c. DQL - Data Query Language - SELECT
+	d. DCL - Data Control Language - GRANT, REVOKE
+	e. TCL - Transaction Control Language - COMMIT, ROLLBACK, SAVEPOINT
+
+08.	Data types
+	a. SMALLINT		-> 1 to  4 digits
+	b. INT			-> 1 to  9 digits
+	c. BIGINT		-> 1 to 18 digits
+	d. CHAR(width)		-> fixed length
+	e. VARCHAR(width)	-> variable length
+	f. DATE			-> yyyy-mm-dd format
+	g. DECIMAL(a,b)		-> b is included in a
+	h. TIMESTAMP		-> current date + current time
+
+	What is the difference between CHAR and VARCHAR data types ?
+	The difference is given below :-
+		    CHAR(10)
+		101 RAJESH---- 15000
+		102 AMIT------ 18000
+		103 SURENDRA-- 13000
+		104 JAY------- 16000
+
+		    VARCHAR(10)
+		101 RAJESH 15000
+		102 AMIT 18000
+		103 SURENDRA 13000
+		104 JAY 16000
+
+09.	SQLCODE variable
+	- SQLCODE variable is similar to file status variable in COBOL.
+	- SQLCODE variable contains the execution status value of a SQL command.
+	- The value stored in SQLCODE can be positive value, 0, negative value.
+			SQLCODE		Description
+			-------		-----------
+			   0		SQL command has executed sucessfully
+			  +ve		SQL command has executed with a warning
+			  -ve		SQL command has failed in execution with an error code.		   
+
+
+10.	SPUFI instructions - CREATE
+	---------------------------
+	01. Using =3.2 command, allocate a PDS DB2.SPUFI.INPUT.PDS
+		Space Unit = TRKS, Primary qty = 10, Secondary Qty = 7, Directory Blocks = 3,
+		Record Format = FB, Record Length = 80, Block Size = 800, Dataset name type = PDS
+
+	02. Using =3.2 command, allocate a PS DB2.SPUFI.OUTPUT.PS
+		Space Unit = TRKS, Primary qty = 10, Secondary Qty = 7, Directory Blocks = 0,
+		Record Format = FB, Record Length = 80, Block Size = 800, Dataset name type = 
+	------------------------------------------------------------------------------------------------------------------
+	
+	01. Type E of left of OZA???.DB2.SPUFI.INPUT.PDS and (CREATE) on right of PDS 
+	02. COPY "OZAGS3.DB2.SPUFI.INPUT.PDS(CREATE)"
+	03. CHANGE ALL  OZAGS3  OZA???
+	04. Save.
+
+	05. On command line, type =9.SP -> select Option 1 ->
+	06. option 1 -> 'OZA???.DB2.SPUFI.INPUT.PDS(CREATE)'
+            option 4 -> 'OZA???.DB2.SPUFI.OUTPUT.PS'
+
+	07. Press <enter>, Press <enter>. You will see CREATE member code. Type END on command.
+	08. You will get a dialog box at bottom. Press <enter> to continue.
+	09. You will see contents of output PS file. Check SQL code of each command. It will be 0.
+            Press F8 to scroll down. 
+	    This means, your table has been created.
+	------------------------------------------------------------------------------------------------------------------
+	10. Run CREATE in SPUFI again. You will get -601 SQLCODE below CREATE TABLE command.
+	11. Remove -- from DROP TABLE and COMMIT commands. Save.
+	12. Run CREATE in SPUFI again. You will now get 0 SQLCODE for all the commands.
+	13. Run CREATE in SPUFI again. You will now get 0 SQLCODE for all the commands.
+	------------------------------------------------------------------------------------------------------------------
+	
+
+10.	SPUFI instructions - INSERT
+	---------------------------
+	01. Type E of left of OZA???.DB2.SPUFI.INPUT.PDS and (INSERT) on right of PDS 
+	02. COPY "OZAGS3.DB2.SPUFI.INPUT.PDS(INSERT)"
+	03. Run INSERT in SPUFI using =9.SP command as follows :-
+		 On command line, type =9.SP -> select Option 1 ->
+		 	> option 1 -> 'OZA???.DB2.SPUFI.INPUT.PDS(INSERT)'
+            	 	> option 4 -> 'OZA???.DB2.SPUFI.OUTPUT.PS'
+	04. In the output, SQLCODE 0 will be a positive case. If you are getting SQLCODE 100 after DELETE command, 
+	    you can ignore this and press F8 to see the output of your remaining commands. 
+	05. Check the output of SELECT command. Check Timestamp of the records.
+
+
+11.	SPUFI instructions - SELECT
+	---------------------------
+	01. Type E of left of OZA???.DB2.SPUFI.INPUT.PDS and (SELECT) on right of PDS 
+	02. COPY "OZAGS3.DB2.SPUFI.INPUT.PDS(SELECT)"
+	03. Run SELECT in SPUFI using =9.SP command as follows :-
+		 On command line, type =9.SP -> select Option 1 ->
+		 	> option 1 -> 'OZA???.DB2.SPUFI.INPUT.PDS(SELECT)'
+            	 	> option 4 -> 'OZA???.DB2.SPUFI.OUTPUT.PS'
+	04. Check the output.
+	05. As discussed, uncomment one SELECT command -> Save -> Run SELECT file in SPUFI -> Check output.
+	06. Comment the uncommented SELECT command -> uncomment the next SELECT -> Save -> Run SELECT file in SPUFI 
+	    -> Check output.
+	07. Repeat Step 06 for all commands.
+	08. You can try your combinations in the commands.
+
+12.	SPUFI instructions - UPDATE
+	---------------------------
+	01. Type E of left of OZA???.DB2.SPUFI.INPUT.PDS and (UPDATE) on right of PDS 
+	02. COPY "OZAGS3.DB2.SPUFI.INPUT.PDS(UPDATE)"
+	03. Run SELECT in SPUFI using =9.SP command as follows :-
+		 On command line, type =9.SP -> select Option 1 ->
+		 	> option 1 -> 'OZA???.DB2.SPUFI.INPUT.PDS(UPDATE)'
+            	 	> option 4 -> 'OZA???.DB2.SPUFI.OUTPUT.PS'
+	04. Check the output.
+	05. As discussed, uncomment one UPDATE command -> Save -> Run UPDATE file in SPUFI -> Check output.
+	06. Comment the uncommented UPDATE command -> uncomment the next UPDATE -> Save -> Run UPDATE file in SPUFI 
+	    -> Check output.
+	07. Repeat Step 06 for all commands.
+
+
+13.	Self Study topics 
+
+	01. SELECT command options :-
+		- BETWEEN
+		- IN
+		- LIKE
+
+	02. Aggregate Functions - SUM(), MAX(), MIN(), AVG()
+
+	03. COUNT(*), COUNT(COLUMN) in SELECT command
+
+	04. GROUP BY, HAVING in SELECT command
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+

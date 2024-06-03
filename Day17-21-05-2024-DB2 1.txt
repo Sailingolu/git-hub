@@ -1,0 +1,448 @@
+
+Ground Rules
+------------
+01. You need to be on the call from 9.00 to to 6.00 pm compulsory.
+02. Most of the training time will be utilized for hands on.
+03. Do daily revision of topics taught during the day.
+04. Ask questions in case of doubts. 
+05. Make the session interactive.
+-----------------------------------------------------------------------------------------------------------------------------
+
+Error messages :-
+-----------------
+TSO/ISPF
+--------
+01. No members in data set : this means your PDS is empty. There are no members in the PDS.
+02. No space in directory  : you have exceeded the limit of Directory Blocks
+
+VSAM error
+----------
+01. Invalid Related Object : You are creating an AIX for a base cluster which has been created using REUSE parameter.
+			     You must remove REUSE in DEFINE CLUSTER command to resolve this error.
+
+COBOL file status codes
+-----------------------
+01. "00"	- File operation successful.
+02. "10"	- End of File
+03. "22"	- Duplicate primary key
+04. "23"	- Primary key/ Alternate key not found
+
+DB2 SQLCODEs
+-------------
+01.  0		- SQL command has executed successfully.
+02.  100	- End of SELECT, Delete all rows from an empty table.
+03. -117	- number of values in INSERT not matching with number of columns
+04. -181	- Date value invalid in date column.
+05. -204	- Invalid table name
+06. -206        - Invalid column name
+07. -408	- Invalid data type
+08. -601	- Object (table) already exists.
+09. -803 	- duplicate primary key
+
+
+ABnormal ENDs (ABEND CODES)
+---------------------------
+01. 0B37 - if you do not have space left in dataset to enter data.
+02. S322 - you get this abend when your job has executed beyond the time limit specified in TIME parameter.
+03. S806 - invalid program name specified in PGM parameter of EXEC statement
+04. S804 - space limit exceeded in REGION parameter of JOB command.
+05. S80A - space limit exceeded in REGION parameter of JOB command.
+06. S0C7 - you have typed a special character in a numeric field data.
+07. S0C4 - 1. mismatch in DD names in RUN JCL and COBOL program.
+	   2. STOP RUN not coded in COBOL program.
+08. U4038 - 1. Accessing a location of a table outside its limits.
+
+JCL programs
+------------
+01. JCL01 - IEFBR14 - allocate a dataset.
+02. JCL02 - IEBGENER - display dataset contents in spool.
+03. JCL03 - IEFBR14 - delete a dataset
+04. JCL04 - IEBGENER - copy dataset
+05. JCL05 - SORT - Sort on one/two field/s
+06. JCL06 - SORT - INCLUDE/OMIT command to sort specific records.
+07. JCL07 - SORT - OUTREC to reformat fields in output file
+08. JCL08 - SORT - Copy all/specific records
+09. JCL09 - SORT - Copy records (split a file into two or more files)
+10. JCL10 - SORT - Eliminate duplicates
+11. JCL11 - Instream procedure 
+12. JCL12 - Instream procedure + symbolic parameter + default value
+13. JCL13 - Catalogued Procedure
+14. JCL14 - JCL using Multiple Job Steps
+15. JCL15 - Define a GDG
+16. JCL16 - Define a Model for the GDG
+17. JCL17 - Define a GDS
+18. JCL18 - Populate data in a GDS
+19. JCL19 - Using GDS in two job steps
+20. JCL20 - COND parameter in JOB statement
+21. JCL21 - COND parameter in EXEC statement
+
+COBOL programs
+--------------
+01. COBOL01 - Basic program - DISPLAY, ACCEPT, COMPUTE
+02. COBOL02 - IF - ELSE - END-IF
+03. COBOL03 - PERFORM
+04. COBOL04 - Validate the input, Nested IF ELSE END-IF, IS NOT NUMERIC
+05. COBOL05 - EVALUATE, Edit characters
+06. COBOL06 - PIC V, how to display numerical value using decimal point
+07. COBOL07 - PERFORM ... TIMES, display statistics
+08. COBOL08 - Sequential table
+09. COBOL09 - Indexed table, SEARCH, SET
+10. COBOL10 - Signed variable
+11. COBOL11 - Display all records of PS file in spool.
+12. COBOL12 - Copy all records of PS file to PS file.
+13. COBOL13 - String manipulation - INSPECT, STRING, UNSTRING commands.
+14. COBOL14 - Copy all records from PS file to KSDS.
+15. COBOL15 - Copy valid records of PS file to KSDS and invalid records of PS file to ERROR.PS file. + COPY command
+16. COBOL16 - Display all records of KSDS in spool. + COPY command
+17. COBOL17 - 88-level.
+18. COBOL18 - Alternate Index (unique)
+19. COBOL19 - ACCESS MODE DYNAMIC
+20. COBOL20 - SORT
+21. COBOL21S, COBOL21T - CALL / EXIT PROGRAM
+22. COBOL22S, COBOL22T - CALL .. USING / LINKAGE SECTION
+23. COBOL23S, COBOL23T - Product program
+24. COBOL24 - REDEFINES clause, SSRANGE compiler option
+
+VSAM programs
+-------------
+01. VSAM01  - DELETE KSDS -> DEFINE KSDS
+02. VSAM02  - REPRO (copy)
+03. VSAM03  - REPRO (REPRO options)
+04. VSAM04  - ALTER
+05. VSAM05  - LISTCAT
+06. VSAM06  - DELETE ESDS -> DEFINE ESDS -> REPRO
+07. VSAM07  - Alternate Index (Unique)    : DELETE -> DEFINE AIX -> BLDINDEX -> DEFINE PATH
+08. VSAM08  - Alternate Index (Nonunique) : DELETE -> DEFINE AIX -> BLDINDEX -> DEFINE PATH
+
+DB2 programs
+------------
+01. CREATE - create table/ index/ drop table
+02. INSERT - insert/ delete
+03. UPDATE - update
+04. SELECT - select
+-----------------------------------------------------------------------------------------------------------------------------
+Knowledge Checks
+----------------
+01. How many types of database categories do we have ?
+02. How many types of tablespace do we have ?
+03. If we do not specify tablespace type in CREATE TABLESPACE command, then what is the default tablespace considered ?
+04. What does SPUFI stand for ?
+05. What is the difference between DROP TABLE EMP; and DELETE FROM EMP; commands ?
+06. What is the SQLCODE for duplicate primary key ?
+07. In DB2, table, database, tablespace, index are called as _______.
+08. What is the SQLCODE for invalid table name ?
+09. DB2 is an example of ________ database.
+10. Apart from SPUFI, which other utility can be used to code and execute SQL commands ?
+----------------------------------------------------------------------------------------------------------------------------
+
+01.	DB2 programming
+	---------------
+	- In DB2, the programming technique employed is called as "Embedded SQL Programming Technique"
+	- In a COBOL/DB2 program, part of the code is written in COBOL and part of the code is related to DB2.
+	
+
+02.	EXEC SQL block
+	--------------
+	- EXEC SQL block is coded for SQL commands in a COBOL/DB2 program.
+
+	- Syntax :-
+
+		EXEC SQL
+			SQL command
+		END-EXEC.
+
+	- Example :-
+		
+		EXEC SQL
+			INSERT INTO EMP VALUES(101, 'MANOJ')
+		END-EXEC.
+
+	- You can code only one SQL command in one EXEC SQL block. If you want to type two SQL commands, then you must
+	  code each SQL command in a separate EXEC SQL block.
+
+	- Do not terminate your SQL command with a ; or any character in EXEC SQL block.
+
+	- Code Snippet
+
+
+		DISPLAY "HELLO"
+		EXEC SQL
+			INSERT INTO EMP VALUES(101,'MANOJ')
+		END-EXEC.
+		DISPLAY "OVER".
+		GOBACK.
+
+	- In EXEC SQL block, you can type SQL commands only. It means you can code table name and column names.
+	  COBOL commands/ variables are not allowed in EXEC SQL block.
+
+	  COBOL commands are allowed outside EXEC SQL block. SQL commands, table name, column names are not allowed
+	  outside EXEC SQL block.
+
+03.	Host variable
+	- Analogy + Example
+
+			You ---------File---------->  P.A. ------File--------->	Minister
+			You <--------File-----------  P.A. <-----File----------	Minister
+
+			COBOL variable --------------> Host variable -----------> DB2 table
+			COBOL variable <-------------- Host variable <----------- DB2 table
+
+			ACCEPT WS-EMPNO.
+			ACCEPT WS-NAME.
+			MOVE WS-EMPNO TO HV-EMPNO.
+			MOVE WS-NAME  TO HV-NAME.
+			EXEC SQL
+				INSERT INTO EMP VALUES(:HV-EMPNO, :HV-NAME)
+			END-EXEC.
+
+	- Host variable is a variable which can be used inside EXEC SQL block as well as outside EXEC SQL block.
+
+	- If you have data in a COBOL variable and if you want to insert this data in DB2 table, then :-
+		a. Move the data from COBOL variable to host variable
+		b. INSERT command will pick the data from host variable and insert the data in the table.
+
+	- If you have data in a table and if you want to display this data in spool, then :-
+		a. Move the data from column to host variable
+		b. Move the data from host variable to COBOL variable and then display COBOL variable data in spool.
+
+	- Each column of the table will have its own host variable.
+
+	- Host variables are defined using a DB2 utility DCLGEN (DeCLaration GENerator)
+
+	- If host variable is coded inside EXEC SQL block, then precede the host-variable name with a :
+	  If host variable is coded outside EXEC SQL block, then do not precede the host variable name with a :
+
+
+04.	DCLGEN - DeCLaration GENerator
+
+	- DCLGEN is a DB2 utility program which will create the table definition and host variable definition in a
+	  member. Such a member is called as "DCLGEN member" and the PDS which has this member is called as "DCLGEN PDS".
+
+	- Follow the steps below to create a DCLGEN member :-
+
+		1. =9.SP -> Option 2
+
+		2.	Option  1 : EMP					(table name)
+			Option  4 : 'OZAGS3.DB2.DCLGEN.PDS(EMP)'	(dclgen-pds(dclgen-member))
+			Option  6 : ADD					ADD -> 1st time, REPLACE -> 2nd time onwards
+			Option  9 : HV-					Prefix of host variable.
+			Option 11 : YES					If prefix is coded in 9, then YES else NO
+
+	  	3. On pressing <enter> a DCLGEN member will be created in DCLGEN PDS. If you open the member, you will see :
+			- table definition (table structure - table name, column name/s type, width, etc.)
+			- host variable definition	
+
+05.	DB201 - Copy records from PS file to a table
+
+	Problem Definition :-
+	---------------------
+	Create a table EMPLOYEE with three columns :- EMPNO - SMALLINT, EMPNAME - CHAR(15), MOBILENO - CHAR(10).
+	Create a PS file and enter 10 records containing empno, empname and mobileno.
+	Write a program which will read each record from PS file and insert the record in EMPLOYEE table.
+	At the end of the program, display total number of records copied.
+
+
+	INCLUDE command
+	---------------
+		- INCLUDE command is used to plug-in a member which contains DB2 related code.
+		- INCLUDE command is similar to COPY command. COPY command plugs-in COBOL related code whereas INCLUDE
+		  command plugs-in DB2 related code.
+		- INCLUDE command must be coded in EXEC SQL block since it is related to DB2.
+		- Syntax :- 
+
+			EXEC SQL
+				INCLUDE member-name
+			END-EXEC.
+		- In every COBOL/DB2 program, you must code INCLUDE command to plugin two members :-
+			- DCLGEN member (table definition, host variable definition)
+			- SQLCA (SQLCODE variable definition)
+
+	SQLCA
+	-----
+		- SQLCA is a DB2 in-built member which contains definition of SQLCODE variable and many other variable.
+		- SQLCA - Strucrured Query Language Communication Area.
+
+
+	How to compile and execute COBOL/DB2 programs ?	
+	-----------------------------------------------
+	-	It is a 3 step process :-
+			a. Compile -> will trap COBOL code related errors
+			b. Bind    -> will trap DB2 related errors
+			c. Run	   -> execute COBOL/DB2 program.
+
+
+
+	INSTRUCTIONS for allocating PDSs 
+	--------------------------------
+	01. Using =3.2, allocate a pds DB2.PROGRAMS
+		SPACE UNITS = TRKS, PRIMARY = 10,   SECONDARY = 7,   DIRECTORY BLOCKS = 3,    
+		RECORD FORMAT = FB,   RECORD LENGTH = 80,   BLOCK SIZE = 800,    DATASET NAME TYPE = PDS
+
+	02. Using =3.2, allocate a pds DB2.DBRMLIB
+		SPACE UNITS = TRKS, PRIMARY = 10,   SECONDARY = 7,   DIRECTORY BLOCKS = 3,    
+		RECORD FORMAT = FB,   RECORD LENGTH = 80,   BLOCK SIZE = 800,    DATASET NAME TYPE = PDS
+
+	03. Using =3.2, allocate a pds DB2.DCLGEN
+		SPACE UNITS = TRKS, PRIMARY = 10,   SECONDARY = 7,   DIRECTORY BLOCKS = 3,    
+		RECORD FORMAT = FB,   RECORD LENGTH = 80,   BLOCK SIZE = 800,    DATASET NAME TYPE = PDS
+
+	04. Using R command, Rename PDS COBOL.COMPILER to DB2.COMPILER
+
+	05. Using R command, Rename PDS COBOL.LOADLIB to DB2.LOADLIB. 
+            Using D command, delete all members present in DB2.LOADLIB.
+
+	06. Using =3.4 command, check if DB2.PROGRAMS, DB2.DBRMLIB, DB2.DCLGEN, DB2.COMPILER, DB2.LOADLIB pdss are present.
+
+	07. Type E on left of DB2.COMPILER and (CBLDBCMP) on right of COMPILER.
+	    COPY "OZAGS3.DB2.COMPILER(CBLDBCMP)"
+	    CHANGE ALL  "OZAGS3"  "OZA???"	->    Save.
+
+	08. Type E on left of DB2.COMPILER and (CBLDBBND) on right of COMPILER.
+	    COPY "OZAGS3.DB2.COMPILER(CBLDBBND)"
+	    CHANGE ALL  "OZAGS3"  "OZA???"	->    Save.
+
+	09. Type E on left of DB2.COMPILER and (CBLDBRUN) on right of COMPILER.
+	    COPY "OZAGS3.DB2.COMPILER(CBLDBRUN)"
+	    CHANGE ALL  "OZAGS3"  "OZA???"	->    Save.
+
+
+	INSTRUCTIONS for SPUFI, DCLGEN
+	------------------------------	
+	01. Type E on left of DB2.SPUFI.INPUT.PDS and (CREATE01) on right of PDS.
+	02. COPY "OZAGS3.DB2.SPUFI.INPUT.PDS(CREATE01)"
+	03. CHANGE ALL  "OZAGS3"  "OZA???"		-> Save
+
+	04. Type E on left of DB2.SPUFI.INPUT.PDS and (SELECT01) on right of PDS.
+	05. COPY "OZAGS3.DB2.SPUFI.INPUT.PDS(SELECT01)"
+
+	06. Run CREATE01 in SPUFI. If you are getting SQLCODE -601, then you can remove the comment on line 4 (DROP TABLE)
+	    and 5 (COMMIT). -> Save -> Run CREATE01 in SPUFI again. -> Check if SQLCODE is 0 for all commands.
+
+	07. Run SELECT01 in SPUFI. You will not see any rows in the output since table is empty. But you will see the
+	    column headings.
+
+	08. Come out of SPUFI. Type =9.SP -> Option 2 (DCLGEN) -> Enter values in the following options :-
+			OPTION  1 	-> 	EMPLOYEE
+			OPTION  4	->	'OZA???.DB2.DCLGEN(EMPLOYEE)'
+			OPTION  6	->	ADD
+			OPTION  9	->	HV-
+			OPTION 11	-> 	YES
+
+	    Press <enter>. A message 'Member added' will be displayed on top of the screen.
+
+	09. Check in DB2.DCLGEN PDS if a member EMPLOYEE has been created. Open the member and study the code.
+	    You will see table declaration (structure) and host variable definitions. Note HV- in host variable names.
+
+
+	INSTRUCTIONS for DB201
+	----------------------
+	01.  Open OZA???.EMP.PS1. Delete all the records which you have in the PS file. -> Save.
+	02.  COPY "OZAGS3.EMP.PS1"	-> Save.
+	-----------------------------------------------------------------------------------------------------------------
+	03.  Type E on left of DB2.PROGRAMS and (DB201) on right of PROGRAMS.
+	04.  COPY "OZAGS3.DB2.PROGRAMS(DB201)"		-> Save.
+	-----------------------------------------------------------------------------------------------------------------
+	05.  Open Compiler JCL -> CBLDBCMP -> CHANGE ALL "OZAGS3" "OZA???"	-> Save -> Submit -> You will get MAXCC=0
+	06.  Open Bind JCL -> CBLDBBND -> CHANGE ALL "OZAGS3" "OZA???"	-> Save -> Submit -> You will get MAXCC = 4.
+	     Goto spool -> Type S on SYSTSPRT line -> Type M and press <F8> -> You will see BIND SUCCESSFUL message.
+	07.  Open Run JCL -> CBLDBRUN -> CHANGE ALL "OZAGS3" "OZA???"	-> Save -> Submit
+	08.  Goto spool and check the messages in SYSOUT. Check the message for duplicate empno.
+	09.  Run SELECT01 in SPUFI and check if unique empno rows have been inserted in the table.
+	-----------------------------------------------------------------------------------------------------------------
+	10.  Open Run JCL -> CBLDBRUN -> Submit
+	11.  Goto spool and check the messages in SYSOUT. You will see ALREADY EXISTS message for all employee numbers.
+	12.  Run SELECT01 in SPUFI. You will see the earlier 9 rows inserted in the table.
+	-----------------------------------------------------------------------------------------------------------------
+	13.  Open DB201 source code member. Remove * from line 56,57,58,59,60,61   -> Save
+	14.  Compile the program. You will get MAXCC=4.
+	15.  Goto spool and Type S on left of SYSPRINT COBOL -> Type M and press <F8> -> You will not see any warning 
+	     messages. -> Type S on left of SYSPRINT PC -> Type M and press <F8> -> You will see warning message.
+	     We can ignore this message since we want to delete all rows from the table.
+	16.  Bind the program. -> You will get MAXCC = 4 -> Goto spool and check message at the bottom in SYSTSPRT.
+	     If you are seeing BIND SUCCESSFUL message, then you can ignore this warning.
+	17.  Run the program -> Goto spool and check messages in SYSOUT -> You will see ROW INSERTED message for 9 empnos
+	     and ALREADY EXISTS message for one empno. This is correct.
+	18.  Run the program -> Goto spool and check messages in SYSOUT -> You will see ROW INSERTED message for 9 empnos
+	     and ALREADY EXISTS message for one empno. This is correct. 
+	19.  If you run the program multiple times, all rows from table will get deleted and a new set of rows will
+	     be inserted in the table.
+	20.  Run SELECT01 in SPUFI -> You will see 9 rows in the table.
+	-----------------------------------------------------------------------------------------------------------------
+
+
+06.	Pointers - how to approach coding a COBOL/DB2 program ?
+
+	Steps 
+	-----
+	01.	Create SPUFI member for CREATE TABLE, CREATE UNIQUE INDEX	-> =9.SP -> 1
+		Create the table and unique index for primary key
+
+	02.	Create DCLGEN member.					-> =9.SP -> 2
+
+	03.	Write the COBOL/DB2 program
+
+	04.	Compile the program	-> change program name on line 19, 20, 21 -> Save -> Submit
+
+			If you are getting MAXCC=4/8/12/16, then
+				goto spool 
+				type S in SYSPRINT -> COB : this will show you COBOL errors/warning     OR
+				type S in SYSPRINT -> PC  : this will show you DB2 errors/warning
+
+	05. 	Bind the program	-> change program name on line 23 -> Save -> Submit
+
+			If you get MAXCC=4, then goto spool and look for BIND SUCCESSFUL message at the bottom (M F8)
+
+	06.	Run the program		-> change program name on line 19 -> add/change dd statements for input file
+					-> save -> submit
+
+	07.	Create SPUFI member for SELECT * FROM table;		-> =9.SP -> 1
+
+
+07.	Assignment
+	01. Create a table CUSTOMER and unique index for primary key in member CREATE$1 in DB2.SPUFI.INPUT.PDS
+
+			CUSTOMER
+			--------
+			CUSTOMER ID	SMALLINT
+			CUSTOMER NAME	CHAR(20)
+			STATUS		CHAR(10)
+
+		> Create unique index for customer id
+
+	02. Create DCLEN member
+			OPTION  1	->
+			OPTION  4	->
+			OPTION  6	-> ADD
+			OPTION  9	-> HV-
+			OPTION 11	-> YES
+
+	03. Rename EMP.PS2 to CUSTOMER.PS. Enter 10 records with the following data :-
+			CUSTOMER ID (4)	CUSTOMER NAME (20)  STATUS (10)
+
+		STATUS can be FULLY-PAID, PART-PAID, NOT-PAID
+
+	04. Write a COBOL/DB2 program (Member : DB201A) which will copy all records from CUSTOMER.PS file to CUSTOMER table. 
+	    At the end, display total number of records copied.
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
