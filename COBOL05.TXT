@@ -1,0 +1,115 @@
+      *===============================================================
+      *=== STUDENT PROGRAM
+      *=== EVALUATE / EDIT CHARACTERS (Z,*)
+      *===============================================================
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. COBOL05.
+      *===============================================================
+       ENVIRONMENT DIVISION.
+      *===============================================================
+       DATA DIVISION.
+       WORKING-STORAGE SECTION.
+       01   STUDENT-RECORD.
+            05    STUD-NAME         PIC A(20).
+            05    FILLER            PIC X(01).
+            05    TEST01-MKS        PIC 9(03).
+            05    FILLER            PIC X(01).
+            05    TEST02-MKS        PIC 9(03).
+            05    FILLER            PIC X(01).
+            05    TEST03-MKS        PIC 9(03).
+            05    FILLER            PIC X(01).
+            05    TOTAL             PIC 9(03).
+            05    FILLER            PIC X(01).
+            05    PERCENT           PIC 9(02).
+            05    FILLER            PIC X(01).
+            05    RESULT            PIC A(04).
+            05    FILLER            PIC X(01).
+            05    REMARKS           PIC X(25).
+
+       77    EDIT-TEST01-MKS         PIC **9.
+       77    EDIT-TEST02-MKS         PIC **9.
+       77    EDIT-TEST03-MKS         PIC **9.
+      *===============================================================
+       PROCEDURE DIVISION.
+      *---------------------------------------------------------------
+      *--- PROGRAM LOGIC STARTS HERE
+      *---------------------------------------------------------------
+       0000-MAIN-PARA.
+           DISPLAY "WELCOME TO MY PROGRAM : COBOL05".
+           DISPLAY " ".
+
+           PERFORM 1000-PROCESS-PARA.
+
+           DISPLAY " ".
+           DISPLAY "THANK YOU FOR USING MY PROGRAM : COBOL05".
+           STOP RUN.
+      *--------------------------------------------------------------
+      *--- PROCESS STUDENT DETAILS
+      *--------------------------------------------------------------
+        1000-PROCESS-PARA.
+            PERFORM 1100-INPUT-PARA.
+            PERFORM 1200-VALIDATION-PARA.
+            PERFORM 1300-CALCULATION-PARA.
+            PERFORM 1400-OUTPUT-PARA.
+            EXIT.
+      *--------------------------------------------------------------
+      *--- ACCEPT THE INPUT DATA
+      *--------------------------------------------------------------
+        1100-INPUT-PARA.
+           ACCEPT STUD-NAME.
+           ACCEPT TEST01-MKS.
+           ACCEPT TEST02-MKS.
+           ACCEPT TEST03-MKS.
+           EXIT.
+      *--------------------------------------------------------------
+      *--- VALIDATE THE INPUT DATA
+      *--------------------------------------------------------------
+        1200-VALIDATION-PARA.
+           EVALUATE TRUE
+              WHEN STUD-NAME = SPACES
+                   MOVE "STUD-NAME-EMPTY" TO REMARKS
+              WHEN TEST01-MKS IS NOT NUMERIC OR
+                   TEST02-MKS IS NOT NUMERIC OR
+                   TEST03-MKS IS NOT NUMERIC
+                   MOVE "NON-NUMERIC-DATA-IN-MARKS" TO REMARKS
+              WHEN TEST01-MKS < 1 OR TEST01-MKS > 100 OR
+                   TEST02-MKS < 1 OR TEST02-MKS > 100 OR
+                   TEST03-MKS < 1 OR TEST03-MKS > 100
+                   MOVE "MARKS-NOT-IN-RANGE" TO REMARKS
+              WHEN OTHER
+                    MOVE "VALID-RECORD" TO REMARKS
+           END-EVALUATE.
+           EXIT.
+      *--------------------------------------------------------------
+      *--- PERFORM CALCULATIONS
+      *--------------------------------------------------------------
+        1300-CALCULATION-PARA.
+            IF REMARKS = "VALID-RECORD"
+               COMPUTE TOTAL = TEST01-MKS + TEST02-MKS + TEST03-MKS
+               COMPUTE PERCENT = TOTAL / 3
+               IF TEST01-MKS < 35 OR TEST02-MKS < 35 OR TEST03-MKS < 35
+                  MOVE "FAIL" TO RESULT
+               ELSE
+                  MOVE "PASS" TO RESULT
+               END-IF
+            END-IF.
+            EXIT.
+      *--------------------------------------------------------------
+      *--- DISPLAY THE OUTPUT
+      *--------------------------------------------------------------
+        1400-OUTPUT-PARA.
+           DISPLAY " ".
+           MOVE TEST01-MKS TO EDIT-TEST01-MKS.
+           MOVE TEST02-MKS TO EDIT-TEST02-MKS.
+           MOVE TEST03-MKS TO EDIT-TEST03-MKS.
+           DISPLAY STUD-NAME, " ",
+                   EDIT-TEST01-MKS, " ",
+                   EDIT-TEST02-MKS, " ",
+                   EDIT-TEST03-MKS, " ",
+                   TOTAL,           " ",
+                   PERCENT,         " ",
+                   RESULT,          " ",
+                   REMARKS.
+           EXIT.
+      *===============================================================
+

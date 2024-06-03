@@ -1,0 +1,191 @@
+      *----------------------------------------------------------------
+      *--- COPY ALL VALID RECORDS FROM PS FILE TO KSDS FILE
+      *--- AND INVALID RECORDS TO ERROR.PS FILE
+      *--- NAME, PROJECT AND JOIN DATE FIELD DATA TO BE FORMATTED.
+      *----------------------------------------------------------------
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. COBOL15.
+      *----------------------------------------------------------------
+       ENVIRONMENT DIVISION.
+       INPUT-OUTPUT SECTION.
+       FILE-CONTROL.
+      *--- SOURCE FILE ENTRY ------------------------------------------
+           SELECT PS-FILE ASSIGN TO DD1
+           ORGANIZATION IS SEQUENTIAL
+           FILE STATUS IS FS-PS.
+
+      *--- TARGET FILE ENTRY ------------------------------------------
+           SELECT KSDS-FILE ASSIGN TO DD2
+           ORGANIZATION IS INDEXED
+           ACCESS MODE IS RANDOM
+           RECORD KEY IS EMPNO-KSDS
+           FILE STATUS IS FS-KSDS.
+
+      *--- ERROR  FILE ENTRY ------------------------------------------
+           SELECT ERROR-FILE ASSIGN TO DD3
+           ORGANIZATION IS SEQUENTIAL
+           FILE STATUS IS FS-ERROR.
+      *----------------------------------------------------------------
+       DATA DIVISION.
+       FILE SECTION.
+      *--- SOURCE FILE ENTRY ------------------------------------------
+       FD  PS-FILE
+           LABEL RECORDS ARE STANDARD
+           RECORDING MODE IS F.
+       01  PS-REC-BUFF.
+           05     FILLER       PIC X(80).
+
+      *--- TARGET FILE ENTRY ------------------------------------------
+       FD  KSDS-FILE
+           LABEL RECORDS ARE STANDARD.
+       01  KSDS-REC-BUFF.
+           05     EMPNO-KSDS   PIC X(04).
+           05     FILLER       PIC X(76).
+
+      *--- ERROR  FILE ENTRY ------------------------------------------
+       FD  ERROR-FILE
+           LABEL RECORDS ARE STANDARD
+           RECORDING MODE IS F.
+       01  ERROR-REC-BUFF.
+           05     FILLER       PIC X(80).
+
+       WORKING-STORAGE SECTION.
+       COPY WSRECORD.
+
+      *--- FILE STATUS VARIABES ---------------------------------------
+       77        FS-PS         PIC X(02)      VALUE SPACES.
+       77        FS-KSDS       PIC X(02)      VALUE SPACES.
+       77        FS-ERROR      PIC X(02)      VALUE SPACES.
+
+      *--- ADDITIONAL VARIABLES ---------------------------------------
+       77        TOTAL-COUNT   PIC 9(02)      VALUE 0.
+       77        VALID-COUNT   PIC 9(02)      VALUE 0.
+       77        INVALID-COUNT PIC 9(02)      VALUE 0.
+       77        F-NAME        PIC X(10)      VALUE SPACE.
+       77        M-NAME        PIC X(10)      VALUE SPACE.
+       77        S-NAME        PIC X(10)      VALUE SPACE.
+       77        DD            PIC X(02)      VALUE SPACE.
+       77        MM            PIC X(02)      VALUE SPACE.
+       77        YY            PIC X(04)      VALUE SPACE.
+      *----------------------------------------------------------------
+       PROCEDURE DIVISION.
+      *----------------------------------------------------------------
+      *--- MAIN LOGIC STARTS HERE -------------------------------------
+      *----------------------------------------------------------------
+       0000-MAIN-PARA.
+           DISPLAY "WELCOME TO MY PROGRAM : COBOL15".
+           DISPLAY " ".
+
+      *--- OPEN SOURCE FILE IN INPUT MODE FOR READING RECORDS ---------
+           OPEN INPUT PS-FILE.
+           DISPLAY "PS FILE OPEN STATUS     : ", FS-PS.
+           DISPLAY " ".
+
+      *--- OPEN TARGET FILE IN OUTPUT MODE FOR WRITING RECORDS --------
+           OPEN OUTPUT KSDS-FILE.
+           DISPLAY "KSDS FILE OPEN STATUS   : ", FS-KSDS.
+           DISPLAY " ".
+
+      *--- OPEN ERROR  FILE IN OUTPUT MODE FOR WRITING RECORDS --------
+           OPEN OUTPUT ERROR-FILE.
+           DISPLAY "ERROR FILE OPEN STATUS  : ", FS-ERROR.
+           DISPLAY " ".
+
+           READ PS-FILE   INTO WS-RECORD.
+           PERFORM 1000-PROCESS-PARA UNTIL FS-PS = "10".
+           DISPLAY FS-PS, ": END OF SOURCE FILE REACHED".
+
+           IF INVALID-COUNT = 0
+              MOVE "NO INVALID RECORDS" TO ERROR-REC-BUFF
+              WRITE ERROR-REC-BUFF
+           END-IF.
+
+           PERFORM 2000-SHOW-STATS-PARA.
+
+      *--- CLOSE THE SOURCE FILE --------------------------------------
+           CLOSE PS-FILE.
+           DISPLAY " ".
+           DISPLAY "PS FILE CLOSE STATUS      : ", FS-PS.
+
+      *--- CLOSE THE TARGET FILE --------------------------------------
+           CLOSE KSDS-FILE.
+           DISPLAY "KSDS FILE CLOSE STATUS    : ", FS-KSDS.
+
+      *--- CLOSE THE ERROR  FILE --------------------------------------
+           CLOSE ERROR-FILE.
+           DISPLAY "ERROR FILE CLOSE STATUS   : ", FS-ERROR.
+
+           DISPLAY " ".
+           DISPLAY "THANK YOU FOR USING THE PROGRAM COBOL15".
+
+           STOP RUN.
+      *----------------------------------------------------------------
+      *--- PROCESS THE RECORD -----------------------------------------
+      *----------------------------------------------------------------
+       1000-PROCESS-PARA.
+           PERFORM 1100-FORMAT-PARA.
+           PERFORM 1200-WRITE-PARA.
+           READ PS-FILE   INTO WS-RECORD.
+           EXIT.
+      *----------------------------------------------------------------
+      *--- FORMAT NAME, PROJECT AND JOIN DATE -------------------------
+      *----------------------------------------------------------------
+       1100-FORMAT-PARA.
+      *--- REMOVE HYPHENS (-) FROM EMP-NAME AND PROJECT FIELD DATA ----
+           INSPECT EMP-NAME REPLACING ALL "-" BY " ".
+           INSPECT PROJECT  REPLACING ALL "-" BY " ".
+
+      *--- CHANGE EMP-NAME FORMAT TO SURNAME FIRST-NAME ---------------
+           UNSTRING EMP-NAME DELIMITED BY " "
+                             INTO F-NAME, M-NAME, S-NAME
+           STRING S-NAME  DELIMITED BY " "
+                  " "     DELIMITED BY SIZE
+                  F-NAME  DELIMITED BY " "
+                  " "     DELIMITED BY SIZE
+                  M-NAME  DELIMITED BY " "
+             INTO EMP-NAME.
+
+      *--- CHANGE JOIN-DATE FORMAT TO DD/MM/YYYY ----------------------
+           UNSTRING JOIN-DATE DELIMITED BY "-" INTO YY, MM, DD.
+           STRING DD    DELIMITED BY SIZE
+                  "/"   DELIMITED BY SIZE
+                  MM    DELIMITED BY SIZE
+                  "/"   DELIMITED BY SIZE
+                  YY    DELIMITED BY SIZE
+             INTO JOIN-DATE.
+
+           EXIT.
+      *----------------------------------------------------------------
+      *--- WRITE THE RECORD IN KSDS -----------------------------------
+      *----------------------------------------------------------------
+       1200-WRITE-PARA.
+           WRITE KSDS-REC-BUFF FROM WS-RECORD.
+           EVALUATE TRUE
+                WHEN FS-KSDS = "00"
+                     DISPLAY FS-KSDS, ":", EMP-NO, ": WRITTEN IN KSDS"
+                     ADD 1 TO VALID-COUNT
+                WHEN FS-KSDS = "22"
+                     DISPLAY FS-KSDS, ":", EMP-NO, ": EXISTS IN KSDS"
+                     ADD 1 TO INVALID-COUNT
+                     WRITE ERROR-REC-BUFF FROM WS-RECORD
+                WHEN OTHER
+                     DISPLAY FS-KSDS, ":", EMP-NO, ": WRITE ERROR"
+                     ADD 1 TO INVALID-COUNT
+                     WRITE ERROR-REC-BUFF FROM WS-RECORD
+           END-EVALUATE.
+           ADD 1 TO TOTAL-COUNT.
+           EXIT.
+      *----------------------------------------------------------------
+      *--- DISPLAY STATISTICS -----------------------------------------
+      *----------------------------------------------------------------
+       2000-SHOW-STATS-PARA.
+           DISPLAY " ".
+           DISPLAY "STATISTICS".
+           DISPLAY "----------".
+           DISPLAY "TOTAL RECORDS         : ", TOTAL-COUNT.
+           DISPLAY "TOTAL VALID RECORDS   : ", VALID-COUNT.
+           DISPLAY "TOTAL INVALID RECORDS : ", INVALID-COUNT.
+           EXIT.
+      *----------------------------------------------------------------
+      *----------------------------------------------------------------
+

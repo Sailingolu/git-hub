@@ -1,0 +1,44 @@
+      *----------------------------------------------------------------
+      *--- REDEFINES CLAUSE -------------------------------------------
+      *--- TO ASSIGN DATA TO A TABLE WITHIN THE PROGRAM ---------------
+      *----------------------------------------------------------------
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. COBOL24.
+      *----------------------------------------------------------------
+       ENVIRONMENT DIVISION.
+      *----------------------------------------------------------------
+       DATA DIVISION.
+       WORKING-STORAGE SECTION.
+       01   TABLE-DATA.
+            05         FILLER         PIC X(08)    VALUE "JAN - 31".
+            05         FILLER         PIC X(08)    VALUE "FEB - 28".
+            05         FILLER         PIC X(08)    VALUE "MAR - 31".
+            05         FILLER         PIC X(08)    VALUE "APR - 30".
+            05         FILLER         PIC X(08)    VALUE "MAY - 31".
+            05         FILLER         PIC X(08)    VALUE "JUN - 30".
+            05         FILLER         PIC X(08)    VALUE "JUL - 31".
+            05         FILLER         PIC X(08)    VALUE "AUG - 31".
+            05         FILLER         PIC X(08)    VALUE "SEP - 30".
+            05         FILLER         PIC X(08)    VALUE "OCT - 31".
+            05         FILLER         PIC X(08)    VALUE "NOV - 30".
+            05         FILLER         PIC X(08)    VALUE "DEC - 31".
+       01   TABLE-DEFN   REDEFINES    TABLE-DATA.
+            05         DAYS-TABLE     OCCURS 12 TIMES.
+                10     DAYS           PIC X(08).
+
+       77   LOCN                          PIC 9(02)    VALUE 1.
+      *----------------------------------------------------------------
+       PROCEDURE DIVISION.
+      *----------------------------------------------------------------
+      *--- PROGRAM LOGIC STARTS HERE ----------------------------------
+      *----------------------------------------------------------------
+       0000-MAIN-PARA.
+            PERFORM 1000-DISPLAY-PARA UNTIL LOCN = 14.
+            GOBACK.
+      *----------------------------------------------------------------
+       1000-DISPLAY-PARA.
+            DISPLAY DAYS(LOCN).
+            ADD 1 TO LOCN.
+            EXIT.
+      *----------------------------------------------------------------
+

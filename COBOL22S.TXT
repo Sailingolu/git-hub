@@ -1,0 +1,36 @@
+      *----------------------------------------------------------------
+      *--- SUM OF TWO NUMBERS : CALLING PROGRAM -----------------------
+      *----------------------------------------------------------------
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. COBOL22S.
+      *----------------------------------------------------------------
+       ENVIRONMENT DIVISION.
+      *----------------------------------------------------------------
+       DATA DIVISION.
+       WORKING-STORAGE SECTION.
+       77     PGM-NAME        PIC X(08)    VALUE SPACES.
+       77     NUM-1           PIC 9(03)    VALUE 0.
+       77     NUM-2           PIC 9(03)    VALUE 0.
+       77     RESULT          PIC 9(04)    VALUE 0.
+      *----------------------------------------------------------------
+       PROCEDURE DIVISION.
+      *----------------------------------------------------------------
+      *--- PROGRAM LOGIC STARTS HERE ----------------------------------
+      *----------------------------------------------------------------
+       0000-MAIN-PARA.
+           DISPLAY "WELCOME TO PROGRAM : COBOL22S".
+           DISPLAY " ".
+
+           ACCEPT NUM-1.
+           ACCEPT NUM-2.
+
+           MOVE "COBOL22T" TO PGM-NAME.
+           CALL PGM-NAME USING BY REFERENCE NUM-1, NUM-2, RESULT.
+           DISPLAY "SUM OF ", NUM-1, " AND ", NUM-2, " = ", RESULT.
+
+           DISPLAY " ".
+           DISPLAY "THANK YOU FOR USING THE PROGRAM : COBOL22S".
+           GOBACK.
+      *----------------------------------------------------------------
+      *----------------------------------------------------------------
+

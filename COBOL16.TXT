@@ -1,0 +1,81 @@
+      *----------------------------------------------------------------
+      *--- DISPLAY ALL RECORDS OF KSDS IN SPOOL.
+      *----------------------------------------------------------------
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. COBOL16.
+      *----------------------------------------------------------------
+       ENVIRONMENT DIVISION.
+       INPUT-OUTPUT SECTION.
+       FILE-CONTROL.
+      *--- KSDS FILE ENTRY --------------------------------------------
+           SELECT KSDS-FILE ASSIGN TO DD1
+           ORGANIZATION IS INDEXED
+           ACCESS MODE IS SEQUENTIAL
+           RECORD KEY IS EMPNO-KSDS
+           FILE STATUS IS FS-KSDS.
+      *----------------------------------------------------------------
+       DATA DIVISION.
+       FILE SECTION.
+      *--- KSDS FILE ENTRY --------------------------------------------
+       FD  KSDS-FILE
+           LABEL RECORDS ARE STANDARD.
+       01  KSDS-REC-BUFF.
+           05     EMPNO-KSDS   PIC X(04).
+           05     FILLER       PIC X(76).
+
+       WORKING-STORAGE SECTION.
+       COPY WSRECORD.
+
+      *--- FILE STATUS VARIABES ---------------------------------------
+       77        FS-KSDS       PIC X(02)      VALUE SPACES.
+
+      *--- ADDITIONAL VARIABLES ---------------------------------------
+       77        TOTAL-COUNT   PIC 9(02)      VALUE 0.
+      *----------------------------------------------------------------
+       PROCEDURE DIVISION.
+      *----------------------------------------------------------------
+      *--- MAIN LOGIC STARTS HERE -------------------------------------
+      *----------------------------------------------------------------
+       0000-MAIN-PARA.
+           DISPLAY "WELCOME TO MY PROGRAM : COBOL16".
+           DISPLAY " ".
+
+      *--- OPEN KSDS FILE IN INPUT MODE TO READ RECORDS  --------------
+           OPEN INPUT KSDS-FILE.
+           DISPLAY "KSDS FILE OPEN STATUS   : ", FS-KSDS.
+           DISPLAY " ".
+
+           READ KSDS-FILE   INTO WS-RECORD.
+           PERFORM 1000-PROCESS-PARA UNTIL FS-KSDS = "10".
+           DISPLAY FS-KSDS, ": END OF KSDS REACHED".
+
+           PERFORM 2000-SHOW-STATS-PARA.
+
+      *--- CLOSE THE KSDS FILE ----------------------------------------
+           CLOSE KSDS-FILE.
+           DISPLAY " ".
+           DISPLAY "KSDS FILE CLOSE STATUS    : ", FS-KSDS.
+
+           DISPLAY " ".
+           DISPLAY "THANK YOU FOR USING THE PROGRAM COBOL16".
+
+           STOP RUN.
+      *----------------------------------------------------------------
+      *--- PROCESS THE RECORD -----------------------------------------
+      *----------------------------------------------------------------
+       1000-PROCESS-PARA.
+           DISPLAY WS-RECORD.
+           ADD 1 TO TOTAL-COUNT.
+           READ KSDS-FILE INTO WS-RECORD.
+           EXIT.
+      *----------------------------------------------------------------
+      *--- DISPLAY STATISTICS -----------------------------------------
+      *----------------------------------------------------------------
+       2000-SHOW-STATS-PARA.
+           DISPLAY " ".
+           DISPLAY "STATISTICS".
+           DISPLAY "----------".
+           DISPLAY "TOTAL RECORDS         : ", TOTAL-COUNT.
+           EXIT.
+      *----------------------------------------------------------------
+

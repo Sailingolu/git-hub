@@ -1,0 +1,67 @@
+      *---------------------------------------------------------------
+      *--- SORT ------------------------------------------------------
+      *---------------------------------------------------------------
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. COBOL20.
+      *---------------------------------------------------------------
+       ENVIRONMENT DIVISION.
+       INPUT-OUTPUT SECTION.
+       FILE-CONTROL.
+      *--- INPUT FILE ENTRY ------------------------------------------
+           SELECT INPUT-FILE  ASSIGN TO DD1
+           ORGANIZATION IS SEQUENTIAL.
+
+      *--- WORK  FILE ENTRY ------------------------------------------
+           SELECT WORK-FILE   ASSIGN TO DD2.
+
+      *--- OUTPUT FILE ENTRY -----------------------------------------
+           SELECT OUTPUT-FILE ASSIGN TO DD3
+           ORGANIZATION IS SEQUENTIAL.
+      *---------------------------------------------------------------
+       DATA DIVISION.
+       FILE SECTION.
+      *--- INPUT  FILE ENTRY -----------------------------------------
+       FD  INPUT-FILE
+           LABEL RECORDS ARE STANDARD
+           RECORDING MODE IS F.
+       01  INPUT-REC-BUFF.
+           05         FILLER         PIC X(80).
+
+      *--- WORK   FILE ENTRY -----------------------------------------
+       SD  WORK-FILE.
+       01  WORK-REC-BUFF.
+           05    EMP-NO        PIC 9(04).
+           05    FILLER        PIC X(01).
+           05    EMP-NAME      PIC X(20).
+           05    FILLER        PIC X(01).
+           05    PROJECT       PIC X(10).
+           05    FILLER        PIC X(01).
+           05    JOIN-DATE     PIC X(10).
+           05    FILLER        PIC X(01).
+           05    MOBILE-NO     PIC 9(10).
+           05    FILLER        PIC X(01).
+           05    SALARY        PIC 9(06).
+
+      *--- OUTPUT FILE ENTRY -----------------------------------------
+       FD  OUTPUT-FILE
+           LABEL RECORDS ARE STANDARD
+           RECORDING MODE IS F.
+       01  OUTPUT-REC-BUFF.
+           05         FILLER         PIC X(80).
+      *---------------------------------------------------------------
+       PROCEDURE DIVISION.
+      *---------------------------------------------------------------
+      *--- PROGRAM LOGIC STARTS HERE ---------------------------------
+      *---------------------------------------------------------------
+       0000-MAIN-PARA.
+           DISPLAY "WELCOME TO PROGRAM : COBOL20".
+           DISPLAY " ".
+
+           SORT WORK-FILE ON ASCENDING PROJECT ON DESCENDING SALARY
+                          USING INPUT-FILE
+                          GIVING OUTPUT-FILE.
+
+           DISPLAY "THANK YOU FOR USING THE PROGRAM : COBOL20".
+           STOP RUN.
+      *---------------------------------------------------------------
+

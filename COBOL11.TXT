@@ -1,0 +1,82 @@
+      *----------------------------------------------------------------
+      *--- DISPLAY ALL RECORDS OF PS FILE
+      *----------------------------------------------------------------
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. COBOL11.
+      *----------------------------------------------------------------
+       ENVIRONMENT DIVISION.
+       INPUT-OUTPUT SECTION.
+       FILE-CONTROL.
+           SELECT PS-FILE ASSIGN TO DD1
+           ORGANIZATION IS SEQUENTIAL
+           FILE STATUS IS FS-PS.
+      *----------------------------------------------------------------
+       DATA DIVISION.
+       FILE SECTION.
+       FD  PS-FILE
+           LABEL RECORDS ARE STANDARD
+           RECORDING MODE IS F.
+       01  PS-REC-BUFF.
+           05     FILLER       PIC X(80).
+
+       WORKING-STORAGE SECTION.
+       01  WS-RECORD.
+           05    EMP-NO        PIC 9(04).
+           05    FILLER        PIC X(01).
+           05    EMP-NAME      PIC X(20).
+           05    FILLER        PIC X(01).
+           05    PROJECT       PIC X(10).
+           05    FILLER        PIC X(01).
+           05    JOIN-DATE     PIC X(10).
+           05    FILLER        PIC X(01).
+           05    MOBILE-NO     PIC 9(10).
+           05    FILLER        PIC X(01).
+           05    SALARY        PIC 9(06).
+
+       77        FS-PS         PIC X(02)      VALUE SPACES.
+       77        TOTAL-COUNT   PIC 9(02)      VALUE 0.
+      *----------------------------------------------------------------
+       PROCEDURE DIVISION.
+      *----------------------------------------------------------------
+      *--- MAIN LOGIC STARTS HERE -------------------------------------
+      *----------------------------------------------------------------
+       0000-MAIN-PARA.
+           DISPLAY "WELCOME TO MY PROGRAM : COBOL11".
+           DISPLAY " ".
+
+           OPEN INPUT PS-FILE.
+           DISPLAY "PS FILE OPEN STATUS  : ", FS-PS.
+           DISPLAY " ".
+
+           READ PS-FILE INTO WS-RECORD.
+           PERFORM 1000-PROCESS-PARA UNTIL FS-PS = "10".
+           DISPLAY FS-PS, ": END OF FILE REACHED".
+
+           PERFORM 2000-SHOW-STATS-PARA.
+
+           CLOSE PS-FILE.
+           DISPLAY " ".
+           DISPLAY "PS FILE CLOSE STATUS : ", FS-PS.
+
+           DISPLAY " ".
+           DISPLAY "THANK YOU FOR USING THE PROGRAM COBOL11".
+
+           STOP RUN.
+      *----------------------------------------------------------------
+      *--- PROCESS THE RECORD -----------------------------------------
+      *----------------------------------------------------------------
+       1000-PROCESS-PARA.
+           DISPLAY FS-PS, ":", WS-RECORD.
+           ADD 1 TO TOTAL-COUNT.
+           READ PS-FILE INTO WS-RECORD.
+           EXIT.
+      *----------------------------------------------------------------
+      *--- DISPLAY STATISTICS -----------------------------------------
+      *----------------------------------------------------------------
+       2000-SHOW-STATS-PARA.
+           DISPLAY " ".
+           DISPLAY "TOTAL RECORDS : ", TOTAL-COUNT.
+           EXIT.
+      *----------------------------------------------------------------
+      *----------------------------------------------------------------
+

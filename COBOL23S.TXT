@@ -1,0 +1,43 @@
+      *---------------------------------------------------------------
+      *--- PRODUCT PROGRAM : CALLING PROGRAM -------------------------
+      *---------------------------------------------------------------
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. COBOL23S.
+      *---------------------------------------------------------------
+       ENVIRONMENT DIVISION.
+      *---------------------------------------------------------------
+       DATA DIVISION.
+       WORKING-STORAGE SECTION.
+       77          PGM-NAME         PIC X(08)     VALUE SPACES.
+
+       01   PRODUCT-RECORD.
+            05     PROD-NAME        PIC X(15).
+            05     FILLER           PIC X(01).
+            05     PRICE            PIC 9(06).
+            05     FILLER           PIC X(01).
+            05     DISCOUNT         PIC 9(06).
+            05     FILLER           PIC X(01).
+            05     NETPRICE         PIC 9(06).
+      *---------------------------------------------------------------
+       PROCEDURE DIVISION.
+      *---------------------------------------------------------------
+      *--- PROGRAM LOGIC STARTS HERE ---------------------------------
+      *---------------------------------------------------------------
+       0000-MAIN-PARA.
+            DISPLAY "WELCOME TO PROGRAM : COBOL23S".
+            DISPLAY " ".
+
+            ACCEPT PRODUCT-RECORD.
+            DISPLAY "INPUT > ", PRODUCT-RECORD.
+
+            MOVE "COBOL23T" TO PGM-NAME.
+            CALL PGM-NAME USING PRICE, DISCOUNT, NETPRICE.
+            DISPLAY "OUTPUT > ", PRODUCT-RECORD.
+
+            DISPLAY " ".
+            DISPLAY "THANK YOU FOR USING THE PROGRAM : COBOL23T".
+            GOBACK.
+      *---------------------------------------------------------------
+      *---------------------------------------------------------------
+      *---------------------------------------------------------------
+

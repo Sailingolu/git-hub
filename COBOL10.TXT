@@ -1,0 +1,25 @@
+      *===============================================================
+      *=== SIGNED VARIABLE
+      *===============================================================
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. COBOL10.
+      *===============================================================
+       ENVIRONMENT DIVISION.
+      *===============================================================
+       DATA DIVISION.
+       WORKING-STORAGE SECTION.
+       77      VAR-1       PIC S9(05).
+       77      EDIT-VAR-1  PIC +9(05).
+      *===============================================================
+       PROCEDURE DIVISION.
+       0000-MAIN-PARA.
+           MOVE -99999  TO VAR-1.
+           MOVE VAR-1 TO EDIT-VAR-1.
+           DISPLAY "VAR-1 = ", VAR-1, " AND EDIT-VAR-1 = ", EDIT-VAR-1.
+
+           MOVE   8321  TO VAR-1.
+           MOVE VAR-1 TO EDIT-VAR-1.
+           DISPLAY "VAR-1 = ", VAR-1, " AND EDIT-VAR-1 = ", EDIT-VAR-1.
+           STOP RUN.
+      *===============================================================
+

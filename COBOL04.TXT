@@ -1,0 +1,82 @@
+      *===============================================================
+      *=== STUDENT PROGRAM
+      *=== PERFORM VALIDATION CHECK ON INPUT DATA
+      *===============================================================
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. COBOL04.
+      *===============================================================
+       ENVIRONMENT DIVISION.
+      *===============================================================
+       DATA DIVISION.
+       WORKING-STORAGE SECTION.
+       01   STUDENT-RECORD.
+            05    STUD-NAME         PIC A(20).
+            05    FILLER            PIC X(01).
+            05    TEST01-MKS        PIC 9(03).
+            05    FILLER            PIC X(01).
+            05    TEST02-MKS        PIC 9(03).
+            05    FILLER            PIC X(01).
+            05    TEST03-MKS        PIC 9(03).
+            05    FILLER            PIC X(01).
+            05    TOTAL             PIC 9(03).
+            05    FILLER            PIC X(01).
+            05    PERCENT           PIC 9(02).
+            05    FILLER            PIC X(01).
+            05    RESULT            PIC A(04).
+            05    FILLER            PIC X(01).
+            05    REMARKS           PIC X(25).
+      *===============================================================
+       PROCEDURE DIVISION.
+      *---------------------------------------------------------------
+      *--- PROGRAM LOGIC STARTS HERE
+      *---------------------------------------------------------------
+       0000-MAIN-PARA.
+           DISPLAY "WELCOME TO MY PROGRAM : COBOL04".
+           DISPLAY " ".
+
+           PERFORM 1000-PROCESS-PARA.
+
+           DISPLAY " ".
+           DISPLAY "THANK YOU FOR USING MY PROGRAM : COBOL03".
+           STOP RUN.
+      *--------------------------------------------------------------
+      *--- PROCESS STUDENT DETAILS
+      *--------------------------------------------------------------
+        1000-PROCESS-PARA.
+           ACCEPT STUD-NAME.
+           ACCEPT TEST01-MKS.
+           ACCEPT TEST02-MKS.
+           ACCEPT TEST03-MKS.
+
+           IF STUD-NAME = SPACES
+              MOVE "STUD-NAME-EMPTY" TO REMARKS
+           ELSE
+              IF TEST01-MKS < 1 OR TEST01-MKS > 100 OR
+                 TEST02-MKS < 1 OR TEST02-MKS > 100 OR
+                 TEST03-MKS < 1 OR TEST03-MKS > 100
+                 MOVE "MARKS-NOT-IN-RANGE" TO REMARKS
+              ELSE
+                 IF TEST01-MKS IS NOT NUMERIC OR
+                    TEST02-MKS IS NOT NUMERIC OR
+                    TEST03-MKS IS NOT NUMERIC
+                    MOVE "NON-NUMERIC-DATA-IN-MARKS" TO REMARKS
+                 ELSE
+                    MOVE "VALID-RECORD" TO REMARKS
+                    COMPUTE TOTAL = TEST01-MKS + TEST02-MKS
+                                    + TEST03-MKS
+                    COMPUTE PERCENT = TOTAL / 3                                 
+                    IF TEST01-MKS < 35 OR TEST02-MKS < 35 OR
+                       TEST03-MKS < 35
+                       MOVE "FAIL" TO RESULT
+                    ELSE
+                       MOVE "PASS" TO RESULT
+                    END-IF                                                   (WE GIVE END IF FOR EVERY IF CONDITION)(IF VUNTEY END IF PETTEY)
+                 END-IF
+              END-IF
+           END-IF.
+
+           DISPLAY " ".											
+           DISPLAY STUDENT-RECORD.							
+           EXIT.	 								
+      *===============================================================			
+

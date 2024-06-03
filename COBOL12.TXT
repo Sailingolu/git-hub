@@ -1,0 +1,113 @@
+      *----------------------------------------------------------------
+      *--- COPY ALL RECORDS FROM PS FILE TO PS FILE
+      *----------------------------------------------------------------
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. COBOL12.
+      *----------------------------------------------------------------
+       ENVIRONMENT DIVISION.
+       INPUT-OUTPUT SECTION.
+       FILE-CONTROL.
+      *--- SOURCE FILE ENTRY ------------------------------------------
+           SELECT PS-FILE-1 ASSIGN TO DD1
+           ORGANIZATION IS SEQUENTIAL
+           FILE STATUS IS FS-PS-1.
+
+      *--- TARGET FILE ENTRY ------------------------------------------
+           SELECT PS-FILE-2 ASSIGN TO DD2
+           ORGANIZATION IS SEQUENTIAL
+           FILE STATUS IS FS-PS-2.
+      *----------------------------------------------------------------
+       DATA DIVISION.
+       FILE SECTION.
+      *--- SOURCE FILE ENTRY ------------------------------------------
+       FD  PS-FILE-1
+           LABEL RECORDS ARE STANDARD
+           RECORDING MODE IS F.
+       01  PS-REC-BUFF-1.
+           05     FILLER       PIC X(80).
+
+      *--- TARGET FILE ENTRY ------------------------------------------
+       FD  PS-FILE-2
+           LABEL RECORDS ARE STANDARD
+           RECORDING MODE IS F.
+       01  PS-REC-BUFF-2.
+           05     FILLER       PIC X(80).
+
+       WORKING-STORAGE SECTION.
+       01  WS-RECORD.
+           05    EMP-NO        PIC 9(04).
+           05    FILLER        PIC X(01).
+           05    EMP-NAME      PIC X(20).
+           05    FILLER        PIC X(01).
+           05    PROJECT       PIC X(10).
+           05    FILLER        PIC X(01).
+           05    JOIN-DATE     PIC X(10).
+           05    FILLER        PIC X(01).
+           05    MOBILE-NO     PIC 9(10).
+           05    FILLER        PIC X(01).
+           05    SALARY        PIC 9(06).
+
+      *--- FILE STATUS VARIABES ---------------------------------------
+       77        FS-PS-1       PIC X(02)      VALUE SPACES.
+       77        FS-PS-2       PIC X(02)      VALUE SPACES.
+
+      *--- ADDITIONAL VARIABLES ---------------------------------------
+       77        TOTAL-COUNT   PIC 9(02)      VALUE 0.
+      *----------------------------------------------------------------
+       PROCEDURE DIVISION.
+      *----------------------------------------------------------------
+      *--- MAIN LOGIC STARTS HERE -------------------------------------
+      *----------------------------------------------------------------
+       0000-MAIN-PARA.
+           DISPLAY "WELCOME TO MY PROGRAM : COBOL12".
+           DISPLAY " ".
+
+      *--- OPEN SOURCE FILE IN INPUT MODE FOR READING RECORDS ---------
+           OPEN INPUT PS-FILE-1.
+           DISPLAY "PS FILE 1 OPEN STATUS  : ", FS-PS-1.
+           DISPLAY " ".
+
+      *--- OPEN TARGET FILE IN OUTPUT MODE FOR WRITING RECORDS --------
+           OPEN OUTPUT PS-FILE-2.
+           DISPLAY "PS FILE 2 OPEN STATUS  : ", FS-PS-2.
+           DISPLAY " ".
+
+           READ PS-FILE-1 INTO WS-RECORD.
+           PERFORM 1000-PROCESS-PARA UNTIL FS-PS-1 = "10".
+           DISPLAY FS-PS-1, ": END OF SOURCE FILE REACHED".
+
+           PERFORM 2000-SHOW-STATS-PARA.
+
+      *--- CLOSE THE SOURCE FILE --------------------------------------
+           CLOSE PS-FILE-1.
+           DISPLAY " ".
+           DISPLAY "PS FILE 1 CLOSE STATUS : ", FS-PS-1.
+
+      *--- CLOSE THE TARGET FILE --------------------------------------
+           CLOSE PS-FILE-2.
+           DISPLAY " ".
+           DISPLAY "PS FILE 2 CLOSE STATUS : ", FS-PS-2.
+
+           DISPLAY " ".
+           DISPLAY "THANK YOU FOR USING THE PROGRAM COBOL12".
+
+           STOP RUN.
+      *----------------------------------------------------------------
+      *--- PROCESS THE RECORD -----------------------------------------
+      *----------------------------------------------------------------
+       1000-PROCESS-PARA.
+           WRITE PS-REC-BUFF-2 FROM WS-RECORD.
+           DISPLAY FS-PS-2, " : ", EMP-NO, " WRITTEN IN TARGET FILE".
+           ADD 1 TO TOTAL-COUNT.
+           READ PS-FILE-1 INTO WS-RECORD.
+           EXIT.
+      *----------------------------------------------------------------
+      *--- DISPLAY STATISTICS -----------------------------------------
+      *----------------------------------------------------------------
+       2000-SHOW-STATS-PARA.
+           DISPLAY " ".
+           DISPLAY "TOTAL RECORDS : ", TOTAL-COUNT.
+           EXIT.
+      *----------------------------------------------------------------
+      *----------------------------------------------------------------
+

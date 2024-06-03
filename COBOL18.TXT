@@ -1,0 +1,64 @@
+      *---------------------------------------------------------------
+      *--- ALTERNATE INDEX (UNIQUE)
+      *---------------------------------------------------------------
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. COBOL18.
+      *---------------------------------------------------------------
+       ENVIRONMENT DIVISION.
+       INPUT-OUTPUT SECTION.
+       FILE-CONTROL.
+      *--- KSDS FILE ENTRY -------------------------------------------
+           SELECT KSDS-FILE ASSIGN TO DDIN
+           ORGANIZATION IS INDEXED
+           ACCESS MODE IS RANDOM
+           RECORD KEY IS KSDS-EMP-NO
+           ALTERNATE RECORD KEY IS KSDS-MOBILE-NO
+           FILE STATUS IS FS-KSDS.
+      *---------------------------------------------------------------
+       DATA DIVISION.
+       FILE SECTION.
+       FD  KSDS-FILE
+           LABEL RECORDS ARE STANDARD.
+       01  KSDS-REC-BUFF.
+           05    KSDS-EMP-NO       PIC 9(04).
+           05    FILLER            PIC X(44).
+           05    KSDS-MOBILE-NO    PIC 9(10).
+           05    FILLER            PIC X(22).
+
+       WORKING-STORAGE SECTION.
+       COPY WSRECORD.
+
+       77        FS-KSDS           PIC X(02)    VALUE SPACES.
+      *---------------------------------------------------------------
+       PROCEDURE DIVISION.
+      *---------------------------------------------------------------
+      *--- PROGRAM LOGIC STARTS HERE ---------------------------------
+      *---------------------------------------------------------------
+       0000-MAIN-PARA.
+           DISPLAY "WELCOME TO MY PROGRAM : COBOL18".
+           DISPLAY " ".
+
+           OPEN INPUT KSDS-FILE.
+           DISPLAY "KSDS FILE OPEN STATUS : ", FS-KSDS.
+           DISPLAY " ".
+
+           ACCEPT KSDS-MOBILE-NO.
+           READ KSDS-FILE INTO WS-RECORD KEY IS KSDS-MOBILE-NO.
+           EVALUATE TRUE
+                WHEN FS-KSDS = "00"
+                     DISPLAY FS-KSDS, ":", WS-RECORD
+                WHEN FS-KSDS = "23"
+                     DISPLAY FS-KSDS, ":", "MOBILE NUMBER NOT FOUND"
+                WHEN OTHER
+                     DISPLAY FS-KSDS, ":", "READ ERROR"
+           END-EVALUATE.
+
+           DISPLAY " ".
+           CLOSE KSDS-FILE.
+           DISPLAY "KSDS-FILE CLOSE STATUS : ", FS-KSDS.
+
+           DISPLAY " ".
+           DISPLAY "THANK YOU FOR USING PROGRAM : COBOL18".
+           STOP RUN.
+      *---------------------------------------------------------------
+

@@ -1,0 +1,79 @@
+      *---------------------------------------------------------------
+      *--- ACCESS MODE DYNAMIC
+      *---------------------------------------------------------------
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. COBOL19.
+      *---------------------------------------------------------------
+       ENVIRONMENT DIVISION.
+       INPUT-OUTPUT SECTION.
+       FILE-CONTROL.
+      *--- KSDS FILE ENTRY -------------------------------------------
+           SELECT KSDS-FILE ASSIGN TO DDIN
+           ORGANIZATION IS INDEXED
+           ACCESS MODE IS DYNAMIC
+           RECORD KEY IS KSDS-EMP-NO
+           FILE STATUS IS FS-KSDS.
+      *---------------------------------------------------------------
+       DATA DIVISION.
+       FILE SECTION.
+       FD  KSDS-FILE
+           LABEL RECORDS ARE STANDARD.
+       01  KSDS-REC-BUFF.
+           05    KSDS-EMP-NO       PIC 9(04).
+           05    FILLER            PIC X(76).
+
+       WORKING-STORAGE SECTION.
+       COPY WSRECORD.
+
+       77        FS-KSDS           PIC X(02)    VALUE SPACES.
+       88        EMPNO-FOUND                    VALUE "00".
+       88        END-OF-FILE                    VALUE "10".
+       88        EMPNO-NOT-FOUND                VALUE "23".
+       77        TOTAL-COUNT       PIC 9(02)    VALUE 0.
+      *---------------------------------------------------------------
+       PROCEDURE DIVISION.
+      *---------------------------------------------------------------
+      *--- PROGRAM LOGIC STARTS HERE ---------------------------------
+      *---------------------------------------------------------------
+       0000-MAIN-PARA.
+           DISPLAY "WELCOME TO MY PROGRAM : COBOL19".
+           DISPLAY " ".
+
+           OPEN INPUT KSDS-FILE.
+           DISPLAY "KSDS FILE OPEN STATUS : ", FS-KSDS.
+           DISPLAY " ".
+
+           ACCEPT KSDS-EMP-NO.
+
+      *--- READ KSDS FILE RANDOMLY -----------------------------------
+           READ KSDS-FILE INTO WS-RECORD.
+           EVALUATE TRUE
+               WHEN EMPNO-FOUND
+                    PERFORM 1000-PROCESS-PARA UNTIL END-OF-FILE
+                    DISPLAY FS-KSDS, " : END OF KSDS REACHED"
+               WHEN EMPNO-NOT-FOUND
+                    DISPLAY FS-KSDS, ":", KSDS-EMP-NO, " NOT FOUND !!!"
+               WHEN OTHER
+                    DISPLAY FS-KSDS, ":", KSDS-EMP-NO, " READ ERROR !!!"
+           END-EVALUATE.
+           DISPLAY " ".
+           DISPLAY "TOTAL RECORDS DISPLAYED : ", TOTAL-COUNT.
+
+           CLOSE KSDS-FILE.
+           DISPLAY " ".
+           DISPLAY "KSDS FILE CLOSE STATUS  : ", FS-KSDS.
+
+           DISPLAY " ".
+           DISPLAY "THANK YOU FOR USING THE PROGRAM : COBOL19".
+           STOP RUN.
+      *---------------------------------------------------------------
+      *--- PROCESS THE RECORD ----------------------------------------
+      *---------------------------------------------------------------
+       1000-PROCESS-PARA.
+           DISPLAY WS-RECORD.
+           ADD 1 TO TOTAL-COUNT.
+      *--- READ KSDS FILE SEQUENTIALLY -------------------------------
+           READ KSDS-FILE NEXT RECORD INTO WS-RECORD.
+           EXIT.
+      *---------------------------------------------------------------
+
