@@ -1,0 +1,299 @@
+      *---------------------------------------------------------------
+      *--- STUDENT PROGRAM -------------------------------------------
+      *---------------------------------------------------------------
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. CICSGS3B.
+      *---------------------------------------------------------------
+       ENVIRONMENT DIVISION.
+      *---------------------------------------------------------------
+       DATA DIVISION.
+
+       WORKING-STORAGE SECTION.
+      *--- TO BE USED IN RETURN-TRANSID-COMMAREA COMMAND -------------
+       01   WS-COMMAREA-1.
+            05      WS-FLAG          PIC X(01).
+
+      *--- TO BE USED IN LINK COMMAND --------------------------------
+       01   WS-COMMAREA-2.
+            05      WS-DATE          PIC X(10).
+            05      WS-TIME          PIC X(08).
+
+      *--- RECORD WHICH WILL CONTAIN DATA TO BE WRITTEN IN A KSDS ----
+       01   WS-STUDENT-RECORD.
+            05      WS-ROLLNO        PIC 9(04).
+            05      FILLER           PIC X(01)    VALUE '-'.
+            05      WS-NAME          PIC X(10).
+            05      FILLER           PIC X(01)    VALUE '-'.
+            05      WS-TEST1-MKS     PIC 9(02).
+            05      FILLER           PIC X(01)    VALUE '-'.
+            05      WS-TEST2-MKS     PIC 9(02).
+            05      FILLER           PIC X(01)    VALUE '-'.
+            05      WS-TEST3-MKS     PIC 9(02).
+            05      FILLER           PIC X(01)    VALUE '-'.
+            05      WS-TOTAL         PIC 9(03).
+            05      FILLER           PIC X(01)    VALUE '-'.
+            05      WS-PERCENT       PIC 9(03).
+            05      FILLER           PIC X(01)    VALUE '-'.
+            05      WS-CLASS         PIC X(04).
+            05      FILLER           PIC X(01)    VALUE '-'.
+            05      WS-GRADE         PIC X(06).
+
+       77   VALID-STATUS             PIC X(01)     VALUE 'N'.
+       77   ERROR-CODE               PIC S9(08) COMP.
+
+      *--- PLUG-IN SYMBOLIC MAP VARIABLE DECLARATIONS ----------------
+       COPY MAPSGS3.
+
+      *--- PLUG-IN DFHBMSCA - CONTAINS COLOR CONSTANT DEFINITION -----
+       COPY DFHBMSCA.
+
+      *--- PLUG-IN DFHAID - CONTAINS AID KEY DEFINITIONS -------------
+       COPY DFHAID.
+
+       LINKAGE SECTION.
+      *--- COMMUNICATION AREA RECORD ---------------------------------
+       01   DFHCOMMAREA.
+            05      DFH-FLAG         PIC X(01).
+      *---------------------------------------------------------------
+       PROCEDURE DIVISION.
+      *---------------------------------------------------------------
+      *--- MAIN LOGIC STARTS HERE ------------------------------------
+      *---------------------------------------------------------------
+       0000-MAIN-PARA.
+            IF EIBCALEN = 0
+
+      *--- INITIALIZE SYMBOLIC MAP VARIABES --------------------------
+               MOVE LOW-VALUE TO STUDMAPI
+
+      *--- SEND THE STUDENT MAP ON THE SCREEN ------------------------
+               PERFORM 6000-SEND-PARA
+
+      *--- REMOVE PROGRAM TEMPORARILY FROM THE MEMORY ----------------
+               PERFORM 8000-REMOVE-TEMP-PARA
+
+            ELSE
+
+      *--- CHECK IF ENTER AID KEY HAS BEEN PRESSED -------------------
+               EVALUATE TRUE
+                   WHEN EIBAID = DFHENTER
+                        PERFORM 1000-PROCESS-MAP-PARA
+                   WHEN EIBAID = DFHPF1
+                        PERFORM 1100-XCTL-LOGIN-PARA
+                   WHEN EIBAID = DFHPF7
+                        MOVE LOW-VALUE TO STUDMAPI
+                        PERFORM 6000-SEND-PARA
+                        PERFORM 8000-REMOVE-TEMP-PARA
+                   WHEN OTHER
+                        MOVE 'INVALID AID KEY PRESSED !!!' TO MESG2O
+                        PERFORM 6000-SEND-PARA
+                        PERFORM 8000-REMOVE-TEMP-PARA
+               END-EVALUATE
+
+            END-IF.
+      *---------------------------------------------------------------
+      *--- PROCESS THE MAP -------------------------------------------
+      *---------------------------------------------------------------
+       1000-PROCESS-MAP-PARA.
+
+      *--- RECEIVE THE STUDENT MAP -----------------------------------
+           PERFORM 7000-RECEIVE-PARA.
+
+           IF ROLLNOI = '9999'
+              PERFORM 1100-XCTL-LOGIN-PARA
+           ELSE
+              PERFORM 1100-VALIDATE-PARA
+              PERFORM 1200-CALCULATE-PARA
+              PERFORM 1300-WRITE-PARA
+           END-IF.
+
+           EXIT.
+      *---------------------------------------------------------------
+      *--- TRANSFER CONTROL TO LOGIN PROGRAM -------------------------
+      *---------------------------------------------------------------
+       1100-XCTL-LOGIN-PARA.
+           EXEC CICS
+                XCTL PROGRAM('CICSGS3A') RESP(ERROR-CODE)
+           END-EXEC.
+           EVALUATE TRUE
+                WHEN ERROR-CODE = DFHRESP(PGMIDERR)
+                     MOVE DFHRED                     TO MESG2C
+                     MOVE DFHBLINK                   TO MESG2H
+                     MOVE 'INVALID PROGRAM NAME !!!' TO MESG2O
+                     PERFORM 6000-SEND-PARA
+                     PERFORM 8000-REMOVE-TEMP-PARA
+           END-EVALUATE.
+           EXIT.
+      *---------------------------------------------------------------
+      *--- VALIDATE THE INPUT DATA -----------------------------------
+      *---------------------------------------------------------------
+       1100-VALIDATE-PARA.
+           EVALUATE TRUE
+              WHEN ROLLNOL = 0  OR ROLLNOI = SPACES
+                   MOVE -1 TO ROLLNOL
+                   MOVE 'PLEASE ENTER ROLL NUMBER'          TO MESG2O
+              WHEN NAMEL = 0    OR NAMEI = SPACES
+                   MOVE -1 TO NAMEL
+                   MOVE 'PLEASE ENTER STUDENT NAME'         TO MESG2O
+              WHEN MKS1L = 0
+                   MOVE -1 TO MKS1L
+                   MOVE 'PLEASE ENTER TEST-1 MARKS'         TO MESG2O
+              WHEN MKS2L = 0
+                   MOVE -1 TO MKS2L
+                   MOVE 'PLEASE ENTER TEST-2 MARKS'         TO MESG2O
+              WHEN MKS3L = 0
+                   MOVE -1 TO MKS3L
+                   MOVE 'PLEASE ENTER TEST-3 MARKS'         TO MESG2O
+              WHEN OTHER
+                   MOVE 'Y' TO VALID-STATUS
+           END-EVALUATE.
+           IF VALID-STATUS = 'N'
+              MOVE 'OZAGS3'   TO LOGIN2O
+              MOVE 'CICSGS3B' TO PGMNAME2O
+
+              EXEC CICS
+                   LINK PROGRAM('CDCTGS3')
+                        COMMAREA(WS-COMMAREA-2)
+                        RESP(ERROR-CODE)
+              END-EXEC
+
+              MOVE WS-DATE TO CDATE2O
+              MOVE WS-TIME TO CTIME2O
+
+              MOVE DFHGREEN TO KEYF1C
+              MOVE DFHGREEN TO KEYF7C
+
+              EXEC CICS
+                   SEND MAP('STUDMAP') MAPSET('MAPSGS3') ERASE CURSOR
+              END-EXEC
+              PERFORM 8000-REMOVE-TEMP-PARA
+           END-IF.
+           EXIT.
+      *---------------------------------------------------------------
+      *--- PERFORM THE CALCULATIONS ----------------------------------
+      *---------------------------------------------------------------
+       1200-CALCULATE-PARA.
+
+           COMPUTE TOTALO = MKS1I + MKS2I + MKS3I.
+
+           COMPUTE PERCENTO = TOTALO / 3.
+
+           IF MKS1I < 35 OR MKS2I < 35 OR MKS3I < 35
+              MOVE 'FAIL' TO CLASSO
+           ELSE
+              MOVE 'PASS' TO CLASSO
+           END-IF.
+
+           IF CLASSO = 'FAIL'
+              MOVE 'FAIL'   TO GRADEO
+           ELSE
+              EVALUATE TRUE
+                  WHEN PERCENTO >= 75
+                       MOVE 'DISTN' TO GRADEO
+                  WHEN PERCENTO >= 60 AND PERCENTO < 75
+                       MOVE 'FIRST' TO GRADEO
+                  WHEN PERCENTO >= 50 AND PERCENTO < 60
+                       MOVE 'SECOND' TO GRADEO
+                  WHEN PERCENTO >= 35 AND PERCENTO < 50
+                       MOVE 'THIRD' TO GRADEO
+              END-EVALUATE
+           END-IF.
+
+           EXIT.
+      *---------------------------------------------------------------
+      *--- WRITE THE RECORD IN KSDS ----------------------------------
+      *---------------------------------------------------------------
+       1300-WRITE-PARA.
+
+      *--- MOVE DATA FROM I/O VARIABLES TO WS-STUDENT-RECORD VARIABLE-
+           MOVE ROLLNOI     TO   WS-ROLLNO.
+           MOVE NAMEI       TO   WS-NAME.
+           MOVE MKS1I       TO   WS-TEST1-MKS.
+           MOVE MKS2I       TO   WS-TEST2-MKS.
+           MOVE MKS3I       TO   WS-TEST3-MKS.
+           MOVE TOTALO      TO   WS-TOTAL.
+           MOVE PERCENTO    TO   WS-PERCENT.
+           MOVE CLASSO      TO   WS-CLASS.
+           MOVE GRADEO      TO   WS-GRADE.
+
+      *--- WRITE THE RECORD IN KSDS ----------------------------------
+           EXEC CICS
+                WRITE DATASET('STUDGS3')
+                      FROM(WS-STUDENT-RECORD)
+                      RIDFLD(WS-ROLLNO)
+           END-EXEC.
+      *    MOVE ERROR-CODE TO ERROR2O.
+      *    EVALUATE TRUE
+      *        WHEN ERROR-CODE = DFHRESP(NORMAL)
+      *             MOVE '1 RECORD SAVED'          TO MESG2O
+      *        WHEN ERROR-CODE = DFHRESP(DUPREC)
+      *             MOVE 'DUPLICATE ROLL NUMBER'   TO MESG2O
+      *        WHEN ERROR-CODE = DFHRESP(INVREQ)
+      *             MOVE 'NO PERMISSION TO WRITE'  TO MESG2O
+      *        WHEN ERROR-CODE = DFHRESP(NOTOPEN)
+      *             MOVE 'FILE IS CLOSED'          TO MESG2O
+      *        WHEN ERROR-CODE = DFHRESP(DISABLED)
+      *             MOVE 'FILE IS DISABLED'        TO MESG2O
+      *        WHEN OTHER
+      *             MOVE 'WRITE ERROR'             TO MESG2O
+      *    END-EVALUATE.
+           PERFORM 6000-SEND-PARA
+           PERFORM 8000-REMOVE-TEMP-PARA
+           EXIT.
+      *---------------------------------------------------------------
+      *--- SEND LOGIN MAP ON THE SCREEN ------------------------------
+      *---------------------------------------------------------------
+       6000-SEND-PARA.
+            MOVE 'OZAGS3'   TO LOGIN2O.
+            MOVE 'CICSGS3B' TO PGMNAME2O.
+
+            EXEC CICS
+                 LINK PROGRAM('CDCTGS3')
+                      COMMAREA(WS-COMMAREA-2)
+                      RESP(ERROR-CODE)
+            END-EXEC.
+
+            MOVE WS-DATE TO CDATE2O.
+            MOVE WS-TIME TO CTIME2O.
+
+            MOVE DFHGREEN TO KEYF1C.
+            MOVE DFHGREEN TO KEYF7C.
+
+            EXEC CICS
+                 SEND MAP('STUDMAP') MAPSET('MAPSGS3') ERASE
+            END-EXEC.
+            EXIT.
+      *---------------------------------------------------------------
+      *--- RECEIVE STUDENT MAP ---------------------------------------
+      *---------------------------------------------------------------
+       7000-RECEIVE-PARA.
+           EXEC CICS
+              RECEIVE MAP('STUDMAP') MAPSET('MAPSGS3') RESP(ERROR-CODE)
+           END-EXEC.
+           EVALUATE TRUE
+              WHEN ERROR-CODE = DFHRESP(MAPFAIL)
+                   MOVE 'YOU HAVE NOT ENTERED ANY DATA !!!' TO MESG2O
+                   MOVE DFHRED                              TO MESG2C
+                   MOVE DFHBLINK                            TO MESG2H
+                   PERFORM 6000-SEND-PARA
+                   PERFORM 8000-REMOVE-TEMP-PARA
+           END-EVALUATE.
+           EXIT.
+      *---------------------------------------------------------------
+      *--- REMOVE THE PROGRAM TEMPORARILY FROM THE MEMORY ------------
+      *---------------------------------------------------------------
+       8000-REMOVE-TEMP-PARA.
+            MOVE 'A' TO WS-FLAG.
+            EXEC CICS
+                 RETURN TRANSID('BGS3') COMMAREA(WS-COMMAREA-1)
+            END-EXEC.
+            EXIT.
+      *---------------------------------------------------------------
+      *--- REMOVE THE PROGRAM PERMANENTLY FROM THE MEMORY ------------
+      *---------------------------------------------------------------
+       9000-QUIT-PARA.
+            EXEC CICS
+                 RETURN
+            END-EXEC.
+            EXIT.
+      *---------------------------------------------------------------
+
