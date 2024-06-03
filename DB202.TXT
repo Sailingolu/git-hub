@@ -1,0 +1,75 @@
+      *---------------------------------------------------------------
+      *--- SELECT A ROW FROM THE TABLE -------------------------------
+      *---------------------------------------------------------------
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. DB202.
+      *---------------------------------------------------------------
+       ENVIRONMENT DIVISION.
+      *---------------------------------------------------------------
+       DATA DIVISION.
+       WORKING-STORAGE SECTION.
+      *--- INDICATOR VARIABLE FOR NULL COLUMN ------------------------
+       77          MOBILENO-IV   PIC S9(04) COMP.
+
+      *--- WORKING-STORAGE VARIABLES ---------------------------------
+       77          EMP-CODE      PIC  9(04).
+
+      *--- PLUG-IN DCLGEN MEMBER - CONTAINS TABLE & HOST VAR. DEFN. --
+           EXEC SQL
+                INCLUDE EMPLOYEE
+           END-EXEC.
+
+      *--- PLUG-IN SQLCA - CONTAINS SQLCODE DEFINTION ----------------
+      *--- SQLCA - STRUCTURED QUERY LANGUAGE COMMUNICATION AREA ------
+           EXEC SQL
+                INCLUDE SQLCA
+           END-EXEC.
+      *---------------------------------------------------------------
+       PROCEDURE DIVISION.
+      *---------------------------------------------------------------
+      *--- PROGRAM LOGIC STARTS HERE ---------------------------------
+      *---------------------------------------------------------------
+       0000-MAIN-PARA.
+           DISPLAY "WELCOME TO PROGRAM : DB202".
+           DISPLAY " ".
+
+           ACCEPT EMP-CODE.
+           MOVE EMP-CODE TO HV-EMPNO.
+
+           PERFORM 1000-SELECT-PARA.
+
+           DISPLAY " ".
+           DISPLAY "THANK YOU FOR USING THE PROGRAM : DB202".
+           GOBACK.
+      *---------------------------------------------------------------
+      *--- SELECT A ROW FROM THE TABLE -------------------------------
+      *---------------------------------------------------------------
+       1000-SELECT-PARA.
+           EXEC SQL
+                SELECT EMPNO,
+                       EMPNAME,
+                       MOBILENO
+                  INTO :HV-EMPNO,
+                       :HV-EMPNAME,
+                       :HV-MOBILENO:MOBILENO-IV
+                  FROM EMPLOYEE
+                 WHERE EMPNO = :HV-EMPNO
+           END-EXEC.
+           EVALUATE TRUE
+                WHEN SQLCODE = 0
+                     PERFORM 1100-DISPLAY-PARA
+                WHEN SQLCODE = 100
+                     DISPLAY HV-EMPNO, " NOT FOUND IN TABLE."
+                WHEN OTHER
+                     DISPLAY HV-EMPNO, " SELECT ERROR."
+           END-EVALUATE.
+      *---------------------------------------------------------------
+      *--- SELECT A ROW FROM THE TABLE -------------------------------
+      *---------------------------------------------------------------
+       1100-DISPLAY-PARA.
+           DISPLAY HV-EMPNO, " ",
+                   HV-EMPNAME, " ",
+                   HV-MOBILENO.
+           EXIT.
+      *---------------------------------------------------------------
+

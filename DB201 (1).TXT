@@ -1,0 +1,136 @@
+      *---------------------------------------------------------------
+      *--- COPY RECORDS FROM PS FILE TO A TABLE ----------------------
+      *--- HANDLE VARCHAR COLUMN
+      *---------------------------------------------------------------
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. DB201.
+      *---------------------------------------------------------------
+       ENVIRONMENT DIVISION.
+       INPUT-OUTPUT SECTION.
+       FILE-CONTROL.
+           SELECT PS-FILE ASSIGN TO DD1
+           ORGANIZATION IS SEQUENTIAL
+           FILE STATUS IS FS-PS.
+      *---------------------------------------------------------------
+       DATA DIVISION.
+
+       FILE SECTION.
+       FD  PS-FILE
+           LABEL RECORDS ARE STANDARD
+           RECORDING MODE IS F.
+       01  PS-REC-BUFF.
+           05      FILLER        PIC X(80).
+
+       WORKING-STORAGE SECTION.
+      *--- WS-RECORD DECLARATION -------------------------------------
+       01  WS-RECORD.
+           05      EMPNO-PS      PIC  9(04).
+           05      FILLER        PIC  X(01).
+           05      EMPNAME-PS    PIC  X(15).
+           05      FILLER        PIC  X(01).
+           05      MOBILENO-PS   PIC  X(10).
+
+      *--- COBOL VARIABLE DECLARATION --------------------------------
+       77          TOTAL-COUNT   PIC  9(02)     VALUE 0.
+       77          FS-PS         PIC  X(02)     VALUE SPACES.
+       77          W             PIC  9(02)     VALUE ZERO.
+       77          N             PIC  9(02)     VALUE 0.
+
+      *--- INDICATOR VARIABLE FOR NULL COLUMN ------------------------
+       77          MOBILENO-IV   PIC S9(04) COMP.
+
+      *--- PLUG-IN DCLGEN MEMBER - CONTAINS TABLE & HOST VAR. DEFN. --
+           EXEC SQL
+                INCLUDE EMPLOYEE
+           END-EXEC.
+
+      *--- PLUG-IN SQLCA - CONTAINS SQLCODE DEFINTION ----------------
+      *--- SQLCA - STRUCTURED QUERY LANGUAGE COMMUNICATION AREA ------
+           EXEC SQL
+                INCLUDE SQLCA
+           END-EXEC.
+      *---------------------------------------------------------------
+       PROCEDURE DIVISION.
+      *---------------------------------------------------------------
+      *--- PROGRAM LOGIC STARTS HERE ---------------------------------
+      *---------------------------------------------------------------
+       0000-MAIN-PARA.
+           DISPLAY "WELCOME TO PROGRAM : DB201".
+           DISPLAY " ".
+
+      *--- DELETE ALL ROWS FROM THE TABLE ----------------------------
+           EXEC SQL
+                DELETE FROM EMPLOYEE
+           END-EXEC.
+           EXEC SQL
+                COMMIT
+           END-EXEC.
+      *---------------------------------------------------------------
+
+           OPEN INPUT PS-FILE.
+           DISPLAY "PS-FILE OPEN STATUS : ", FS-PS.
+           DISPLAY " ".
+
+           READ PS-FILE INTO WS-RECORD.
+           PERFORM 1000-PROCESS-PARA UNTIL FS-PS = "10".
+           DISPLAY "END OF PS FILE REACHED : ", FS-PS.
+           DISPLAY " ".
+
+           DISPLAY "TOTAL RECORDS COPIED : ", TOTAL-COUNT.
+           DISPLAY " ".
+
+           CLOSE PS-FILE.
+           DISPLAY "PS-FILE CLOSE STATUS : ", FS-PS.
+           DISPLAY " ".
+
+           DISPLAY "THANK YOU FOR USING THE PROGRAM : DB201".
+           GOBACK.
+      *---------------------------------------------------------------
+      *--- PROGRAM LOGIC STARTS HERE ---------------------------------
+      *---------------------------------------------------------------
+       1000-PROCESS-PARA.
+           MOVE EMPNO-PS    TO HV-EMPNO.
+
+      *--- CODE TO HANDLE VARCHAR COLUMN -----------------------------
+           MOVE 0      TO N.
+
+           MOVE EMPNAME-PS  TO HV-EMPNAME-TEXT.
+
+           MOVE LENGTH OF HV-EMPNAME-TEXT TO W.
+           INSPECT FUNCTION REVERSE(HV-EMPNAME-TEXT)
+                            TALLYING N FOR LEADING "-".
+           COMPUTE HV-EMPNAME-LEN = W - N.
+      *---------------------------------------------------------------
+
+      *--- CODE TO HANDLE NULL COLUMN --------------------------------
+           MOVE 0 TO MOBILENO-IV.
+           IF MOBILENO-PS = SPACES
+              MOVE -1 TO MOBILENO-IV
+           ELSE
+              MOVE 0  TO MOBILENO-IV
+              MOVE MOBILENO-PS TO HV-MOBILENO
+           END-IF.
+      *---------------------------------------------------------------
+
+           EXEC SQL
+                INSERT INTO EMPLOYEE VALUES(:HV-EMPNO,
+                                            :HV-EMPNAME,
+                                            :HV-MOBILENO:MOBILENO-IV
+                                           )
+           END-EXEC.
+           EVALUATE TRUE
+                WHEN SQLCODE = 0
+                     DISPLAY HV-EMPNO, " HAS BEEN INSERTED IN TABLE."
+                     ADD 1 TO TOTAL-COUNT
+                WHEN SQLCODE = -803
+                     DISPLAY HV-EMPNO, " ALREADY EXISTS IN TABLE."
+                WHEN OTHER
+                     DISPLAY HV-EMPNO, " INSERT ERROR."
+           END-EVALUATE.
+
+      *--- READ NEXT RECORD FROM PS FILE ------------------------------
+           READ PS-FILE INTO WS-RECORD.
+           EXIT.
+      *---------------------------------------------------------------
+      *---------------------------------------------------------------
+

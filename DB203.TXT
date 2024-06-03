@@ -1,0 +1,92 @@
+      *---------------------------------------------------------------
+      *--- DISPLAY ALL ROWS OF TABLE IN SPOOL ------------------------
+      *---------------------------------------------------------------
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. DB203.
+      *---------------------------------------------------------------
+       ENVIRONMENT DIVISION.
+      *---------------------------------------------------------------
+       DATA DIVISION.
+       WORKING-STORAGE SECTION.
+      *--- INDICATOR VARIABLE FOR NULL COLUMN ------------------------
+       77          MOBILENO-IV   PIC S9(04) COMP.
+
+      *--- WORKING-STORAGE VARIABLES ---------------------------------
+       77          TOTAL-COUNT   PIC  9(02)          VALUE 0.
+
+      *--- PLUG-IN DCLGEN MEMBER - CONTAINS TABLE & HOST VAR. DEFN. --
+           EXEC SQL
+                INCLUDE EMPLOYEE
+           END-EXEC.
+
+      *--- PLUG-IN SQLCA - CONTAINS SQLCODE DEFINTION ----------------
+      *--- SQLCA - STRUCTURED QUERY LANGUAGE COMMUNICATION AREA ------
+           EXEC SQL
+                INCLUDE SQLCA
+           END-EXEC.
+
+      *--- DECLARE A CURSOR ------------------------------------------
+           EXEC SQL
+                DECLARE CUR01 CURSOR FOR SELECT EMPNO,
+                                                EMPNAME,
+                                                MOBILENO
+                                          FROM  EMPLOYEE
+           END-EXEC.
+      *---------------------------------------------------------------
+       PROCEDURE DIVISION.
+      *---------------------------------------------------------------
+      *--- PROGRAM LOGIC STARTS HERE ---------------------------------
+      *---------------------------------------------------------------
+       0000-MAIN-PARA.
+           DISPLAY "WELCOME TO PROGRAM : DB203".
+           DISPLAY " ".
+
+      *--- OPEN THE CURSOR -------------------------------------------
+           EXEC SQL
+                OPEN CUR01
+           END-EXEC.
+           DISPLAY "CUR01 CURSOR OPEN STATUS : ", SQLCODE.
+           DISPLAY " ".
+
+      *--- FETCH THE FIRST ROW FROM CURSOR CONTROLLED TABLE ----------
+           EXEC SQL
+                FETCH CUR01 INTO :HV-EMPNO,
+                                 :HV-EMPNAME,
+                                 :HV-MOBILENO:MOBILENO-IV
+           END-EXEC.
+
+           PERFORM 1000-PROCESS-PARA UNTIL SQLCODE = 100.
+           DISPLAY "END OF TABLE REACHED...".
+
+           EXEC SQL
+                CLOSE CUR01
+           END-EXEC.
+           DISPLAY " ".
+           DISPLAY "CUR01 CURSOR CLOSE STATUS : ", SQLCODE
+
+           DISPLAY " ".
+           DISPLAY "TOTAL ROWS DISPLAYED : ", TOTAL-COUNT.
+
+           DISPLAY " ".
+           DISPLAY "THANK YOU FOR USING THE PROGRAM : DB203".
+           GOBACK.
+      *---------------------------------------------------------------
+      *--- DISPLAY THE ROW DETAILS AND FETCH THE NEXT ROW ------------
+      *---------------------------------------------------------------
+       1000-PROCESS-PARA.
+           DISPLAY HV-EMPNO, " ", HV-EMPNAME-LEN, ":",
+                   HV-EMPNAME-TEXT, " ", HV-MOBILENO.
+           ADD 1 TO TOTAL-COUNT.
+
+           INITIALIZE HV-EMPNAME.
+           INITIALIZE HV-MOBILENO.
+
+           EXEC SQL
+                FETCH CUR01 INTO :HV-EMPNO,
+                                 :HV-EMPNAME,
+                                 :HV-MOBILENO:MOBILENO-IV
+           END-EXEC.
+           EXIT.
+      *---------------------------------------------------------------
+      *---------------------------------------------------------------
+

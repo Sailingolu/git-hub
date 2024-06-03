@@ -1,0 +1,29 @@
+-- -------------------------------------------------------------------
+-- --- DELETE ALL ROWS FROM TABLE ------------------------------------
+-- -------------------------------------------------------------------
+   DELETE FROM EMP;
+   COMMIT;
+
+-- -------------------------------------------------------------------
+-- --- INSERT ROWS IN THE TABLE --------------------------------------
+-- -------------------------------------------------------------------
+   INSERT INTO EMP VALUES(101,'TIM',NULL,'2020-03-09',22000,
+                          CURRENT TIMESTAMP);
+   INSERT INTO EMP VALUES(102,'CHANDRESH','RETAIL','2019-01-19',22000,
+                          CURRENT TIMESTAMP);
+   INSERT INTO EMP VALUES(103,'RAHUL','BANKING','2023-06-23',23000,
+                          CURRENT TIMESTAMP);
+   INSERT INTO EMP VALUES(104,'VINAY',NULL,'2021-07-03',26000,
+                          CURRENT TIMESTAMP);
+   INSERT INTO EMP VALUES(105,'AJAY','FINANCE','2018-08-02',27000,
+                          CURRENT TIMESTAMP);
+   INSERT INTO EMP VALUES(106,'ROHIT','BANKING','2017-04-02',21000,
+                          CURRENT TIMESTAMP);
+   INSERT INTO EMP VALUES(107,'VILAS',NULL,'2013-03-09',27000,
+                          CURRENT TIMESTAMP);
+-- -------------------------------------------------------------------
+-- --- SELECT ROWS FROM THE TABLE ------------------------------------
+-- -------------------------------------------------------------------
+   SELECT * FROM EMP;
+-- -------------------------------------------------------------------
+

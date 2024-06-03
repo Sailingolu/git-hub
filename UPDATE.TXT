@@ -1,0 +1,17 @@
+-- -----------------------------------------------------------------
+-- --- UPDATE COMMAND ----------------------------------------------
+-- -----------------------------------------------------------------
+   SELECT * FROM EMP;
+
+-- UPDATE EMP SET SALARY = 25000 WHERE EMP_NAME = 'CHANDRESH';
+
+-- UPDATE EMP SET PROJECT = 'RETAIL' WHERE EMP_NO = 101;
+
+-- UPDATE EMP SET PROJECT = NULL WHERE EMP_NO = 106;
+
+-- UPDATE EMP SET SALARY = SALARY + 500 WHERE PROJECT IS NULL;
+-- UPDATE EMP SET SALARY = SALARY + 2000 WHERE PROJECT IS NOT NULL;
+
+   SELECT * FROM EMP;
+
+
