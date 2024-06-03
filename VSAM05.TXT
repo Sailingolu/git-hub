@@ -1,0 +1,10 @@
+//OZAGS3V    JOB   'FINANCE-123','MADHAV',NOTIFY=OZAGS3,TIME=(2,30)
+//* ------------------------------------------------------------------
+//* --- DISPLAY ATTRIBUTES OF A VSAM FILE IN SPOOL
+//* ------------------------------------------------------------------
+//STEP01     EXEC  PGM=IDCAMS
+//SYSPRINT   DD    SYSOUT=*
+//SYSIN      DD    *
+  LISTCAT ENTRIES(OZAGS3.COMPANY.KSDS.CLUSTER) ALL
+/*
+

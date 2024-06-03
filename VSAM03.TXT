@@ -1,0 +1,53 @@
+//OZAGS3V    JOB   'FINANCE-123','MADHAV',NOTIFY=OZAGS3,TIME=(2,30)
+//* ------------------------------------------------------------------
+//* --- DISPLAY KSDS FILE CONTENTS IN SPOOL
+//* ------------------------------------------------------------------
+//STEP01     EXEC  PGM=IDCAMS
+//SYSPRINT   DD    SYSOUT=*
+//DD01       DD    DSN=OZAGS3.EMPLOYEE.KSDS.CLUSTER,DISP=OLD
+//DD02       DD    SYSOUT=*
+//SYSIN      DD    *
+  REPRO   INFILE(DD01)  OUTFILE(DD02)
+/*
+//* ------------------------------------------------------------------
+//* --- DISPLAY FIRST N RECORDS OF KSDS FILE IN SPOOL
+//* ------------------------------------------------------------------
+//STEP02     EXEC  PGM=IDCAMS
+//SYSPRINT   DD    SYSOUT=*
+//DD01       DD    DSN=OZAGS3.EMPLOYEE.KSDS.CLUSTER,DISP=OLD
+//DD02       DD    SYSOUT=*
+//SYSIN      DD    *
+  REPRO   INFILE(DD01)  OUTFILE(DD02)  COUNT(3)
+/*
+//* ------------------------------------------------------------------
+//* --- DISPLAY FIRST N RECORDS OF KSDS FILE IN SPOOL
+//* ------------------------------------------------------------------
+//STEP03     EXEC  PGM=IDCAMS
+//SYSPRINT   DD    SYSOUT=*
+//DD01       DD    DSN=OZAGS3.EMPLOYEE.KSDS.CLUSTER,DISP=OLD
+//DD02       DD    SYSOUT=*
+//SYSIN      DD    *
+  REPRO   INFILE(DD01)  OUTFILE(DD02)  SKIP(7)
+/*
+//* ------------------------------------------------------------------
+//* --- DISPLAY RECORDS FROM BETWEEN IN KSDS FILE IN SPOOL
+//* ------------------------------------------------------------------
+//STEP04     EXEC  PGM=IDCAMS
+//SYSPRINT   DD    SYSOUT=*
+//DD01       DD    DSN=OZAGS3.EMPLOYEE.KSDS.CLUSTER,DISP=OLD
+//DD02       DD    SYSOUT=*
+//SYSIN      DD    *
+  REPRO   INFILE(DD01)  OUTFILE(DD02)  SKIP(2) COUNT(5)
+/*
+//* ------------------------------------------------------------------
+//* --- DISPLAY RECORDS FROM KSDS FILE BASED ON P-KEY IN SPOOL
+//* ------------------------------------------------------------------
+//STEP05     EXEC  PGM=IDCAMS
+//SYSPRINT   DD    SYSOUT=*
+//DD01       DD    DSN=OZAGS3.EMPLOYEE.KSDS.CLUSTER,DISP=OLD
+//DD02       DD    SYSOUT=*
+//SYSIN      DD    *
+  REPRO   INFILE(DD01)  OUTFILE(DD02)  FROMKEY('1050') TOKEY('1075')
+/*
+//* ------------------------------------------------------------------
+

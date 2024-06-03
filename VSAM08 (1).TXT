@@ -1,0 +1,48 @@
+//OZAGS3V     JOB   'BANKING-123','MADHAV',NOTIFY=OZAGS3,TIME=(2,30)
+//* ----------------------------------------------------------------
+//* --- DELETE AIX CLUSTER
+//* ----------------------------------------------------------------
+//STEP01      EXEC  PGM=IDCAMS
+//SYSPRINT    DD    SYSOUT=*
+//SYSIN       DD    *
+  DELETE OZAGS3.COMPANY.PROJECT.AIX.CLUSTER
+/*
+//* ----------------------------------------------------------------
+//* --- DEFINE AIX CLUSTER
+//* ----------------------------------------------------------------
+//STEP02      EXEC  PGM=IDCAMS
+//SYSPRINT    DD    SYSOUT=*
+//SYSIN       DD    *
+  DEFINE AIX(NAME(OZAGS3.COMPANY.PROJECT.AIX.CLUSTER) -
+             RELATE(OZAGS3.COMPANY.KSDS.CLUSTER) -
+             VOLUMES(USR001) -
+             TRACKS(10, 7) -
+             RECORDSIZE(80,80) -
+             KEYS(10,26) -
+             NONUNIQUEKEY -
+             UPGRADE -
+            ) -
+        DATA(NAME(OZAGS3.COMPANY.PROJECT.AIX.DATA)) -
+       INDEX(NAME(OZAGS3.COMPANY.PROJECT.AIX.INDEX))
+/*
+//* ----------------------------------------------------------------
+//* --- POPULATE RECORDS IN AIX CLUSTER
+//* ----------------------------------------------------------------
+//STEP03      EXEC  PGM=IDCAMS
+//SYSPRINT    DD    SYSOUT=*
+//DD01        DD    DSN=OZAGS3.COMPANY.KSDS.CLUSTER,DISP=OLD
+//DD02        DD    DSN=OZAGS3.COMPANY.PROJECT.AIX.CLUSTER,DISP=OLD
+//SYSIN       DD    *
+  BLDINDEX  INFILE(DD01)   OUTFILE(DD02)
+/*
+//* ----------------------------------------------------------------
+//* --- DEFINE A PATH FOR AIX CLUSTER
+//* ----------------------------------------------------------------
+//STEP04      EXEC  PGM=IDCAMS
+//SYSPRINT    DD    SYSOUT=*
+//SYSIN       DD    *
+ DEFINE PATH(NAME(OZAGS3.COMPANY.PROJECT.AIX.PATH) -
+             PATHENTRY(OZAGS3.COMPANY.PROJECT.AIX.CLUSTER) -
+             UPDATE)
+//* ----------------------------------------------------------------
+

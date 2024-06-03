@@ -1,0 +1,37 @@
+//OZAGS3V    JOB   'FINANCE-123','MADHAV',NOTIFY=OZAGS3,TIME=(2,30)
+//* ------------------------------------------------------------------
+//* --- DELETE KSDS CLUSTER
+//* ------------------------------------------------------------------
+//STEP01     EXEC  PGM=IDCAMS
+//SYSPRINT   DD    SYSOUT=*
+//SYSIN      DD    *
+   DELETE OZAGS3.COMPANY.KSDS.CLUSTER
+/*
+//* ------------------------------------------------------------------
+//* --- DEFINE KSDS CLUSTER
+//* ------------------------------------------------------------------
+//STEP02     EXEC  PGM=IDCAMS
+//SYSPRINT   DD    SYSOUT=*
+//SYSIN      DD    *
+     DEFINE CLUSTER(NAME(OZAGS3.COMPANY.KSDS.CLUSTER) -
+                    VOLUMES(USR001) -
+                    INDEXED -
+                    TRACKS(10,7) -
+                    KEYS(4,0) -
+                    RECORDSIZE(80,80) -
+                    REUSE -
+                   ) -
+               DATA(NAME(OZAGS3.COMPANY.KSDS.DATA)) -
+              INDEX(NAME(OZAGS3.COMPANY.KSDS.INDEX))
+/*
+//* ------------------------------------------------------------------
+//* --- COPY DATA FROM PS FILE TO KSDS FILE
+//* ------------------------------------------------------------------
+//STEP03     EXEC  PGM=IDCAMS
+//SYSPRINT   DD    SYSOUT=*
+//DD01       DD    DSN=OZAGS3.EMP.PS1,DISP=OLD
+//DD02       DD    DSN=OZAGS3.COMPANY.KSDS.CLUSTER,DISP=OLD
+//SYSIN      DD    *
+   REPRO   INFILE(DD01)  OUTFILE(DD02)   REUSE
+/*
+//* ------------------------------------------------------------------

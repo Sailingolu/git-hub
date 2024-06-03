@@ -1,0 +1,14 @@
+//OZAGS3V    JOB   'FINANCE-123','MADHAV',NOTIFY=OZAGS3,TIME=(2,30)
+//* ------------------------------------------------------------------
+//* --- RENAME A CLUSTER
+//* ------------------------------------------------------------------
+//STEP01     EXEC  PGM=IDCAMS
+//SYSPRINT   DD    SYSOUT=*
+//SYSIN      DD    *
+ ALTER OZAGS3.EMPLOYEE.KSDS.CLUSTER NEWNAME(OZAGS3.COMPANY.KSDS.CLUSTER)
+
+ ALTER OZAGS3.EMPLOYEE.KSDS.DATA    NEWNAME(OZAGS3.COMPANY.KSDS.DATA)
+
+ ALTER OZAGS3.EMPLOYEE.KSDS.INDEX   NEWNAME(OZAGS3.COMPANY.KSDS.INDEX)
+/*
+
